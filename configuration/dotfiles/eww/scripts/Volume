@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+get_vol () {
+    volumen=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1 | tr -d '%')
+    mute=$(pactl get-sink-mute @DEFAULT_SINK@)
+    [[ $mute == "Mute: yes" ]] && echo "muted ${volumen}" || echo "${volumen}"
+}
+
+get_icon () {
+    mute=$(pactl get-sink-mute @DEFAULT_SINK@)
+    echo "images/$( [[ $mute == "Mute: yes" ]] && echo "mute" || echo "volume" ).png"
+}
+
+case "$1" in
+    --vol) get_vol ;;
+    --icon) get_icon ;;
+    --toggle-muted) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+esac

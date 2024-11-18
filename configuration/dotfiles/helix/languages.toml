@@ -1,0 +1,22 @@
+[[language]]
+name = "typescript"
+
+[[language]]
+name = "javascript"
+
+[[language]]
+name = "json"
+
+[[language]]
+name = "html"
+
+[[language]]
+name = "python"
+auto-format = false
+[language.formatter]
+command = "black"
+args = [
+"-", # stdin
+"--quiet",
+"--line-length=79",
+]
