@@ -37,20 +37,83 @@
 ; (defvar ru_reveal false)
 (deflisten lang_script :initial "en" "scripts/lang_check.sh")
 
+;; Notifications
+(deflisten notifications-cards "~/.config/dunst/logger.sh subscribe")
+; (defpoll notifications-cards :interval "1s" "~/.config/dunst/logger.sh get")
+(defpoll notifications-crits :interval "1s" "~/.config/dunst/logger.sh crits")
+(defpoll notifications-total :interval "1s" :initial "0" "~/.config/dunst/logger.sh total")
+
 ;;---------- Widgets ----------;;
 
 ;; Launcher ;;
 (defwidget launcher []
 	(box :class "mainbars"
-		;  (
-			; eventbox :cursor "pointer"
-			(box :style "background-image: url('images/NixOS.png');"
-				    :class "icons"
-				    :valign "center"
-				    ; :onclick "cd ; OpenApps --menu &"
-				    ; :onrightclick "OpenApps --rice &"
+		 (
+			eventbox :cursor "pointer"
+					    :onclick "eww open --toggle nc"
+			(box
+				(box :style "background-image: url('images/NixOS.png');"
+					    :class "icons"
+					    :valign "center"
+				(label :text "${notifications-total}" :class "notification-badge" :yalign "0.5" :xalign "1" :tooltip "Notifications")
+					)
+			)
+		 )
+	)
+)
+
+(defwidget notification-card [?class summary body image ?SL ?M ?L ?R application]
+  (eventbox :onmiddleclick M
+    :onclick L
+    :onrightclick R
+    :class "notification-card-eventbox ${class}"
+    (box :space-evenly false :orientation "v" :class "notification-card-surround ${class}"
+      (box :space-evenly "true" :orientation "h" :class "notification-card-header-box"
+          (label :class "${class} notification-app-name" :text "${application}" :halign "center")
+          (button :onclick "~/.config/dunst/logger.sh rm_id ${SL}"
+          :class "notification-card-notify-close" :halign "end"
+          (label :class "notification-card-notify-close" :text "󰅙 " :xalign "0.5" :tooltip "Remove this notification.")))
+      (box :space-evenly "false" :orientation "h"
+      (box :class "notification-image" :style "background-image: url(\"${image}\");")
+      (box :orientation "vertical"
+        :class "${class}"
+        :space-evenly false
+        :hexpand true
+        :class "notification-card-box"
+      
+        (box :space-evenly false
+          (label :limit-width 25
+            :wrap true
+            :text summary
+            :class "notification-summary ${class}"
+            :halign "start"
+          :hexpand true))
+        (label :limit-width 30
+          :wrap true
+          :text body
+          :halign "start"
+        :class "notification-body ${class}"))))))
+
+(defwidget notification-center []
+	(box :class "notifications-box" :space-evenly "false" :orientation "v"
+    (box :orientation "v"
+      :space-evenly "false"
+      :class "notification-layout-box"
+      (box :space-evenly "false"
+        :class "notification-headers"
+        (label :text "Notifications"
+          :class "notification-headers-label"
+          :halign "center"
 				)
-		;  )
+			)
+      (literal :content notifications-cards :class "notification-literal")
+			; (scroll :height 600 :vscroll true (box :orientation "vertical" :class "notification-scroll-box" :spacing 20 :space-evenly false  
+			; (notification-card :class "notification-card notification-card-LOW notification-card-notify-send" :SL "82" :L "dunstctl history-pop 82" :body "low test 3" :summary "Test message" :image "/nix/store/is6p4kj6pnrns9k99gwkjbm3dbahm95b-papirus-icon-theme-20240501/share/icons/Papirus-Dark/128x128/apps/telegram.svg" :application "notify-send")  
+			; (notification-card :class "notification-card notification-card-NORMAL notification-card-notify-send" :SL "81" :L "dunstctl history-pop 81" :body "normal test 2" :summary "Test message" :image "/nix/store/is6p4kj6pnrns9k99gwkjbm3dbahm95b-papirus-icon-theme-20240501/share/icons/Papirus-Dark/128x128/apps/telegram.svg" :application "notify-send")  
+			; (notification-card :class "notification-card notification-card-CRITICAL notification-card-notify-send" :SL "80" :L "dunstctl history-pop 80" :body "critical test 1" :summary "Test message" :image "/nix/store/is6p4kj6pnrns9k99gwkjbm3dbahm95b-papirus-icon-theme-20240501/share/icons/Papirus-Dark/128x128/apps/telegram.svg" :application "notify-send") ))
+
+      (button :onclick "~/.config/dunst/logger.sh clear" :halign "end" :class "notification-headers-clear" "Clear All" )
+		)
 	)
 )
 
@@ -492,3 +555,11 @@ capacity < 60 ? sixty :
 	:wm-ignore false
 (allbars))
 
+(defwindow nc
+	:windowtype "normal"
+  :wm-ignore true
+  :monitor 0
+	:halign "center"
+  :geometry (geometry :anchor "top left" :y "5%" :x "5%")
+(notification-center)
+)

@@ -6,6 +6,8 @@
 ![notifications and status bar](./screenshots/3.png)
 ![powermenu](./screenshots/4.png)
 ![lockscreen](./screenshots/5.png)
+![notification center](./screenshots/6.png)
+![empty notification center](./screenshots/7.png)
 
 # Installation steps
 

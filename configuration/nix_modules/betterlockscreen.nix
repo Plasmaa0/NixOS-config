@@ -4,10 +4,29 @@ let
   c = config.lib.stylix.colors;
 in 
 {
-  services.betterlockscreen = {
+  # services.betterlockscreen = {
+  #   enable = true;
+  #   inactiveInterval = 15; # 15 minutes
+  #   arguments = [ " --show-layout" ];
+  # };
+  # xidlehook --not-when-audio --not-when-fullscreen --detect-sleep --timer 600 "light -S 40" "light -I" --timer 120 "$LOCK_COMMAND" "light -I" --timer 60 "systemctl suspend" "light -I"
+  services.screen-locker = {
     enable = true;
-    inactiveInterval = 15; # 15 minutes
-    arguments = [ " --show-layout" ];
+    inactiveInterval = 15; # minutes
+    lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen --lock --show-layout";
+    xautolock = {
+      enable = true;
+      detectSleep = true;
+      extraOptions = [
+        # according to manual
+        # -corners xxxx       : corner actions (0, +, -) in this order:
+        #                       topleft topright bottomleft bottomright
+        " -corners '----'" # put your cursor in one of corners of the screen to prevent locking
+      ];
+    };
+    xss-lock.extraOptions = [
+      " -n ${pkgs.xss-lock}/share/doc/xss-lock/dim-screen.sh"
+    ];
   };
 
   # services.logind.extraConfig = ''
