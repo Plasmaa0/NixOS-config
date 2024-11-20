@@ -1,4 +1,42 @@
 @import 'colors';
+/* for testing purposes */
+/* $bg: #272822; */
+/* $bg-alt: #383830; */
+/* $active: #49483e; */
+/* $borderbg: #f5f4f1; */
+/* $fg: #f8f8f2; */
+/* $urgent: #cc6633; */
+/* $selected: #a6e22e; */
+/* $highlight: #f92672; */
+
+/* $critical_frame_color: #f92672; */
+/* $critical_background: #cc6633; */
+/* $critical_foreground: #272822; */
+
+/* $normal_background: #a6e22e; */
+/* $normal_foreground: #383830; */
+/* $normal_frame_color: #a6e22e; */
+
+/* $low_frame_color: #f8f8f2; */
+/* $low_foreground: #f5f4f1; */
+/* $low_background: #383830; */
+
+/* $base00:#272822; */
+/* $base01:#383830; */
+/* $base02:#49483e; */
+/* $base03:#75715e; */
+/* $base04:#a59f85; */
+/* $base05:#f8f8f2; */
+/* $base06:#f5f4f1; */
+/* $base07:#f9f8f5; */
+/* $base08:#f92672; */
+/* $base09:#fd971f; */
+/* $base0A:#f4bf75; */
+/* $base0B:#a6e22e; */
+/* $base0C:#a1efe4; */
+/* $base0D:#66d9ef; */
+/* $base0E:#ae81ff; */
+/* $base0F:#cc6633; */
 
 // Global //
 * {
@@ -190,4 +228,156 @@ tooltip {
   background-color: rgb(25, 39, 34);
   min-width: 10px;
   min-height: 10px;
+}
+
+$N_TITLE: 24pt;
+$N_APPNAME: 20pt;
+$N_SUMMARY: 18pt;
+$N_BODY: 16pt;
+$N_CLEAR: 18pt;
+
+.notifications-box{
+  background-color: $bg;
+}
+
+/* .notifications-layout-box{ */
+  /* padding: 50px; */
+  /* margin: 50px; */
+/* } */
+.notification-scroll-box {
+  margin: 10px 16px 0px 16px;
+}
+
+.notification-headers-label{
+  color: $fg;
+  font-size: $N_TITLE;
+  font-weight: bold;
+  font-family: Iosevka;
+  text-shadow: 0px 0px 5px #000000;
+  padding: 0px 160px 0px 160px;
+}
+
+.notification-literal{
+}
+
+.notification-card-eventbox{
+  background-color: $bg-alt;
+  border-radius: 15px;
+}
+
+.notification-image{
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-width: 60px;
+  border-radius: 10px;
+  margin: 0px 0px 10px 10px;
+}
+
+.notification-headers-clear{
+  margin: 10px 16px 16px 0px;
+  background-color: $bg-alt;
+  border-radius: 15px;
+  padding: 15px 15px 13px 15px;
+  font-size: $N_CLEAR;
+  font-weight: bold;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s;
+}
+.notification-headers-clear:hover {
+  background-color: $selected;
+}
+
+.notification-card-header-box{
+  background-color: $bg-alt;
+  border-radius: 15px 15px 0px 0px;
+  padding: 2px 20px 2px 20px;
+  /* class */
+}
+.notification-card-notify-close{
+  padding: 2px 0px 2px 3px;
+  border-radius: 50px 50px 50px 50px;
+  color: $highlight;
+  transition: background-color 0.2s;
+  background-color:rgba(0, 0, 0, 0.1);
+}
+.notification-card-notify-close:hover{
+  background-color: $bg;
+}
+.notifications-empty-label{
+  color: $fg;
+  font-size: $N_SUMMARY;
+}
+
+.notification-app-name{
+  font-size: $N_APPNAME;
+  font-weight: bold;
+  color: $fg;
+}
+.notification-body{
+  font-size: $N_BODY;
+  color: $fg;
+}
+.notification-summary{
+  font-weight: bold;
+  font-size: $N_SUMMARY;
+  padding-bottom: 2px;
+  color: $fg;
+}
+.notification-card-box{
+  padding: 0px;
+}
+.notification-card{
+  color: $fg;
+}
+.notification-card-surround{
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 5px;
+}
+.notification-card-LOW>*, .notification-card-NORMAL>*, .notification-card-CRITICAL>*, .notification-card-OTHER>*{
+  background-color: unset;
+}
+
+/* LOW */
+.notification-card-LOW, .notification-app-name.notification-card-LOW{
+  color: $low_foreground;
+  background-color: $low_background;
+}
+.notification-card-surround.notification-card-LOW{
+  border-color: $low_frame_color;
+}
+/* NORMAL */
+.notification-card-NORMAL, .notification-app-name.notification-card-NORMAL{
+  color: $normal_foreground;
+  background-color: $normal_background;
+}
+.notification-card-surround.notification-card-NORMAL{
+  border-color: $normal_frame_color;
+}
+/* CRITICAL */
+.notification-card-CRITICAL, .notification-app-name.notification-card-CRITICAL{
+  color: $critical_foreground;
+  background-color: $critical_background;
+}
+.notification-card-surround.notification-card-CRITICAL{
+  border-color: $critical_frame_color;
+}
+/* OTHER=LOW */
+.notification-card-OTHER, .notification-app-name.notification-card-OTHER{
+  color: $low_foreground;
+  background-color: $low_background;
+}
+.notification-card-surround.notification-card-OTHER{
+  border-color: $low_frame_color;
+}
+
+.notification-badge{
+  background: $normal_background;
+  font-size: 1rem;
+  margin: 10px 5px 0px 15px;
+  border-radius: 100%;
+  min-width: 10px;
+  color: $normal_foreground;
+  border:1px solid $normal_background;
 }

@@ -13,8 +13,9 @@
 
   home.packages = (with pkgs; [
     alacritty
-    fish eza bat starship ripgrep fzf fastfetch yad entr cloc
+    fish eza bat starship ripgrep fzf fastfetch yad entr cloc moreutils speedtest-cli
     telegram-desktop
+    betterlockscreen
     spaceFM
     vscode
     glow
