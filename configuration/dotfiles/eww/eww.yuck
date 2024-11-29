@@ -54,8 +54,9 @@
 			(box
 				(box :style "background-image: url('images/NixOS.png');"
 					    :class "icons"
+							:space-evenly true
 					    :valign "center"
-				(label :text "${notifications-total}" :class "notification-badge" :yalign "0.5" :xalign "1" :tooltip "Notifications")
+				(label :text "${notifications-total}" :class "notification-badge" :yalign "0.5" :xalign "0.5" :tooltip "Notifications")
 					)
 			)
 		 )
@@ -336,19 +337,7 @@ capacity < 60 ? sixty :
 		  :space-evenly "false"
 		  :orientation "h"
 		  :halign "center"
-		  (label :text "󰥻 ${lang_script}")
-		; (revealer
-		;   :reveal en_reveal
-		;   :transition "slidedown"
-		;   :duration "500ms"
-		;   (label
-		; 	:text "󰥻 en" ))
-		; (revealer
-		;   :reveal ru_reveal
-		;   :transition "slidedown"
-		;   :duration "500ms"
-		;   (label
-		; 	:text "󰥻 ru" ))
+		  (label :text "󰥻 ${lang_script}" :tooltip "Language")
 		)))
 
 ;; system
@@ -366,6 +355,10 @@ capacity < 60 ? sixty :
 
 		(lang)
 
+		(eventbox
+				:cursor "pointer"
+				:onclick "arandr &"
+				:tooltip "Brightness. Click to open arandr"
 		 (box :orientation "h"
 				:spacing 3
 				:valign "center"
@@ -383,7 +376,7 @@ capacity < 60 ? sixty :
 						:valign "center"
 						:text "${brightness_value}%"
 				)
-			)
+			))
 		 
 				(eventbox :cursor "pointer"
 				 :onscroll "scripts/playerctl.sh --volume-{} &"
@@ -432,22 +425,22 @@ capacity < 60 ? sixty :
 		; 		 )
 		;  ))
 
-		;  (eventbox :cursor "pointer"
-		;  (button :onclick "OpenApps --usercard &"
-		; 		 (box :orientation "h"
-		; 			  :spacing 3
-		; 			  :valign "center"
-		; 			  :halign "center"
-		; 			  :space-evenly "false"
-		; 			  (box :style "background-image: url('${IMAGE}');"
-		; 				   :class "icons")
-		; 			  (label :class "infotext"
-		; 					 :halign "start"
-		; 					 :valign "center"
-		; 					 :text USER
-		; 			  )
-		; 		 )
-		;  ))
+		 (eventbox :cursor "pointer" :tooltip "Toggle theme"
+		 (button :onclick "toggle-theme &"
+				 (box :orientation "h"
+					  :spacing 3
+					  :valign "center"
+					  :halign "center"
+					  :space-evenly "false"
+					  (box :style "background-image: url('${IMAGE}');"
+						   :class "icons")
+					  ; (label :class "infotext"
+							;  :halign "start"
+							;  :valign "center"
+							;  :text USER
+					  ; )
+				 )
+		 ))
 
 		;  (eventbox :cursor "pointer"
 		;  (button :onclick "~/.config/rofi/powermenu/type-2/powermenu.sh &"
