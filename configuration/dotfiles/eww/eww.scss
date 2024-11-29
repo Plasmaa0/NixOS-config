@@ -38,6 +38,9 @@
 /* $base0E:#ae81ff; */
 /* $base0F:#cc6633; */
 
+/* $yellow:$base0A; */
+/* $blue:$base0D; */
+
 // Global //
 * {
   all: unset;
@@ -211,21 +214,25 @@ tooltip {
 .focused-workspace {
   background-color: $selected;
 }
+.focused-workspace>*{
+  color: $bg-alt;
+}
 
 .urgent-workspace {
+  color: $bg-alt;
   background-color: $urgent;
 }
 
 .brightness_progress {
-  color: #f8e026;
-  background-color: rgb(25, 39, 34);
+  color: $yellow;
+  background-color: $bg-alt;
   min-width: 10px;
   min-height: 10px;
 }
 
 .volume_progress {
-  color: rgb(69, 48, 230);
-  background-color: rgb(25, 39, 34);
+  color: $blue;
+  background-color: $bg-alt;
   min-width: 10px;
   min-height: 10px;
 }
@@ -373,10 +380,11 @@ $N_CLEAR: 18pt;
 }
 
 .notification-badge{
-  background: $normal_background;
-  font-size: 1rem;
-  margin: 10px 5px 0px 15px;
-  border-radius: 100%;
+  background: rgba($normal_background, 0.8);
+  font-size: 0.8rem;
+  margin: 10px 0px 0px 15px;
+  padding: 0px 2px 0px 2px;
+  border-radius: 10px 10px 10px 10px;
   min-width: 10px;
   color: $normal_foreground;
   border:1px solid $normal_background;

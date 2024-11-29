@@ -13,7 +13,8 @@ DUNST_ERR="${config.xdg.configHome}/dunst/err.log"
 
 handle_dunst_signal(){
   case "$DUNST_URGENCY" in
-    "LOW"|"NORMAL"|"CRITICAL") urgency="$DUNST_URGENCY";;
+    "LOW") exit;;
+    "NORMAL"|"CRITICAL") urgency="$DUNST_URGENCY";;
     *) urgency="OTHER";;
   esac
 
