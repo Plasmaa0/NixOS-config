@@ -52,5 +52,8 @@
     $base0D:#${config.lib.stylix.colors.base0D};
     $base0E:#${config.lib.stylix.colors.base0E};
     $base0F:#${config.lib.stylix.colors.base0F};
+
+    $yellow:#${config.lib.stylix.colors.base0A};
+    $blue:#${config.lib.stylix.colors.base0D};
   '';
 }

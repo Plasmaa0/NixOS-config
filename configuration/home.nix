@@ -13,7 +13,7 @@
 
   home.packages = (with pkgs; [
     alacritty
-    fish eza bat starship ripgrep fzf fastfetch yad entr cloc moreutils speedtest-cli
+    fish eza bat starship ripgrep fzf fastfetch yad fd entr cloc moreutils speedtest-cli
     telegram-desktop
     betterlockscreen
     spaceFM
@@ -35,6 +35,8 @@
     gparted
     # yandex-music
     texlive.combined.scheme-full texstudio
+    libreoffice
+    xarchiver
     # cider
     # i3wsr # i3 workspace names
     ((pkgs.python3.override { enableOptimizations = true; reproducibleBuild = false;}).withPackages (ppkgs: [
@@ -52,7 +54,7 @@
   services.copyq.enable = true;
   services.poweralertd.enable = true; # notifications about "power"-related things
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "${pkgs.helix}/bin/hx";
     # SUDO_EDITOR="code --wait";
   };
 
