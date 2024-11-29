@@ -2,6 +2,7 @@
 # Hide welcome message
 set fish_greeting
 set VIRTUAL_ENV_DISABLE_PROMPT 1
+export MANROFFOPT="-c"
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 ## Export variable need for qt-theme
@@ -104,7 +105,7 @@ function copy
     end
 end
 
-export EDITOR=/usr/bin/helix
+export EDITOR=hx
 ## Useful aliases
 # Replace ls with exa
 alias ls='exa -al --color=always --group-directories-first --icons' # preferred listing
