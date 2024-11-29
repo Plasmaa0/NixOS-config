@@ -43,8 +43,8 @@ in
 "ui.background" = { bg = "base0" }
 
 # status bars, panels, modals, autocompletion
-"ui.statusline" = { fg = "base8", bg = "base4" }
-"ui.statusline.inactive" = { fg = "base8", bg = "base8x0c" }
+"ui.statusline" = { fg = "base8", bg = "base2" }
+"ui.statusline.inactive" = { fg = "base8", bg = "base1" }
 "ui.popup" = { bg = "base3" }
 "ui.window" = { bg = "base3" }
 "ui.help" = { fg = "base8", bg = "base3" }
@@ -74,7 +74,7 @@ in
 
 # base text, punctuation
 "ui.text" = { fg = "base8" }
-"punctuation" = "base6"
+"punctuation" = "base4"
 
 # classes, types, primitives
 "type" = "green"
