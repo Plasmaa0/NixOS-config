@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -11,6 +11,7 @@
     ];
 
 #  environment.pathToLink = ["/libexec"];
+  services.systemd-lock-handler.enable=true;
   services.xserver = {
     enable = true;
     dpi = 192;
@@ -18,14 +19,46 @@
   };
   services.pipewire.pulse.enable = true;
   services.displayManager.defaultSession = "none+i3";
-  services.xserver.displayManager.gdm = {
-    enable = true;
-    banner = 
-    ''
-      Hello!
-    '';
-  };
   
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+    greeters.slick = {
+      enable = true;
+      font = {
+        package = (pkgs.nerdfonts.override{fonts=["IosevkaTermSlab"];});
+        name = "IosevkaTermSlab";
+      };
+      iconTheme = {
+        package = pkgs.papirus-icon-theme;
+        name = "Papirus-Dark";
+      };
+      extraConfig = ''
+    [Greeter]
+        background="#699ad7"
+        logo="${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"
+        show-hostname=true
+        show-power=true
+        show-a11y=true
+        show-keyboard=true
+        show-clock=true
+        show-quit=true
+        xft-dpi=192
+      '';
+    };
+  };
+
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/etc/nixos";
+    flags = [
+      "--update-input"
+      "nixpkgs nixpkgs-stable home-manager styliix nixvim"
+      "-L" # print build logs
+    ];
+    dates = "daily";
+    randomizedDelaySec = "45min";
+    allowReboot = true;
+  };
   services.libinput = {
     enable = true;
     touchpad.naturalScrolling = true;
@@ -74,7 +107,14 @@
   environment.systemPackages = [
     pkgs.home-manager
     pkgs.vim
+    pkgs.vial
   ];
+  services.udev.packages = with pkgs; [
+    vial
+  ];
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -95,12 +135,19 @@
     };
   };
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+
   nix.optimise.automatic = true;
   nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 7d";
   };
 
   # List services that you want to enable:
