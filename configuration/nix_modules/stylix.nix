@@ -1,5 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  activation-script = {
+    reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run --quiet ${pkgs.i3}/bin/i3-msg reload || true
+      run --quiet ${pkgs.i3}/bin/i3-msg restart || true
+      run --quiet ${pkgs.i3}/bin/i3-msg restart || true
+      run --quiet ${pkgs.procps}/bin/pkill dunst || true
+      run --quiet ${pkgs.libnotify}/bin/notify-send "Dunst" "Dunst reloaded successfully" || true
+      run --quiet ${pkgs.procps}/bin/pkill -USR1 hx || true
+    '';
+  };
+in
 {
   stylix.enable = true;
   stylix.autoEnable = true;
@@ -9,7 +21,28 @@
   stylix.targets.helix.enable = false;
   stylix.imageScalingMode = "fill";
   stylix.polarity = "dark";
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/monokai.yaml";  
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/monokai.yaml";
+  home.packages = with pkgs; [
+    (writeShellApplication {
+      name = "toggle-theme";
+      runtimeInputs = with pkgs; [ home-manager coreutils brightnessctl gnugrep ripgrep ];
+      text =
+        ''
+        brightnessctl -s
+        brightnessctl -q set 0% || true
+        "$(home-manager generations | head -1 | rg -o '/[^ ]*')"/specialisation/light-theme/activate || "$(home-manager generations | head -2 | tail -1 | rg -o '/[^ ]*')"/activate
+        brightnessctl -r
+        '';
+    })
+  ];
+  home.activation = activation-script;
+  specialisation.light-theme.configuration = {
+      stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";  
+      stylix.image = lib.mkForce ./../wallpapers/desert_day.jpg;
+      stylix.polarity = lib.mkForce "light";
+      home.activation = activation-script;
+  };
+  # home-manager generations | head -1 | tr " " "\n" | grep "/nix.*
   # see also common/fonts.nix
   stylix.fonts = {
     serif = {
