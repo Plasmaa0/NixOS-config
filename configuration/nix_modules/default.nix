@@ -18,5 +18,6 @@
     ./fastfetch.nix
     ./nixvim.nix
     ./nnn.nix
+    ./qutebrowser.nix
  ];
 }
