@@ -50,11 +50,22 @@
   # ++ (with pkgs_stable; [
   #   # wezterm
   # ]);
-  services.flameshot.enable = true;
+  services.flameshot = {
+    enable = true;
+    settings = {
+      General = {
+        uiColor = "#${config.lib.stylix.colors.base02}";  
+        contrastUiColor = "#${config.lib.stylix.colors.base07}";  
+        contrastOpacity = 180;
+      };
+    };
+  };
   services.copyq.enable = true;
   services.poweralertd.enable = true; # notifications about "power"-related things
   home.sessionVariables = {
     EDITOR = "${pkgs.helix}/bin/hx";
+    BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
+    DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
     # SUDO_EDITOR="code --wait";
   };
 
