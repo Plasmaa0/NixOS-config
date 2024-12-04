@@ -41,7 +41,7 @@ handle_dunst_signal(){
   #   ICON_PATH=$HOME/.cache/temp-$SPOTIFY_TITLE.png
   # fi
 
-  ${pkgs.coreutils}/bin/echo '(notification-card :class "notification-card notification-card-'$urgency' notification-card-'$DUNST_APP_NAME'" :SL "'$DUNST_ID'" :L "dunstctl history-pop '$DUNST_ID'" :body "'$body'" :summary "'$summary'" :image "'$ICON_PATH'" :application "'$DUNST_APP_NAME'")' \
+  ${pkgs.coreutils}/bin/echo '(notification-card :class "notification-card notification-card-'$urgency' notification-card-'$DUNST_APP_NAME'" :SL "'$DUNST_ID'" :L "dunstctl history-pop '$DUNST_ID'" :body "'$body'" :summary "'$summary'" :image "'$ICON_PATH'" :application "'$glyph' '$DUNST_APP_NAME'")' \
     | ${pkgs.coreutils}/bin/cat - "$DUNST_LOG" \
     | ${pkgs.moreutils}/bin/sponge "$DUNST_LOG"
 }
