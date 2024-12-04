@@ -14,13 +14,13 @@
   home.packages = (with pkgs; [
     alacritty
     fish eza bat starship ripgrep fzf fastfetch yad fd entr cloc moreutils speedtest-cli
+    fishPlugins.done jump
     telegram-desktop
     betterlockscreen
     spaceFM
     vscode
     glow
     (btop.override { cudaSupport = true; })
-    chromium
     networkmanagerapplet
     upower poweralertd
     xorg.xbacklight brightnessctl
