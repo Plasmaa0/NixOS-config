@@ -41,9 +41,13 @@
 /* $yellow:$base0A; */
 /* $blue:$base0D; */
 
+$regular: 0.6rem;
+$small: 0.4rem;
+
 // Global //
 * {
   all: unset;
+  /* border: 1px solid cyan; */
   font-family: "JetBrainsMono NF";
   color: $fg;
 }
@@ -62,23 +66,23 @@ tooltip {
 // }
 
 .allbars {
-  margin: 0.2rem 1rem;
-  // padding-right: 5rem; // !!!!!!!!!!!!!!!!!!!! if bar exceeds right border of screen change this
+  margin: 0.5*$small $regular;
 }
 
 .mainbars {
   background-color: $bg;
   border: 1px solid $borderbg;
   border-radius: 12px;
-  padding: 0.2rem 0.8rem;
+  padding: 0.5*$small $regular;
   box-shadow: 3px 3px 5px 0px $bg-alt;
 }
 
 .icons {
   background-repeat: no-repeat;
-  background-size: 24px;
-  min-height: 24px;
-  min-width: 24px;
+  /* margin: 0 2*$regular 0 0; */
+  background-size: 2*$regular;
+  min-height: 2*$regular;
+  min-width: 2*$regular;
 }
 
 .icon-power {
@@ -92,15 +96,15 @@ tooltip {
   background-color: $bg-alt;
   border-radius: 16px;
   padding: 0 5px;
-  font-size: 0.813rem;
-  font-weight: bold;
+  font-size: 1.5*$regular;
+  /* font-weight: bold; */
 }
 
 .infotext-pac {
   background-color: $urgent;
   border-radius: 16px;
   padding: 0 5px;
-  font-size: 0.813rem;
+  font-size: $regular;
   font-weight: bold;
 }
 
@@ -108,102 +112,62 @@ tooltip {
 
 .album_art {
   background-repeat: no-repeat;
-  background-size: 34px;
-  min-height: 34px;
-  min-width: 34px;
+  background-size: 2*$regular;
+  min-height: 2*$regular;
+  min-width: 2*$regular;
   border-radius: 8px;
 }
 
 .song-info {
-  min-width: 150px;
+  min-width: 6rem;
 }
 
 .song {
-  font-size: 0.8rem;
+  font-size: $regular;
   font-weight: bold;
 }
 
 .artist {
-  font-size: 0.7rem;
+  font-size: 0.8*$regular;
   font-weight: bold;
 }
 
 .player-toggle {
   font-family: "Material Design Icons Desktop";
-  font-size: 1.6rem;
+  font-size: 2*$regular;
 }
 
 .player-previous,
 .player-next {
   font-family: "Material Design Icons Desktop";
-  font-size: 1.2rem;
+  font-size: 1.5*$regular;
 }
 
 //----- Clock -----//
 
 .time {
-  font-size: 0.8rem;
+  font-size: $regular;
   font-weight: bold;
 }
 
 .date {
-  font-size: 0.7rem;
-  font-weight: bold;
-}
-
-.weathericon {
-  font-family: "Font Awesome 6 Free Solid";
-  font-size: 1.4rem;
-  font-weight: normal;
-}
-
-.weathertemp {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.audio-box {
-  background-color: $bg;
-  border: 1px solid $borderbg;
-  border-radius: 12px;
-  padding: 0.5rem 0.8rem;
-}
-
-.speaker_icon {
-  background-size: 55px;
-  background-image: url("images/volume.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 55px;
-  min-width: 55px;
-  margin: 0 9px 0 0;
-  border-radius: 12px;
-}
-
-.speaker_bar scale trough highlight {
-  background-color: #67d4f1;
-  border-radius: 24px;
-}
-
-.speaker_bar scale trough {
-  background-color: $bg;
-  border: 3px solid $borderbg;
-  border-radius: 24px;
-  min-height: 13px;
-  min-width: 120px;
+  font-size: 0.8*$regular;
 }
 
 .workspaces {
+  font-size: 1.5*$regular;
   background-color: $bg;
-  border: 1px solid $borderbg;
-  padding: 8px 10px;
-  border-radius: 15px;
+  /* border: 1px solid $borderbg; */
+  /* padding: 2*$small 1.5*$small; */
+  /* border-radius: 15px; */
 }
 
 .workspaces button, .power-buttons button {
+  /* border: 1px solid cyan; */
+  /* background-color: $yellow; */
   padding: 0px 5px;
   border-radius: 15px;
-  margin: 0px 2px;
+  margin: .5*$small 0.2*$small;
   transition: all 0.15s ease-out;
 }
 
@@ -213,6 +177,7 @@ tooltip {
 
 .focused-workspace {
   background-color: $selected;
+  font-weight: bold;
 }
 .focused-workspace>*{
   color: $bg-alt;
@@ -226,31 +191,29 @@ tooltip {
 .brightness_progress {
   color: $yellow;
   background-color: $bg-alt;
-  min-width: 10px;
-  min-height: 10px;
 }
 
 .volume_progress {
   color: $blue;
   background-color: $bg-alt;
-  min-width: 10px;
-  min-height: 10px;
 }
 
-$N_TITLE: 24pt;
-$N_APPNAME: 20pt;
-$N_SUMMARY: 18pt;
-$N_BODY: 16pt;
-$N_CLEAR: 18pt;
+$N_TITLE: 2*$regular;
+$N_APPNAME: 1.8*$regular;
+$N_SUMMARY: 1.5*$regular;
+$N_BODY: 2*$small;
+$N_CLEAR: 1.5*$regular;
 
 .notifications-box{
   background-color: $bg;
+  border-radius: 2rem;
 }
 
 /* .notifications-layout-box{ */
   /* padding: 50px; */
   /* margin: 50px; */
 /* } */
+
 .notification-scroll-box {
   margin: 10px 16px 0px 16px;
 }
@@ -260,7 +223,7 @@ $N_CLEAR: 18pt;
   font-size: $N_TITLE;
   font-weight: bold;
   font-family: Iosevka;
-  text-shadow: 0px 0px 5px #000000;
+  text-shadow: 0px 0px 2px #000000;
   padding: 0px 160px 0px 160px;
 }
 
@@ -338,9 +301,9 @@ $N_CLEAR: 18pt;
   color: $fg;
 }
 .notification-card-surround{
-  border-radius: 15px;
+  border-radius: 1rem;
   border-style: solid;
-  border-width: 5px;
+  border-width: 0.25rem;
 }
 .notification-card-LOW>*, .notification-card-NORMAL>*, .notification-card-CRITICAL>*, .notification-card-OTHER>*{
   background-color: unset;
@@ -380,12 +343,12 @@ $N_CLEAR: 18pt;
 }
 
 .notification-badge{
-  background: rgba($normal_background, 0.8);
-  font-size: 0.8rem;
-  margin: 10px 0px 0px 15px;
-  padding: 0px 2px 0px 2px;
-  border-radius: 10px 10px 10px 10px;
-  min-width: 10px;
-  color: $normal_foreground;
-  border:1px solid $normal_background;
+  background: rgba($active, 0.8);
+  font-size: 1.3*$regular;
+  margin: 0 0 0 $small;
+  /* padding: 0px 2px 0px 2px; */
+  /* border-radius: 10px 10px 10px 10px; */
+  /* min-width: 10px; */
+  /* color: $normal_foreground; */
+  /* border:1px solid $normal_background; */
 }

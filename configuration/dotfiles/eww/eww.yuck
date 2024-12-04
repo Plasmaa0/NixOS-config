@@ -48,16 +48,19 @@
 ;; Launcher ;;
 (defwidget launcher []
 	(box :class "mainbars"
+			(box
+					:space-evenly false
+				(box :style "background-image: url('images/NixOS.png');"
+					    :class "icons"
+					    :valign "center"
+					)
 		 (
 			eventbox :cursor "pointer"
 					    :onclick "eww open --toggle nc"
-			(box
-				(box :style "background-image: url('images/NixOS.png');"
-					    :class "icons"
-							:space-evenly true
-					    :valign "center"
-				(label :text "${notifications-total}" :class "notification-badge" :yalign "0.5" :xalign "0.5" :tooltip "Notifications")
-					)
+				(label :text "🔔${notifications-total}" 
+						:halign "center"
+						:valign "center"
+				:class "infotext notification-badge" :tooltip "Notifications")
 			)
 		 )
 	)
@@ -70,26 +73,29 @@
     :class "notification-card-eventbox ${class}"
     (box :space-evenly false :orientation "v" :class "notification-card-surround ${class}"
       (box :space-evenly "true" :orientation "h" :class "notification-card-header-box"
-          (label :class "${class} notification-app-name" :text "${application}" :halign "center")
+          (label :class "${class} notification-app-name" :text "${application}" :halign "start")
           (button :onclick "~/.config/dunst/logger.sh rm_id ${SL}"
           :class "notification-card-notify-close" :halign "end"
           (label :class "notification-card-notify-close" :text "󰅙 " :xalign "0.5" :tooltip "Remove this notification.")))
       (box :space-evenly "false" :orientation "h"
-      (box :class "notification-image" :style "background-image: url(\"${image}\");")
+      ; (box :class "notification-image" :style "background-image: url(\"${image}\");")
+			(image
+				:icon application
+				:icon-size "dialog"
+			)
       (box :orientation "vertical"
         :class "${class}"
         :space-evenly false
-        :hexpand true
         :class "notification-card-box"
       
         (box :space-evenly false
-          (label :limit-width 25
+          (label
             :wrap true
             :text summary
             :class "notification-summary ${class}"
             :halign "start"
           :hexpand true))
-        (label :limit-width 30
+        (label
           :wrap true
           :text body
           :halign "start"
@@ -102,7 +108,7 @@
       :class "notification-layout-box"
       (box :space-evenly "false"
         :class "notification-headers"
-        (label :text "Notifications"
+        (label :text "${notifications-total} Notifications"
           :class "notification-headers-label"
           :halign "center"
 				)
@@ -121,7 +127,7 @@
 ;; Workspaces Widgets ;;
 (defwidget workspaces [active-workspace focused-workspace urgent-workspace]
 	(box
-    :class "workspaces"
+    :class "mainbars workspaces"
     :orientation "h"
 		:space-evenly true
     :halign "start"
@@ -171,41 +177,41 @@
     }
     :onclick "i3-msg workspace 5" 5)
 
-    (button
-    :class {
-      arraylength(search(focused-workspace, "6")) > 0 ? "focused-workspace" : 
-      arraylength(search(urgent-workspace, "6")) > 0 ? "urgent-workspace" : 
-      arraylength(search(active-workspace, "6")) > 0 ? "active-workspace" : 
-      "regular"
-    }
-    :onclick "i3-msg workspace 6" 6)
+    ; (button
+    ; :class {
+    ;   arraylength(search(focused-workspace, "6")) > 0 ? "focused-workspace" : 
+    ;   arraylength(search(urgent-workspace, "6")) > 0 ? "urgent-workspace" : 
+    ;   arraylength(search(active-workspace, "6")) > 0 ? "active-workspace" : 
+    ;   "regular"
+    ; }
+    ; :onclick "i3-msg workspace 6" 6)
 
-    (button
-    :class {
-      arraylength(search(focused-workspace, "7")) > 0 ? "focused-workspace" : 
-      arraylength(search(urgent-workspace, "7")) > 0 ? "urgent-workspace" : 
-      arraylength(search(active-workspace, "7")) > 0 ? "active-workspace" : 
-      "regular"
-    }
-    :onclick "i3-msg workspace 7" 7)
+    ; (button
+    ; :class {
+    ;   arraylength(search(focused-workspace, "7")) > 0 ? "focused-workspace" : 
+    ;   arraylength(search(urgent-workspace, "7")) > 0 ? "urgent-workspace" : 
+    ;   arraylength(search(active-workspace, "7")) > 0 ? "active-workspace" : 
+    ;   "regular"
+    ; }
+    ; :onclick "i3-msg workspace 7" 7)
 
-    (button
-    :class {
-      arraylength(search(focused-workspace, "8")) > 0 ? "focused-workspace" : 
-      arraylength(search(urgent-workspace, "8")) > 0 ? "urgent-workspace" : 
-      arraylength(search(active-workspace, "8")) > 0 ? "active-workspace" : 
-      "regular"
-    }
-    :onclick "i3-msg workspace 8" 8)
+    ; (button
+    ; :class {
+    ;   arraylength(search(focused-workspace, "8")) > 0 ? "focused-workspace" : 
+    ;   arraylength(search(urgent-workspace, "8")) > 0 ? "urgent-workspace" : 
+    ;   arraylength(search(active-workspace, "8")) > 0 ? "active-workspace" : 
+    ;   "regular"
+    ; }
+    ; :onclick "i3-msg workspace 8" 8)
 
-    (button
-    :class {
-      arraylength(search(focused-workspace, "9")) > 0 ? "focused-workspace" : 
-      arraylength(search(urgent-workspace, "9")) > 0 ? "urgent-workspace" : 
-      arraylength(search(active-workspace, "9")) > 0 ? "active-workspace" : 
-      "regular"
-    }
-    :onclick "i3-msg workspace 9" 9)
+    ; (button
+    ; :class {
+    ;   arraylength(search(focused-workspace, "9")) > 0 ? "focused-workspace" : 
+    ;   arraylength(search(urgent-workspace, "9")) > 0 ? "urgent-workspace" : 
+    ;   arraylength(search(active-workspace, "9")) > 0 ? "active-workspace" : 
+    ;   "regular"
+    ; }
+    ; :onclick "i3-msg workspace 9" 9)
   )
 )
 
@@ -274,15 +280,13 @@ capacity < 60 ? sixty :
 (defwidget music []
 	(box :class "mainbars"
 		 :spacing 10
-		 :space-evenly "false"
+		 :space-evenly false
 
 		 (box :class "album_art"
 			  :valign "center"
 			  :halign "start"
 			  :style "background-image: url('${COVER}');")
 
-		 (eventbox 
-		;  (button :onclick "OpenApps --player &"
 			(box :orientation "v"
 				:class "song-info"
 				:spacing 0
@@ -302,7 +306,6 @@ capacity < 60 ? sixty :
 						:limit-width 18
 						:text ARTIST)
 				)
-			)
 
 		 (box :spacing 8
 			  :valign "center"
@@ -349,7 +352,7 @@ capacity < 60 ? sixty :
 		 (systray
 			:class "systray"
 			:orientation "h"
-			:icon-size 24
+			:icon-size 20
 			:pack-direction "rtl"
 			)
 
@@ -469,8 +472,8 @@ capacity < 60 ? sixty :
 		 (box :orientation "v"
 			  :spacing 0
 			  :halign "start"
-			(label :class "time" :halign "start" :text TIME)
-			(label :class "date" :halign "start" :text DATE)
+			(label :class "time" :halign "start" :valign "center" :text TIME)
+			(label :class "date" :halign "start" :valign "center" :text DATE)
 		 )))
 	)
 )
@@ -481,7 +484,7 @@ capacity < 60 ? sixty :
 (defwidget left []
 	(box :halign "start"
 	     :spacing 15
-		 :halign "center"
+		 :halign "start"
 	     :valign "center"
 		 :space-evenly "false"
 (launcher)
@@ -497,37 +500,38 @@ capacity < 60 ? sixty :
 	(box :halign "center"
 		 :valign "center"
 		 :spacing 15
-		 :space-evenly "false"
+		 :space-evenly false
 (clock)))
 
 (defwidget right []
-	(box :space-evenly "false"
+	(box :space-evenly false
 		 :spacing 15
-		 :halign "center"
+		 :halign "end"
 		 :valign "center"
 (music)
 (system)
 ))
 
+; (defwidget left_middle []
+; 	(box 
+; 		 :space-evenly false
+; 		 :spacing 15
+; 		 :halign "center"
+; 		 :valign "center"
 
-(defwidget left_middle []
-	(box :class "allbars"
-		 :space-evenly "true"
-		 :spacing 60
-		 :halign "center"
-		 :valign "center"
-
-(left)
-(middle)
-))
+; (left)
+; (middle)
+; ))
 
 (defwidget allbars []
-	(box :class "allbars"
-		 :space-evenly "false"
-		 :spacing 15
-		 :halign "center"
-		 :valign "center"
-(left_middle)
+	(centerbox :class "allbars"
+		 ; :space-evenly false
+		 ; :spacing 15
+		 ; :halign "center"
+		 ; :valign "center"
+			:orientation "h"
+(left)
+(middle)
 (right)
 ))
 
