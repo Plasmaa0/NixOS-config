@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }: 
 let
   c = config.lib.stylix.colors;
+  icons_path = "${builtins.unsafeDiscardStringContext config.gtk.iconTheme.package}/share/icons/${builtins.unsafeDiscardStringContext config.gtk.iconTheme.name}/128x128";
 in 
 {
   services.dunst.enable = true;
@@ -30,7 +31,7 @@ handle_dunst_signal(){
 
   if [[ $DUNST_ICON_PATH == "" ]]
   then
-    ICON_PATH=${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}/128x128/apps/$DUNST_APP_NAME.svg
+    ICON_PATH=${icons_path}/apps/$DUNST_APP_NAME.svg
   else
     FIXED_ICON_PATH=$(${pkgs.coreutils}/bin/echo "''${DUNST_ICON_PATH}" | ${pkgs.gnused}/bin/sed 's/32x32/48x48/g')
     ICON_PATH=$FIXED_ICON_PATH
@@ -41,7 +42,7 @@ handle_dunst_signal(){
   #   ICON_PATH=$HOME/.cache/temp-$SPOTIFY_TITLE.png
   # fi
 
-  ${pkgs.coreutils}/bin/echo '(notification-card :class "notification-card notification-card-'$urgency' notification-card-'$DUNST_APP_NAME'" :SL "'$DUNST_ID'" :L "dunstctl history-pop '$DUNST_ID'" :body "'$body'" :summary "'$summary'" :image "'$ICON_PATH'" :application "'$glyph' '$DUNST_APP_NAME'")' \
+  ${pkgs.coreutils}/bin/echo '(notification-card :class "notification-card notification-card-'$urgency' notification-card-'$DUNST_APP_NAME'" :SL "'$DUNST_ID'" :L "dunstctl history-pop '$DUNST_ID'" :body "'$body'" :summary "'$glyph' '$summary'" :image "'$ICON_PATH'" :application "'$DUNST_APP_NAME'")' \
     | ${pkgs.coreutils}/bin/cat - "$DUNST_LOG" \
     | ${pkgs.moreutils}/bin/sponge "$DUNST_LOG"
 }
@@ -182,7 +183,7 @@ esac
     idle_threshold = 120
 
     # Font and typography settings
-    font = "Iosevka NerdFont"
+    font = "${config.stylix.fonts.serif.name}"
     alignment = "left"
     word_wrap = "yes"
 
@@ -220,8 +221,8 @@ esac
     # Scale larger icons down to this size, set to 0 to disable
     max_icon_size = 64
     icon_corner_radius = 5
-
-    icon_path = "/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/48x48/devices/:/usr/share/icons/Paper/48x48/apps/"
+    
+    icon_path = "${icons_path}/status/:${icons_path}/devices/:${icons_path}/apps/"
 
     history_length = 20
     sticky_history = "true"

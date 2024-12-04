@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  wallpaper_dark = ./../wallpapers/monokai.jpg;
-  wallpaper_light = ./../wallpapers/desert_day.jpg;
+  # wallpaper_dark = ./../wallpapers/monokai.jpg;
+  # wallpaper_light = ./../wallpapers/desert_day.jpg;
   activation-script = {
     reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${pkgs.i3}/bin/i3-msg reload || true
@@ -17,7 +17,7 @@ in
 {
   stylix.enable = true;
   stylix.autoEnable = true;
-  stylix.image = wallpaper_dark;
+  stylix.image = ./../wallpapers/monokai.jpg;
   stylix.targets.feh.enable = true;
   stylix.targets.i3.enable = false;
   stylix.targets.helix.enable = false;
@@ -41,7 +41,7 @@ in
   specialisation.light-theme.configuration = {
       # stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";  
       stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";  
-      stylix.image = lib.mkForce wallpaper_light;
+      stylix.image = lib.mkForce ./../wallpapers/desert_day.jpg;
       stylix.polarity = lib.mkForce "light";
       home.activation = activation-script;
   };
