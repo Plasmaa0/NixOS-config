@@ -60,19 +60,18 @@
             "folders": "/"
         },
         {
-            "key": "│ {#35} memory  {#keys}│",
+            "key": "│ {#35}🏠 home   {#keys}│",
+            "type": "disk",
+            "folders": "/home"
+        },
+        {
+            "key": "│ {#36} memory  {#keys}│",
             "type": "memory"
         },
         {
-            "key": "│ {#36}󰩟 network {#keys}│",
+            "key": "│ {#37}󰩟 network {#keys}│",
             "type": "localip",
             "format": "{ipv4} ({ifname})"
-        },
-        {
-            "type": "weather",
-            "key": "│ {#40}☁︎ WEATHER {#keys}│",
-            "timeout": 1000,
-            "keyColor": "green"
         },
         {
             "key": "├───────────┤",
