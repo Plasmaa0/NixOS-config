@@ -1,21 +1,23 @@
 { config, pkgs, lib, ... }:
 
 let
+  wallpaper_dark = ./../wallpapers/monokai.jpg;
+  wallpaper_light = ./../wallpapers/desert_day.jpg;
   activation-script = {
     reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      run --quiet ${pkgs.i3}/bin/i3-msg reload || true
-      run --quiet ${pkgs.i3}/bin/i3-msg restart || true
-      run --quiet ${pkgs.i3}/bin/i3-msg restart || true
-      run --quiet ${pkgs.procps}/bin/pkill dunst || true
-      run --quiet ${pkgs.libnotify}/bin/notify-send "Dunst" "Dunst reloaded successfully" || true
-      run --quiet ${pkgs.procps}/bin/pkill -USR1 hx || true
+      run ${pkgs.i3}/bin/i3-msg reload || true
+      run ${pkgs.i3}/bin/i3-msg restart || true
+      run ${pkgs.i3}/bin/i3-msg restart || true
+      run ${pkgs.procps}/bin/pkill dunst || true
+      run ${pkgs.libnotify}/bin/notify-send "Dunst" "Dunst reloaded successfully" || true
+      run ${pkgs.procps}/bin/pkill -USR1 hx || true
     '';
   };
 in
 {
   stylix.enable = true;
   stylix.autoEnable = true;
-  stylix.image = ./../wallpapers/monokai.jpg;
+  stylix.image = wallpaper_dark;
   stylix.targets.feh.enable = true;
   stylix.targets.i3.enable = false;
   stylix.targets.helix.enable = false;
@@ -37,8 +39,9 @@ in
   ];
   home.activation = activation-script;
   specialisation.light-theme.configuration = {
-      stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";  
-      stylix.image = lib.mkForce ./../wallpapers/desert_day.jpg;
+      # stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";  
+      stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";  
+      stylix.image = lib.mkForce wallpaper_light;
       stylix.polarity = lib.mkForce "light";
       home.activation = activation-script;
   };
