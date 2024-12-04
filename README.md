@@ -3,22 +3,24 @@
    <br>
       My NixOS system
    <br>
+   
+   <img src="./screenshots/monokai.png" width="600px" height="10px" /> <br>
    <div align="center">
 
    <div align="center">
       <p></p>
       <div align="center">
          <a href="https://github.com/plasmaa0/nixos-config/stargazers">
-            <img src="https://img.shields.io/github/stars/plasmaa0/nixos-config?color=F5BDE6&labelColor=303446&style=for-the-badge&logo=starship&logoColor=F5BDE6">
+            <img src="https://img.shields.io/github/stars/plasmaa0/nixos-config?color=fd971f&labelColor=303446&style=for-the-badge&logo=starship&logoColor=fd971f">
          </a>
          <a href="https://github.com/plasmaa0/nixos-config/">
-            <img src="https://img.shields.io/github/repo-size/plasmaa0/nixos-config?color=C6A0F6&labelColor=303446&style=for-the-badge&logo=github&logoColor=C6A0F6">
+            <img src="https://img.shields.io/github/repo-size/plasmaa0/nixos-config?color=a6e22e&labelColor=303446&style=for-the-badge&logo=github&logoColor=a6e22e">
          </a>
          <a = href="https://nixos.org">
-            <img src="https://img.shields.io/badge/NixOS-Unstable-blue?style=for-the-badge&logo=NixOS&logoColor=white&label=NixOS&labelColor=303446&color=91D7E3">
+            <img src="https://img.shields.io/badge/NixOS-Unstable-blue?style=for-the-badge&logo=NixOS&logoColor=white&label=NixOS&labelColor=303446&color=66d9ef">
          </a>
          <a href="https://github.com/plasmaa0/nixos-config/blob/main/LICENSE">
-            <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=MIT&colorA=313244&colorB=F5A97F&logo=unlicense&logoColor=F5A97F&"/>
+            <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=MIT&colorA=313244&colorB=cc6633&logo=unlicense&logoColor=cc6633&"/>
          </a>
       </div>
       <br>
