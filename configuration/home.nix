@@ -19,7 +19,7 @@
     betterlockscreen
     spaceFM
     vscode
-    glow
+    glow mdcat
     (btop.override { cudaSupport = true; })
     networkmanagerapplet
     upower poweralertd
