@@ -6,10 +6,10 @@
 
 ;; Volume vars
 (defpoll volume_icon :interval "1s" "scripts/Volume --icon")
-(defpoll volume_value :interval "1s" "scripts/Volume --vol")
+(defpoll volume_value :initial "0" :interval "1s" "scripts/Volume --vol")
 
 ;; Brightness
-(defpoll brightness_value :interval "1s"                        
+(defpoll brightness_value :initial "0" :interval "1s"                        
     `brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%' &`
   )
 
@@ -333,7 +333,7 @@ capacity < 60 ? sixty :
 	(eventbox
 	  :class "lang"
 	;   :cursor "pointer"
-	  :orientation "h"
+	  ; :orientation "h"
 	;   (button  			
 	; 	  :onclick "hyprctl switchxkblayout your-keyboard-name next"
 	  (box
@@ -353,7 +353,6 @@ capacity < 60 ? sixty :
 			:class "systray"
 			:orientation "h"
 			:icon-size 20
-			:pack-direction "rtl"
 			)
 
 		(lang)

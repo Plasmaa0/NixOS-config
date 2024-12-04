@@ -7,7 +7,7 @@ case "$1" in
     --title) FORMAT="{{ title }}" ;;
     --artist) FORMAT="{{ artist }}" ;;
     --status) FORMAT="{{ status }}" ;;
-    --cover) playerctl metadata -p playerctld | grep 'artUrl' | cut -c 45- && exit;;
+    --cover) (rm cover.png -f &&  curl $(playerctl metadata mpris:artUrl) --output cover.png -s 2>/dev/null && echo "$(pwd)/cover.png" || echo "images/music-note.svg" ) &&  exit;;
     --play-pause) playerctl play-pause -p playerctld && exit;;
     --previous) playerctl previous -p playerctld && exit;;
     --next) playerctl next -p playerctld && exit;;

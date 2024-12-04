@@ -48,7 +48,7 @@ $small: 0.4rem;
 * {
   all: unset;
   /* border: 1px solid cyan; */
-  font-family: "JetBrainsMono NF";
+  font-family: "Iosevka";
   color: $fg;
 }
 
@@ -115,7 +115,7 @@ tooltip {
   background-size: 2*$regular;
   min-height: 2*$regular;
   min-width: 2*$regular;
-  border-radius: 8px;
+  border-radius: 5px;
 }
 
 .song-info {
