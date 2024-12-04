@@ -110,10 +110,10 @@ base0E=${c.base0E} # "#ae81ff"
 base0F=${c.base0F} # "#cc6633"
 
 # default theme
-loginbox="''${base08}66"
+loginbox=00000000
 loginshadow=000000ff
 locktext="Hello $(whoami)!"
-font="Iosevka"
+font="${config.stylix.fonts.monospace.name}"
 fontXL=72
 fontlg=42
 fontmd=36
