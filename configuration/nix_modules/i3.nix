@@ -98,29 +98,32 @@ bindsym $mod+q kill
 
 bindsym $mod+Shift+Return exec ~/.config/rofi/launchers/type-2/launcher.sh
 
+# move mouse to center of currently focused window
+set $mouse_to_focused "${pkgs.bash}/bin/sh -c 'eval `${pkgs.xdotool}/bin/xdotool getactivewindow getwindowgeometry --shell`; ${pkgs.xdotool}/bin/xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"
+
 # change focus
-bindsym $mod+a focus left
-bindsym $mod+s focus down
-bindsym $mod+w focus up
-bindsym $mod+d focus right
+bindsym $mod+a focus left; exec --no-startup-id $mouse_to_focused
+bindsym $mod+s focus down; exec --no-startup-id $mouse_to_focused
+bindsym $mod+w focus up; exec --no-startup-id $mouse_to_focused
+bindsym $mod+d focus right; exec --no-startup-id $mouse_to_focused
 
 # alternatively, you can use the cursor keys:
-# bindsym $mod+Left focus left
-# bindsym $mod+Down focus down
-# bindsym $mod+Up focus up
-# bindsym $mod+Right focus right
+# bindsym $mod+Left focus left; exec --no-startup-id $mouse_to_focused
+# bindsym $mod+Down focus down; exec --no-startup-id $mouse_to_focused
+# bindsym $mod+Up focus up; exec --no-startup-id $mouse_to_focused
+# bindsym $mod+Right focus right; exec --no-startup-id $mouse_to_focused
 
 # move focused window
-bindsym $mod+Shift+a move left
-bindsym $mod+Shift+s move down
-bindsym $mod+Shift+w move up
-bindsym $mod+Shift+d move right
+bindsym $mod+Shift+a move left; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+s move down; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+w move up; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+d move right; exec --no-startup-id $mouse_to_focused
 
 # alternatively, you can use the cursor keys:
-# bindsym $mod+Shift+Left move left
-# bindsym $mod+Shift+Down move down
-# bindsym $mod+Shift+Up move up
-# bindsym $mod+Shift+Right move right
+# bindsym $mod+Shift+Left move left; exec --no-startup-id $mouse_to_focused
+# bindsym $mod+Shift+Down move down; exec --no-startup-id $mouse_to_focused
+# bindsym $mod+Shift+Up move up; exec --no-startup-id $mouse_to_focused
+# bindsym $mod+Shift+Right move right; exec --no-startup-id $mouse_to_focused
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -144,10 +147,10 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+p focus parent
+bindsym $mod+p focus parent; exec --no-startup-id $mouse_to_focused
 
 # focus the child container
-bindsym $mod+c focus child
+bindsym $mod+c focus child; exec --no-startup-id $mouse_to_focused
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -163,28 +166,28 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
+bindsym $mod+1 workspace number $ws1; exec --no-startup-id $mouse_to_focused
+bindsym $mod+2 workspace number $ws2; exec --no-startup-id $mouse_to_focused
+bindsym $mod+3 workspace number $ws3; exec --no-startup-id $mouse_to_focused
+bindsym $mod+4 workspace number $ws4; exec --no-startup-id $mouse_to_focused
+bindsym $mod+5 workspace number $ws5; exec --no-startup-id $mouse_to_focused
+bindsym $mod+6 workspace number $ws6; exec --no-startup-id $mouse_to_focused
+bindsym $mod+7 workspace number $ws7; exec --no-startup-id $mouse_to_focused
+bindsym $mod+8 workspace number $ws8; exec --no-startup-id $mouse_to_focused
+bindsym $mod+9 workspace number $ws9; exec --no-startup-id $mouse_to_focused
+bindsym $mod+0 workspace number $ws10; exec --no-startup-id $mouse_to_focused
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+1 move container to workspace number $ws1; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+2 move container to workspace number $ws2; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+3 move container to workspace number $ws3; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+4 move container to workspace number $ws4; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+5 move container to workspace number $ws5; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+6 move container to workspace number $ws6; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+7 move container to workspace number $ws7; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+8 move container to workspace number $ws8; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+9 move container to workspace number $ws9; exec --no-startup-id $mouse_to_focused
+bindsym $mod+Shift+0 move container to workspace number $ws10; exec --no-startup-id $mouse_to_focused
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
