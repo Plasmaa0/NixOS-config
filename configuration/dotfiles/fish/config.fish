@@ -156,11 +156,11 @@ abbr glg git log --graph --decorate --oneline
 
 # Replace some more things with better alternatives
 alias cat='bat --style header --style snip --style changes --style header'
-[ ! -x /usr/bin/yay ] && [ -x /usr/bin/paru ] && alias yay='paru'
+alias sk='sk --ansi -i -c "rg --color=always --line-number {}"'
+alias fzf='fzf --preview "bat --style header --style snip --style changes --style header {} --color=always" --preview-label="Preview"'
 
 # Common use
 alias grubup="sudo update-grub"
-alias fixpacman="sudo rm /var/lib/pacman/db.lck"
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
 alias wget='wget -c '
