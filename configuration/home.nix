@@ -4,6 +4,7 @@
   imports = [
     ./nix_modules
     ./secrets/secrets.nix
+    ./shell_templates
   ];
   home.username = "plasmaa0";
   home.homeDirectory = "/home/plasmaa0";
@@ -13,8 +14,9 @@
 
   home.packages = (with pkgs; [
     alacritty
-    fish eza bat starship ripgrep fzf fastfetch yad fd entr cloc moreutils speedtest-cli
+    fish eza bat starship ripgrep fzf fastfetch yad fd entr cloc moreutils speedtest-cli unzip
     fishPlugins.done jump
+    gnumake
     telegram-desktop
     betterlockscreen
     spaceFM
@@ -34,7 +36,9 @@
     evince
     gparted
     # yandex-music
-    texlive.combined.scheme-full texstudio
+    cassette
+    qbittorrent
+    texlive.combined.scheme-full texstudio tectonic zathura
     libreoffice
     xarchiver
     # cider
