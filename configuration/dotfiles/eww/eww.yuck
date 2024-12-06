@@ -177,41 +177,41 @@
     }
     :onclick "i3-msg workspace 5" 5)
 
-    ; (button
-    ; :class {
-    ;   arraylength(search(focused-workspace, "6")) > 0 ? "focused-workspace" : 
-    ;   arraylength(search(urgent-workspace, "6")) > 0 ? "urgent-workspace" : 
-    ;   arraylength(search(active-workspace, "6")) > 0 ? "active-workspace" : 
-    ;   "regular"
-    ; }
-    ; :onclick "i3-msg workspace 6" 6)
+    (button
+    :class {
+      arraylength(search(focused-workspace, "6")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "6")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "6")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 6" 6)
 
-    ; (button
-    ; :class {
-    ;   arraylength(search(focused-workspace, "7")) > 0 ? "focused-workspace" : 
-    ;   arraylength(search(urgent-workspace, "7")) > 0 ? "urgent-workspace" : 
-    ;   arraylength(search(active-workspace, "7")) > 0 ? "active-workspace" : 
-    ;   "regular"
-    ; }
-    ; :onclick "i3-msg workspace 7" 7)
+    (button
+    :class {
+      arraylength(search(focused-workspace, "7")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "7")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "7")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 7" 7)
 
-    ; (button
-    ; :class {
-    ;   arraylength(search(focused-workspace, "8")) > 0 ? "focused-workspace" : 
-    ;   arraylength(search(urgent-workspace, "8")) > 0 ? "urgent-workspace" : 
-    ;   arraylength(search(active-workspace, "8")) > 0 ? "active-workspace" : 
-    ;   "regular"
-    ; }
-    ; :onclick "i3-msg workspace 8" 8)
+    (button
+    :class {
+      arraylength(search(focused-workspace, "8")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "8")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "8")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 8" 8)
 
-    ; (button
-    ; :class {
-    ;   arraylength(search(focused-workspace, "9")) > 0 ? "focused-workspace" : 
-    ;   arraylength(search(urgent-workspace, "9")) > 0 ? "urgent-workspace" : 
-    ;   arraylength(search(active-workspace, "9")) > 0 ? "active-workspace" : 
-    ;   "regular"
-    ; }
-    ; :onclick "i3-msg workspace 9" 9)
+    (button
+    :class {
+      arraylength(search(focused-workspace, "9")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "9")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "9")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 9" 9)
   )
 )
 
