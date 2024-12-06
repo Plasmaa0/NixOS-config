@@ -11,6 +11,12 @@ name = "json"
 name = "html"
 
 [[language]]
+name = "nix"
+
+[language.auto-pairs]
+'=' = ';'
+
+[[language]]
 name = "python"
 auto-format = true
 [language.formatter]
