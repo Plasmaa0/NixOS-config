@@ -17,6 +17,7 @@
     fish eza bat starship ripgrep fzf fastfetch yad fd entr cloc moreutils speedtest-cli unzip
     fishPlugins.done jump
     gnumake
+    powertop
     telegram-desktop
     betterlockscreen
     spaceFM
