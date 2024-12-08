@@ -70,9 +70,9 @@ imports = [
 
 ## Installing
 
-Run `./rebuild.sh` script:
+Run `./scripts/rebuild-boot.sh` script and reboot:
 ```bash
-./rebuild.sh
+./scripts/rebuild-boot.sh && reboot
 ```
 
 # Personal data
