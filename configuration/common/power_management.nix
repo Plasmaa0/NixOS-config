@@ -5,6 +5,11 @@
   services.tlp = {
     enable = true;
     settings = {
+      USB_AUTOSUSPEND=0;
+
+      START_CHARGE_THRESH_BAT0=30;
+      STOP_CHARGE_THRESH_BAT0=70;
+
       PLATFORM_PROFILE_ON_AC="performance";
       PLATFORM_PROFILE_ON_BAT="low-power";
 
