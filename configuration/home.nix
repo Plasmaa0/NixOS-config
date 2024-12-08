@@ -16,6 +16,7 @@
     alacritty
     fish eza bat starship ripgrep fzf fastfetch yad fd entr cloc moreutils speedtest-cli unzip
     fishPlugins.done jump
+    hyperfine
     gnumake
     powertop
     telegram-desktop
