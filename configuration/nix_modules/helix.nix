@@ -15,7 +15,7 @@ in
       lua-language-server
       marksman
       nil
-      python311Packages.python-lsp-server python312Packages.python-lsp-server black
+      python311Packages.python-lsp-server python312Packages.python-lsp-server black mypy basedpyright ruff
       taplo
     ]);
   };

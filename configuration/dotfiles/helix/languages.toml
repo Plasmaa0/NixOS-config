@@ -19,13 +19,28 @@ name = "nix"
 [[language]]
 name = "python"
 auto-format = true
-[language.formatter]
-command = "black"
-args = [
-"-", # stdin
-"--quiet",
-"--line-length=79",
-]
+language-servers = [
+                  "ruff", 
+                  "pylsp", 
+                  # "basedpyright"
+                  ]
+indent = { tab-width = 4, unit = "    " }
+[language-server.pylsp.config.pylsp]
+plugins.pylsp_mypy.enabled = true
+plugins.pylsp_mypy.live_mode = true
+[language-server.basedpyright.config.basedpyright.analysis]
+typeCheckingMode = "recommended"
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+environment = { "RUFF_TRACE" = "messages" }
+[language-server.ruff.config.settings]
+logLevel = "debug"
+lineLength = 88
+indent-width = 4
+[language-server.ruff.config.settings.lint]
+select = ["ALL"]
+ignore = ["INP001", "ERA001", "D1", "ANN", "COM", "T20"]
 
 [[language]]
 name = "latex"
