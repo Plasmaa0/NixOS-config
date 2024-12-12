@@ -1,1 +1,3 @@
 configuration/secrets/secrets.nix
+configuration/homes/common/secrets/secrets.nix
+**/secrets.nix

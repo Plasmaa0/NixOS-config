@@ -6,6 +6,8 @@ let
 	qute_pass_common_args = "--always-show-selection --dmenu-invocation 'rofi -dmenu -theme ${rofi_theme}'";
 in
 {
+  home.sessionVariables.BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
+  home.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
 	programs.password-store = {
 		enable = true;
 		package = (pkgs.pass.withExtensions (ext: with ext; [pass-import]));

@@ -169,7 +169,8 @@ List of applications with colors tweaked by me:
 - `betterlockscreen`
 
 # TODO
-- [ ] fix freezing on suspend (something with `betterlockscreen`)
-- [ ] system.autoUpgrade
-- [ ] eww notification center
+- [x] fix freezing on suspend (something with `betterlockscreen`)
+- [x] system.autoUpgrade
+- [x] eww notification center
+- [ ] maintain `README.md`
 - [ ] sops-nix secret management
