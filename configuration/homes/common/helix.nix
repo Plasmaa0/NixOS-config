@@ -4,6 +4,7 @@ let
   c = config.lib.stylix.colors;
 in 
 {
+  home.sessionVariables.EDITOR = "${pkgs.helix}/bin/hx";
   programs.helix = {
     enable = true;
     extraPackages = (with pkgs; [
@@ -60,8 +61,8 @@ in
 "ui.virtual.inlay-hint" = { fg = "base6" }
 
 # comments, nord3 based lighter color
-"comment" = { fg = "base5", modifiers = ["italic"] }
-"ui.linenr" = { fg = "base5" }
+"comment" = { fg = "base4", modifiers = ["italic"] }
+"ui.linenr" = { fg = "base4" }
 
 # cursor, variables, constants, attributes, fields
 "ui.cursor.primary" = { fg = "base7", modifiers = ["reversed"] }

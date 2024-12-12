@@ -18,7 +18,6 @@ in
   stylix.enable = true;
   stylix.autoEnable = true;
   stylix.image = ./../wallpapers/monokai.jpg;
-  stylix.targets.feh.enable = true;
   stylix.targets.i3.enable = false;
   stylix.targets.helix.enable = false;
   stylix.imageScalingMode = "fill";
