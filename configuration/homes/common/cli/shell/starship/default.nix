@@ -2,6 +2,13 @@
   programs.starship = {
     enable = true;
     settings = {
+      format = ''$username$hostname$directory$git_branch$git_status$python$sudo$cmd_duration $fill$time$status$character'';
+      right_format = "$battery";
+      add_newline = true;
+      fill = {
+        symbol = "  ─  ";
+        style = "bold purple";
+      };
       username = {
         format = " [╭─$user]($style)@";
         show_always = true;
@@ -42,34 +49,64 @@
         min_time = 1;
       };
       battery = {
-        charging_symbol = "";
-        disabled = true;
-        discharging_symbol = "";
-        full_symbol = "";
+        charging_symbol = "󰂄 ";
+        disabled = false;
+        discharging_symbol = "󰁹 "; # displayed when charge is between 90% and 100%
+        full_symbol = "󱟢 ";
+        unknown_symbol = "󰂑 "; # when tlp pends charging (ac is connected but battery not charging)
+        empty_symbol = "󰂎 ";
         display = [
           {
-            disabled = true;
             style = "bold red";
-            threshold = 15;
+            threshold = 10;
+            discharging_symbol = "󰁺 ";
           }
           {
-            disabled = true;
+            style = "bold red";
+            threshold = 20;
+            discharging_symbol = "󰁻 ";
+          }
+          {
+            style = "bold orange";
+            threshold = 30;
+            discharging_symbol = "󰁼 ";
+          }
+          {
+            style = "bold yellow";
+            threshold = 40;
+            discharging_symbol = "󰁽 ";
+          }
+          {
             style = "bold yellow";
             threshold = 50;
+            discharging_symbol = "󰁾 ";
           }
           {
-            disabled = true;
+            style = "bold yellow";
+            threshold = 60;
+            discharging_symbol = "󰁿 ";
+          }
+          {
+            style = "bold green";
+            threshold = 70;
+            discharging_symbol = "󰂀 ";
+          }
+          {
             style = "bold green";
             threshold = 80;
+            discharging_symbol = "󰂁 ";
+          }
+          {
+            style = "bold green";
+            threshold = 90;
+            discharging_symbol = "󰂂 ";
           }
         ];
       };
       time = {
-        disabled = true;
-        format = ''
-          🕙 $time($style)
-        '';
-        style = "bright-white";
+        disabled = false;
+        format = " [$time]($style) \n";
+        style = "bold purple";
         time_format = "%T";
       };
       character = {
@@ -78,10 +115,10 @@
       };
       status = {
         disabled = false;
-        format = "[\[$symbol $status_common_meaning $status_signal_name $status_maybe_int\]]($style)";
+        format = "[$symbol$status_common_meaning$status_signal_name$status_maybe_int]($style)";
         map_symbol = true;
         pipestatus = true;
-        symbol = "🔴";
+        symbol = "🔴 ";
       };
       aws.symbol = " ";
       conda.symbol = " ";
