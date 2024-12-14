@@ -70,7 +70,7 @@ in
       mod = config.xsession.windowManager.i3.config.modifier;
       send_volume_notification = ''notify-send -a volume -u low -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1) Volume --hint=string:x-dunst-stack-tag:volume'';
       step = "5%";
-      send_brightness_notification = ''notify-send -a bright -u low -h int:value:$(brightnessctl | grep -o '[0-9]\+%') --hint=string:x-dunst-stack-tag:brightness Brightness'';
+      send_brightness_notification = ''notify-send -a bright -u low -h int:value:$(brightnessctl | grep -o '[0-9]\+%') Brightness --hint=string:x-dunst-stack-tag:brightness'';
       # move mouse to center of currently focused window (FIXME moves mouse to top left if no window in focus)
       mouse_to_focused = ''"${pkgs.bash}/bin/sh -c 'eval `${pkgs.xdotool}/bin/xdotool getactivewindow getwindowgeometry --shell`; ${pkgs.xdotool}/bin/xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"'';
       ws1 = "1";

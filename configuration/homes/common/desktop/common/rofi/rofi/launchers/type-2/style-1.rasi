@@ -1,23 +1,16 @@
-/**
- *
- * Author : Aditya Shakya (adi1090x)
- * Github : @adi1090x
- * 
- * Rofi Theme File
- * Rofi Version: 1.7.3
- **/
-
 /*****----- Configuration -----*****/
 configuration {
 	modi:                       "drun";
     show-icons:                 true;
-    display-drun:               "";
+    display-drun:               " ";
 	drun-display-format:        "{name}";
 }
 
 /*****----- Global Properties -----*****/
-@import                          "shared/colors.rasi"
-@import                          "shared/fonts.rasi"
+@import "~/.config/rofi/colors/stylix_theme.rasi"
+* {
+    font: "Iosevka Nerd Font 28";
+}
 
 /*****----- Main Window -----*****/
 window {

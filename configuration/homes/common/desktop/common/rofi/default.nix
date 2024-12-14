@@ -1,16 +1,16 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   c = config.lib.stylix.colors;
 in 
 {
+  home.packages = (with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" "Iosevka" ]; })
+    openmoji-color
+  ]);
   programs.rofi.enable = true;
   home.file."${config.xdg.configHome}/rofi" = {
     source = ./rofi;
-    recursive = true;
-  };
-  home.file."${config.xdg.dataHome}/fonts" = {
-    source = ./rofi/fonts;
     recursive = true;
   };
   home.file."${config.xdg.configHome}/rofi/colors/stylix_theme.rasi".text = ''
