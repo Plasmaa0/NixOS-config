@@ -1,4 +1,4 @@
-{...}:{
+{...}: {
   programs.gpg.enable = true;
   programs.git = {
     enable = true;

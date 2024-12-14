@@ -1,4 +1,4 @@
-{...}:{
+{...}: {
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
   # Select internationalisation properties.

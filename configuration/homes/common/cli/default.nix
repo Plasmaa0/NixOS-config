@@ -1,14 +1,14 @@
-{pkgs, ...}:{
+{pkgs, ...}: {
   imports = [
     ./editor/helix
     ./editor/neovim
-    
+
     ./shell/fish
     ./shell/starship
-    
+
     ./terminal/alacritty
     ./terminal/wezterm
-    
+
     ./utils/fastfetch
     ./utils/git.nix
     ./utils/nnn.nix
@@ -36,5 +36,6 @@
     gnumake
     glow
     mdcat
+    alejandra
   ];
 }

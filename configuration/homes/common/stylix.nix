@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   activation-script = {
     reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${pkgs.i3}/bin/i3-msg reload || true
@@ -11,8 +14,7 @@ let
       run ${pkgs.procps}/bin/pkill -USR1 hx || true
     '';
   };
-in
-{
+in {
   stylix.enable = true;
   stylix.autoEnable = true;
   stylix.image = ./wallpapers/monokai.jpg;
@@ -26,46 +28,45 @@ in
   home.packages = with pkgs; [
     (writeShellApplication {
       name = "toggle-theme";
-      runtimeInputs = with pkgs; [ home-manager coreutils brightnessctl gnugrep ripgrep ];
-      text =
-        ''
+      runtimeInputs = with pkgs; [home-manager coreutils brightnessctl gnugrep ripgrep];
+      text = ''
         brightnessctl -s
         brightnessctl -q set 0% || true
         "$(home-manager generations | head -1 | rg -o '/[^ ]*')"/specialisation/light-theme/activate || "$(home-manager generations | head -2 | tail -1 | rg -o '/[^ ]*')"/activate
         brightnessctl -r
-        '';
+      '';
     })
   ];
   home.activation = activation-script;
   specialisation.light-theme.configuration = {
-      # stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";  
-      stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";  
-      stylix.image = lib.mkForce ./wallpapers/desert_day.jpg;
-      stylix.polarity = lib.mkForce "light";
-      home.activation = activation-script;
+    # stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";
+    stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
+    stylix.image = lib.mkForce ./wallpapers/desert_day.jpg;
+    stylix.polarity = lib.mkForce "light";
+    home.activation = activation-script;
   };
   # home-manager generations | head -1 | tr " " "\n" | grep "/nix.*
   # see also common/fonts.nix
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      serif = [ "IosevkaTermSlab" ];
-      sansSerif = [ "Arimo" ];
-      monospace = [ "Iosevka" ];
-      emoji = [ "OpenMoji Color" ];
+      serif = ["IosevkaTermSlab"];
+      sansSerif = ["Arimo"];
+      monospace = ["Iosevka"];
+      emoji = ["OpenMoji Color"];
     };
   };
   stylix.fonts = {
     serif = {
-      package = (pkgs.nerdfonts.override{fonts=["IosevkaTermSlab"];});
+      package = pkgs.nerdfonts.override {fonts = ["IosevkaTermSlab"];};
       name = "IosevkaTermSlab";
     };
     sansSerif = {
-      package = (pkgs.nerdfonts.override{fonts=["Arimo"];});
+      package = pkgs.nerdfonts.override {fonts = ["Arimo"];};
       name = "Arimo";
     };
     monospace = {
-      package = (pkgs.nerdfonts.override{fonts=["Iosevka"];});
+      package = pkgs.nerdfonts.override {fonts = ["Iosevka"];};
       name = "Iosevka";
     };
     emoji = {

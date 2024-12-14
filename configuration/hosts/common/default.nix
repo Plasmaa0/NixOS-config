@@ -1,4 +1,9 @@
-{pkgs, lib, inputs, ...}:{
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   imports = [
     ./bootloader.nix
     ./fonts.nix
@@ -17,6 +22,6 @@
     ./systemd-lock-handler.nix
     inputs.home-manager.nixosModules.home-manager
   ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.package = lib.mkForce pkgs.nix;
 }

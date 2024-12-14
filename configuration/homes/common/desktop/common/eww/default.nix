@@ -1,13 +1,18 @@
-{config, pkgs, ...}:
-let
-  c = config.lib.stylix.colors;
-in
 {
-  home.packages = (with pkgs; [
-      pulseaudio pavucontrol
-      arandr brightnessctl
-      eww playerctl
-  ]);
+  config,
+  pkgs,
+  ...
+}: let
+  c = config.lib.stylix.colors;
+in {
+  home.packages = with pkgs; [
+    pulseaudio
+    pavucontrol
+    arandr
+    brightnessctl
+    eww
+    playerctl
+  ];
   home.file."${config.xdg.configHome}/eww/images" = {
     source = ./eww/images;
     recursive = true;
