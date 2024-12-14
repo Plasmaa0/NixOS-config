@@ -1,9 +1,0 @@
-pkill dunst
-dunst -config ~/.config/dunst/dunstrc &
-
-notify-send -u critical "Urgent message" "critical test 1"
-notify-send -u normal "Normal message" "normal test 2"
-notify-send -u low "Low message" "low test 3"
-notify-send -u normal "Test with icon" "text" -i reddit
-notify-send -u low -a Cider -i stock_volume "Test message" "Cider test"
-notify-send -u low -a volume -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1) "Volume"

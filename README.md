@@ -1,10 +1,10 @@
 <h1 align="center">
-   <img src="configuration/dotfiles/NixOS.png" width="100px" /> 
+   <img src="./assets_readme/NixOS.png" width="100px" /> 
    <br>
       My NixOS system
    <br>
    
-   <img src="./screenshots/monokai.png" width="600px" height="10px" /> <br>
+   <img src="./assets_readme/monokai.png" width="600px" height="10px" /> <br>
    <div align="center">
 
    <div align="center">
@@ -29,19 +29,19 @@
 
 <h1 align="center"> Preview </h1>
 
-![few windows opened](./screenshots/animation.gif)
+![few windows opened](./assets_readme/animation.gif)
 
-![app launcher](./screenshots/2.png)
+![app launcher](./assets_readme/2.png)
 
-![notifications and status bar](./screenshots/3.png)
+![notifications and status bar](./assets_readme/3.png)
 
-![powermenu](./screenshots/4.png)
+![powermenu](./assets_readme/4.png)
 
-![lockscreen](./screenshots/5.png)
+![lockscreen](./assets_readme/5.png)
 
-![notification center](./screenshots/6.png)
+![notification center](./assets_readme/6.png)
 
-![empty notification center](./screenshots/7.png)
+![empty notification center](./assets_readme/7.png)
 
 # Installation steps
 
