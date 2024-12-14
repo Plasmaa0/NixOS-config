@@ -4,7 +4,6 @@
     ./fonts.nix
     ./power_management.nix
     ./keymap.nix
-    ./users.nix
     ./autoUpgrade.nix
     ./garbageCollect.nix
     ./displayManager.nix
@@ -14,6 +13,8 @@
     ./touchpad.nix
     ./audio.nix
     ./networking.nix
+    ./nix-ld.nix
+    ./systemd-lock-handler.nix
     inputs.home-manager.nixosModules.home-manager
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
