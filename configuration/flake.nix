@@ -29,7 +29,7 @@
               networking.hostName = host;
               users.users = nixpkgs.lib.genAttrs homes (user: {
                 isNormalUser = true;
-                description = "${host} user ${user}";
+                description = user;
                 extraGroups = [ "networkmanager" "wheel" ];
               });
               home-manager = {
