@@ -39,6 +39,10 @@ end
 ## Starship prompt
 if status --is-interactive
     source ("starship" init fish --print-full-init | psub)
+    function starship_transient_rprompt_func
+        starship module time
+    end
+    enable_transience
 end
 
 
