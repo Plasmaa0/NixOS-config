@@ -15,24 +15,24 @@ dir="$HOME/.config/rofi/powermenu/type-2"
 theme='style-1'
 
 # CMDs
-uptime="`uptime | awk -F'( |,|:)+' '{d=h=m=0; if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes."}'`"
-host=`hostname`
+uptime=$(uptime | awk -F'( |,|:)+' '{d=h=m=0; if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes."}')
+host=$(hostname)
 
 # Options
-shutdown=''
-reboot=''
-lock=''
-suspend=''
-logout=''
-yes=''
-no=''
+shutdown='⏻ ' 
+reboot='󰑙 '
+lock='󰌾 '
+suspend='󰤄 '
+logout='󰍃 '
+yes='󰄬 '
+no='󰅖 '
 
 # Rofi CMD
 rofi_cmd() {
 	rofi -dmenu \
 		-p "Uptime: $uptime" \
 		-mesg "Uptime: $uptime" \
-		-theme ${dir}/${theme}.rasi
+		-theme "${dir}"/${theme}.rasi
 }
 
 # Confirmation CMD
@@ -45,7 +45,7 @@ confirm_cmd() {
 		-dmenu \
 		-p 'Confirmation' \
 		-mesg 'Are you Sure?' \
-		-theme ${dir}/${theme}.rasi
+		-theme "${dir}"/${theme}.rasi
 }
 
 # Ask for confirmation

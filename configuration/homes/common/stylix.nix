@@ -46,6 +46,15 @@ in
   };
   # home-manager generations | head -1 | tr " " "\n" | grep "/nix.*
   # see also common/fonts.nix
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      serif = [ "IosevkaTermSlab" ];
+      sansSerif = [ "Arimo" ];
+      monospace = [ "Iosevka" ];
+      emoji = [ "OpenMoji Color" ];
+    };
+  };
   stylix.fonts = {
     serif = {
       package = (pkgs.nerdfonts.override{fonts=["IosevkaTermSlab"];});
