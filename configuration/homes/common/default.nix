@@ -1,11 +1,15 @@
-{ config, outputs, ... }: {
+{
+  config,
+  outputs,
+  ...
+}: {
   programs.home-manager.enable = true;
   imports = [
     ./secrets/secrets.nix
     ./shell_templates
-  
+
     ./stylix.nix
- ];
+  ];
   # ++ (builtins.attrValues outputs.homeManagerModules);
   xdg.mimeApps = {
     enable = true;

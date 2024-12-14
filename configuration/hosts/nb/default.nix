@@ -7,4 +7,3 @@
     ../common/modules/HighDPI.nix
   ];
 }
-

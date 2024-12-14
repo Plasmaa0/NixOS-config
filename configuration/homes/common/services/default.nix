@@ -1,4 +1,4 @@
-{...}:{
+{...}: {
   imports = [
     ./flameshot.nix
     ./copyq.nix

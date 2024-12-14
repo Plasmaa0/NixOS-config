@@ -1,3 +1,3 @@
-{...}:{
-  services.systemd-lock-handler.enable=true;
+{...}: {
+  services.systemd-lock-handler.enable = true;
 }

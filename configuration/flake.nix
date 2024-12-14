@@ -12,16 +12,24 @@
     nixvim.url = "github:nix-community/nixvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
-      inherit (self) outputs;
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      config.allowUnfree = true;
+      config.nvidia.acceptLicense = true;
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        config.allowUnfree = true;
-        config.nvidia.acceptLicense = true;
-        system = "x86_64-linux";
-      };
-      mkSystem = ({host, homes}:
+    };
+    mkSystem = (
+      {
+        host,
+        homes,
+      }:
         nixpkgs.lib.nixosSystem {
           modules = [
             ./hosts/${host}
@@ -30,7 +38,7 @@
               users.users = nixpkgs.lib.genAttrs homes (user: {
                 isNormalUser = true;
                 description = user;
-                extraGroups = [ "networkmanager" "wheel" ];
+                extraGroups = ["networkmanager" "wheel"];
               });
               home-manager = {
                 useGlobalPkgs = true;
@@ -52,15 +60,15 @@
               };
             }
           ];
-          specialArgs = { inherit inputs outputs pkgs home-manager; };
+          specialArgs = {inherit inputs outputs pkgs home-manager;};
         }
-      );
-    in {
-      nixosConfigurations = {
-        nb = mkSystem {
-          host = "nb";
-          homes = [ "plasmaa0" ];
-        };
+    );
+  in {
+    nixosConfigurations = {
+      nb = mkSystem {
+        host = "nb";
+        homes = ["plasmaa0"];
       };
     };
+  };
 }

@@ -1,4 +1,4 @@
-{...}:{
+{...}: {
   imports = [
     ./browser/qutebrowser.nix
     ./social/telegram.nix

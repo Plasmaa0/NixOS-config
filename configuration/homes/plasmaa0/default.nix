@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ../common
     ../common/desktop/i3
@@ -11,16 +15,19 @@
     ../common/services/autorandr.nix
   ];
 
-  home.packages = (with pkgs; [
+  home.packages = with pkgs; [
     spaceFM
-    (btop.override { cudaSupport = true; })
+    (btop.override {cudaSupport = true;})
     networkmanagerapplet
-    upower poweralertd
-    xorg.xbacklight brightnessctl
+    upower
+    poweralertd
+    xorg.xbacklight
+    brightnessctl
     dconf
     feh
     arandr
-    pulseaudio pavucontrol
+    pulseaudio
+    pavucontrol
     evince
     gparted
     # yandex-music
@@ -30,5 +37,5 @@
     xarchiver
     # cider
     # i3wsr # i3 workspace names
-  ]);
+  ];
 }

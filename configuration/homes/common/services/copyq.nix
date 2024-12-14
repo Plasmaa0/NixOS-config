@@ -1,3 +1,3 @@
-{...}:{
+{...}: {
   services.copyq.enable = true;
 }

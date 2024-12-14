@@ -1,4 +1,4 @@
-{...}:{
+{...}: {
   services.xserver.dpi = 192;
   # Scale programs
   environment.variables = {

@@ -1,11 +1,13 @@
-{ config, pkgs, lib, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./I_HATE_NVIDIA.nix
-    ];
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    ./I_HATE_NVIDIA.nix
+  ];
 
   # environment.systemPackages = [
   #   pkgs.home-manager
@@ -19,4 +21,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 }
-

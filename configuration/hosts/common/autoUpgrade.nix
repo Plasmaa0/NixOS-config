@@ -1,4 +1,4 @@
-{...}:{
+{...}: {
   system.autoUpgrade = {
     enable = true;
     flake = "/etc/nixos";

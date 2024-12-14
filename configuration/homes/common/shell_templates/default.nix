@@ -1,10 +1,13 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     (writeShellApplication {
       name = "mkshell";
-      runtimeInputs = with pkgs; [ coreutils eza ];
-      text =
-        ''
+      runtimeInputs = with pkgs; [coreutils eza];
+      text = ''
         set +u
 
         help(){
@@ -25,7 +28,7 @@
           echo -e "$result"
           exit 0
         }
-        
+
         if [ -z "$1" ]
         then
           echo "Please, pass an argument"
@@ -54,7 +57,7 @@
               ;;
           esac
         fi
-        '';
+      '';
     })
   ];
 }
