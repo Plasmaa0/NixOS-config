@@ -4,7 +4,7 @@
     flake = "/etc/nixos";
     flags = [
       "--update-input"
-      "nixpkgs nixpkgs-stable home-manager styliix nixvim"
+      "nixpkgs"
       "-L" # print build logs
     ];
     dates = "daily";
