@@ -468,11 +468,13 @@ capacity < 60 ? sixty :
 			:cursor "pointer"
 			:tooltip "Open Yad calendar"
 		 (button :onclick "yad --calendar --geometry=500x200+500+50 --close-on-unfocus 2> /dev/null &"
-		 (box :orientation "v"
-			  :spacing 0
-			  :halign "start"
+		 (box :orientation "h"
+					:spacing 2
+					:space-evenly true
+					:valign "center"
+			  ; :halign "start"
 			(label :class "time" :halign "start" :valign "center" :text TIME)
-			(label :class "date" :halign "start" :valign "center" :text DATE)
+			(label :class "date" :halign "end" :valign "center" :text DATE)
 		 )))
 	)
 )
