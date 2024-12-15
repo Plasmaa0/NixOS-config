@@ -137,7 +137,7 @@ in {
         "${mod}+Shift+r" = "restart";
         "${mod}+Shift+e" = "exec ~/.config/rofi/powermenu/type-2/powermenu.sh";
         "${mod}+t" = "exec telegram-desktop";
-        "Print" = "exec flameshot gui";
+        "Print" = "exec pkill picom; exec flameshot gui";
         "${mod}+r" = ''mode "resize"'';
         "${mod}+m" = ''[class="Cider"] scratchpad show; resize set height 80 ppt; resize set width 80 ppt; move position center'';
       };
