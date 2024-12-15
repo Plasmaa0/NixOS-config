@@ -14,8 +14,10 @@ in {
     text = ''
       DUNST_LOG="${config.xdg.configHome}/dunst/out.log"
       DUNST_ERR="${config.xdg.configHome}/dunst/err.log"
+      LAST_LOG="${config.xdg.configHome}/dunst/last.log"
 
       handle_dunst_signal(){
+        echo DUNST_APP_NAME: $DUNST_APP_NAME DUNST_SUMMARY: $DUNST_SUMMARY DUNST_BODY: $DUNST_BODY DUNST_ICON_PATH: $DUNST_ICON_PATH DUNST_URGENCY: $DUNST_URGENCY DUNST_ID: $DUNST_ID DUNST_PROGRESS: $DUNST_PROGRESS DUNST_CATEGORY: $DUNST_CATEGORY DUNST_STACK_TAG: $DUNST_STACK_TAG DUNST_URLS: $DUNST_URLS DUNST_TIMEOUT: $DUNST_TIMEOUT DUNST_TIMESTAMP: $DUNST_TIMESTAMP DUNST_DESKTOP_ENTRY: $DUNST_DESKTOP_ENTRY DUNST_STACK_TAG: $DUNST_STACK_TAG > $LAST_LOG
         case "$DUNST_URGENCY" in
           "LOW") exit;;
           "NORMAL"|"CRITICAL") urgency="$DUNST_URGENCY";;
@@ -261,14 +263,18 @@ in {
         background = "#${c.base01}"
         timeout = 5
 
-    [Cider]
+    [z_Cider]
         appname="Cider"
         background = "#9F3046"
         foreground = "#DACDD1"
         frame_color = "#B7B5BA"
         timeout = 10
 
-    [volume]
+    # In process of creating dunstrc all TOML elements are sorted alphabetically
+    # for volume and brightness notifications to work properly
+    # rule for them need to be defined AFTER `urgency_low`
+    # volume and brightness rules are prefixed with z to define them after `urgency_low`
+    [z_volume]
         appname="volume"
         background = "#${c.base01}"
         foreground = "#${c.base0D}"
@@ -281,11 +287,11 @@ in {
         progress_bar_horizontal_alignment = "center"
         timeout = 1
 
-    [bright]
+    [z_bright]
         appname="bright"
         background = "#${c.base01}"
-        foreground = "#${c.base0D}"
-        highlight = "#${c.base0D}"
+        foreground = "#${c.base0A}"
+        highlight = "#${c.base0A}"
         alignment="center"
         max_icon_size = 128
         # hide_text = true
@@ -317,7 +323,8 @@ in {
         notify-send -u low "Low message" "low test 3"
         notify-send -u normal "Test with icon" "text" -i reddit
         notify-send -u low -a Cider -i stock_volume "Test message" "Cider test"
-        notify-send -u low -a volume -h "int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1)" "Volume"
+        notify-send -u low -a volume -h "int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1)" "Volume" --hint=string:x-dunst-stack-tag:volume
+        notify-send -u low -a bright -h "int:value:$(brightnessctl | grep -o '[0-9]\+%')" "Brightness" --hint=string:x-dunst-stack-tag:brightness
       '';
     })
   ];
