@@ -146,12 +146,12 @@ tooltip {
 //----- Clock -----//
 
 .time {
-  font-size: $regular;
+  font-size: 1.5*$regular;
   font-weight: bold;
 }
 
 .date {
-  font-size: 0.8*$regular;
+  font-size: 1.25*$regular;
 }
 
 .workspaces {
