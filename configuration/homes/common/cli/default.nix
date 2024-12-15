@@ -21,6 +21,7 @@
     fzf
     skim
     fastfetch
+    pokeget-rs
     yad
     fd
     entr

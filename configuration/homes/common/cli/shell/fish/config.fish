@@ -215,6 +215,7 @@ if status --is-interactive && type -q fastfetch
     # treefetch -b
     # /home/plasmaa0/infa/perlinfetch/venv/bin/python /home/plasmaa0/infa/perlinfetch/perlinfetch.py
     # pokeget random --hide-name
-    fastfetch
+    pokeget random --hide-name | fastfetch --file-raw -
+    # fastfetch
 end
 # pyenv init - | source
