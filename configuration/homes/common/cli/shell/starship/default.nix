@@ -1,8 +1,106 @@
-{...}: {
+{lib, ...}: {
   programs.starship = {
     enable = true;
     settings = {
-      format = ''$username$hostname$directory$git_branch$git_status$python$sudo$cmd_duration $fill$time$status$character'';
+      format = lib.concatStrings [
+        # first row left
+        "$username"
+        "$hostname"
+        "$localip"
+        "$shlvl"
+        "$singularity"
+        "$kubernetes"
+        "$directory"
+        "$vcsh"
+        "$fossil_branch"
+        "$fossil_metrics"
+        "$git_branch"
+        "$git_commit"
+        "$git_state"
+        "$git_metrics"
+        "$git_status"
+        "$hg_branch"
+        "$pijul_channel"
+        "$docker_context"
+        "$package"
+        "$c"
+        "$cmake"
+        "$cobol"
+        "$daml"
+        "$dart"
+        "$deno"
+        "$dotnet"
+        "$elixir"
+        "$elm"
+        "$erlang"
+        "$fennel"
+        "$gleam"
+        "$golang"
+        "$guix_shell"
+        "$haskell"
+        "$haxe"
+        "$helm"
+        "$java"
+        "$julia"
+        "$kotlin"
+        "$gradle"
+        "$lua"
+        "$nim"
+        "$nodejs"
+        "$ocaml"
+        "$opa"
+        "$perl"
+        "$php"
+        "$pulumi"
+        "$purescript"
+        "$python"
+        "$quarto"
+        "$raku"
+        "$rlang"
+        "$red"
+        "$ruby"
+        "$rust"
+        "$scala"
+        "$solidity"
+        "$swift"
+        "$terraform"
+        "$typst"
+        "$vlang"
+        "$vagrant"
+        "$zig"
+        "$buf"
+        "$nix_shell"
+        "$conda"
+        "$meson"
+        "$spack"
+        "$memory_usage"
+        "$aws"
+        "$gcloud"
+        "$openstack"
+        "$azure"
+        "$nats"
+        "$direnv"
+        "$env_var"
+        "$crystal"
+        "$sudo"
+        "$cmd_duration"
+
+        # first row middle
+        "$fill"
+
+        # first row right
+        "$time"
+        "$line_break"
+
+        # second row left
+        "$jobs"
+        "$status"
+        "$os"
+        "$container"
+        "$shell"
+        "$character"
+      ];
+      # second row right
       right_format = "$battery";
       add_newline = true;
       fill = {
@@ -25,8 +123,8 @@
       directory = {
         style = "purple";
         truncate_to_repo = true;
-        truncation_length = 0;
-        truncation_symbol = "repo: ";
+        truncation_length = 3;
+        truncation_symbol = "󰊢 ";
       };
       sudo = {
         disabled = false;
@@ -51,13 +149,13 @@
       battery = {
         charging_symbol = "󰂄 ";
         disabled = false;
-        discharging_symbol = "󰁹 "; # displayed when charge is between 90% and 100%
+        discharging_symbol = "󰁹 ";
         full_symbol = "󱟢 ";
         unknown_symbol = "󰂑 "; # when tlp pends charging (ac is connected but battery not charging)
         empty_symbol = "󰂎 ";
         display = [
           {
-            style = "bold red";
+            style = "blink bold red";
             threshold = 10;
             discharging_symbol = "󰁺 ";
           }
@@ -67,7 +165,7 @@
             discharging_symbol = "󰁻 ";
           }
           {
-            style = "bold orange";
+            style = "bold yellow";
             threshold = 30;
             discharging_symbol = "󰁼 ";
           }
@@ -77,22 +175,22 @@
             discharging_symbol = "󰁽 ";
           }
           {
-            style = "bold yellow";
+            style = "yellow";
             threshold = 50;
             discharging_symbol = "󰁾 ";
           }
           {
-            style = "bold yellow";
+            style = "yellow";
             threshold = 60;
             discharging_symbol = "󰁿 ";
           }
           {
-            style = "bold green";
+            style = "yellow";
             threshold = 70;
             discharging_symbol = "󰂀 ";
           }
           {
-            style = "bold green";
+            style = "green";
             threshold = 80;
             discharging_symbol = "󰂁 ";
           }
@@ -101,11 +199,16 @@
             threshold = 90;
             discharging_symbol = "󰂂 ";
           }
+          {
+            style = "bold green";
+            threshold = 100;
+            discharging_symbol = "󰁹 ";
+          }
         ];
       };
       time = {
         disabled = false;
-        format = " [$time]($style) \n";
+        format = " [$time]($style)";
         style = "bold purple";
         time_format = "%T";
       };
@@ -132,9 +235,9 @@
       java.symbol = " ";
       julia.symbol = " ";
       nim.symbol = " ";
-      nix_shell.symbol = " ";
+      nix_shell.symbol = "󱄅 ";
       nodejs.symbol = " ";
-      package.symbol = " ";
+      package.symbol = "📦 ";
       perl.symbol = " ";
       php.symbol = " ";
       python = {
