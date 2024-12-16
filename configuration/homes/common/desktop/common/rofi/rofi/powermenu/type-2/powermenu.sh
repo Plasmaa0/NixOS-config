@@ -20,6 +20,7 @@ host=$(hostname)
 
 # Options
 shutdown='⏻ ' 
+hibernate='󰚥 '
 reboot='󰑙 '
 lock='󰌾 '
 suspend='󰤄 '
@@ -55,7 +56,7 @@ confirm_exit() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$lock\n$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd
+	echo -e "$lock\n$suspend\n$logout\n$reboot\n$shutdown\n$hibernate" | rofi_cmd
 }
 
 # Execute Command
@@ -64,6 +65,8 @@ run_cmd() {
 	if [[ "$selected" == "$yes" ]]; then
 		if [[ $1 == '--shutdown' ]]; then
 			systemctl poweroff
+		elif [[ $1 == '--hibernate' ]]; then
+			systemctl hibernate
 		elif [[ $1 == '--reboot' ]]; then
 			systemctl reboot
 		elif [[ $1 == '--suspend' ]]; then
@@ -93,6 +96,9 @@ chosen="$(run_rofi)"
 case ${chosen} in
     $shutdown)
 		run_cmd --shutdown
+        ;;
+    $hibernate)
+		run_cmd --hibernate
         ;;
     $reboot)
 		run_cmd --reboot
