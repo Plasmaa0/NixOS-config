@@ -36,16 +36,23 @@ in {
 
         if [[ $DUNST_ICON_PATH == "" ]]
         then
-          ICON_PATH=${icons_path}/apps/$DUNST_APP_NAME.svg
+          ICON_PATH=$(${pkgs.findutils}/bin/find ${icons_path}/apps -iname "*$DUNST_APP_NAME*" | ${pkgs.coreutils}/bin/head -1)
         else
-          FIXED_ICON_PATH=$(${pkgs.coreutils}/bin/echo "''${DUNST_ICON_PATH}" | ${pkgs.gnused}/bin/sed 's/32x32/48x48/g')
-          ICON_PATH=$FIXED_ICON_PATH
+          ICON_PATH=$DUNST_ICON_PATH
         fi
 
-        # if [[ $DUNST_APP_NAME == "Spotify" ]]
-        # then
-        #   ICON_PATH=$HOME/.cache/temp-$SPOTIFY_TITLE.png
-        # fi
+        if [[ $DUNST_APP_NAME == "Cassette" ]]
+        then
+          url=$(${pkgs.playerctl}/bin/playerctl metadata mpris:artUrl)
+          name="${config.xdg.configHome}/dunst/cover_$(${pkgs.coreutils}/bin/echo $url | ${pkgs.coreutils}/bin/tr '/' '-' | ${pkgs.coreutils}/bin/tr ':' '_')"
+          ${pkgs.curl}/bin/curl $(${pkgs.playerctl}/bin/playerctl metadata mpris:artUrl) --output $name -s 2>/dev/null
+          ICON_PATH=$name
+        fi
+
+        if [[ $ICON_PATH == "" ]]
+        then
+          ICON_PATH=${icons_path}/mimetypes/unknown.svg
+        fi
 
         ${pkgs.coreutils}/bin/echo '(notification-card :class "notification-card notification-card-'$urgency' notification-card-'$DUNST_APP_NAME'" :SL "'$DUNST_ID'" :L "dunstctl history-pop '$DUNST_ID'" :body "'$body'" :summary "'$glyph' '$summary'" :image "'$ICON_PATH'" :application "'$DUNST_APP_NAME'")' \
           | ${pkgs.coreutils}/bin/cat - "$DUNST_LOG" \
@@ -92,6 +99,7 @@ in {
       clear_logs() {
         ${pkgs.coreutils}/bin/rm $DUNST_LOG
         ${pkgs.coreutils}/bin/touch $DUNST_LOG
+        ${pkgs.coreutils}/bin/rm ${config.xdg.configHome}/dunst/cover_*
       }
 
       compile_caches() {
@@ -263,8 +271,8 @@ in {
         background = "#${c.base01}"
         timeout = 5
 
-    [z_Cider]
-        appname="Cider"
+    [z_Cassette]
+        appname="Cassette"
         background = "#9F3046"
         foreground = "#DACDD1"
         frame_color = "#B7B5BA"
@@ -322,7 +330,7 @@ in {
         notify-send -u normal "Normal message" "normal test 2"
         notify-send -u low "Low message" "low test 3"
         notify-send -u normal "Test with icon" "text" -i reddit
-        notify-send -u low -a Cider -i stock_volume "Test message" "Cider test"
+        notify-send -u low -a Cassette -i stock_volume "Test message" "Music test"
         notify-send -u low -a volume -h "int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1)" "Volume" --hint=string:x-dunst-stack-tag:volume
         notify-send -u low -a bright -h "int:value:$(brightnessctl | grep -o '[0-9]\+%')" "Brightness" --hint=string:x-dunst-stack-tag:brightness
       '';

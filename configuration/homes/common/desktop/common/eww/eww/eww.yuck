@@ -80,8 +80,11 @@
       (box :space-evenly "false" :orientation "h"
       ; (box :class "notification-image" :style "background-image: url(\"${image}\");")
 			(image
-				:icon application
-				:icon-size "dialog"
+				:path image
+				:image-width 50
+				:image-height 50
+				; :icon image
+				; :icon-size "dialog"
 			)
       (box :orientation "vertical"
         :class "${class}"
