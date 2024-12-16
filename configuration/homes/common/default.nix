@@ -11,12 +11,6 @@
     ./stylix.nix
   ];
   # ++ (builtins.attrValues outputs.homeManagerModules);
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "application/pdf" = ["evince.desktop"];
-    };
-  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
