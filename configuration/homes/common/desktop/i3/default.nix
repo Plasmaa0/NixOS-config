@@ -167,10 +167,6 @@ in {
         notification = false;
       }
       {
-        command = "copyq";
-        notification = false;
-      }
-      {
         command = "xhost +";
         notification = false;
       }
@@ -181,11 +177,6 @@ in {
       }
       {
         command = "eww open --toggle bar";
-        notification = false;
-        always = true;
-      }
-      {
-        command = "killall flameshot || flameshot";
         notification = false;
         always = true;
       }
