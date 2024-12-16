@@ -3,7 +3,11 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  mimeapps = {
+    "application/pdf" = ["org.gnome.Evince.desktop"];
+  };
+in {
   imports = [
     ../common
     ../common/desktop/i3
@@ -38,4 +42,14 @@
     # cider
     # i3wsr # i3 workspace names
   ];
+
+  xdg = {
+    enable = true;
+    mime.enable = true;
+    mimeApps = {
+      enable = true;
+      defaultApplications = mimeapps;
+      associations.added = mimeapps;
+    };
+  };
 }
