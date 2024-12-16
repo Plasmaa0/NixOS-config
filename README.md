@@ -37,7 +37,11 @@
 
 ![powermenu](./assets_readme/4.png)
 
+lockscreen
 ![lockscreen](./assets_readme/5.png)
+
+displayManager (sddm)
+![lockscreen](./assets_readme/displayManager.png)
 
 ![notification center](./assets_readme/6.png)
 
