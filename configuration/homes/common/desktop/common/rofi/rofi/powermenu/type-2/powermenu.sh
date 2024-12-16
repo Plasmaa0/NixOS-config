@@ -77,7 +77,7 @@ run_cmd() {
 				bspc quit
 			elif [[ "$DESKTOP_SESSION" == 'i3' ]]; then
 				i3-msg exit
-			elif [[ "$DESKTOP_SESSION" == 'none+i3' ]]; then
+			elif [[ "$DESKTOP_SESSION" == 'none+home-manager' ]]; then
 				i3-msg exit
 			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
 				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
