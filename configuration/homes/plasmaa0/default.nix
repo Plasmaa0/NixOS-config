@@ -4,8 +4,10 @@
   pkgs,
   ...
 }: let
+  # to look for proper names of apps
+  # ls $(echo $XDG_DATA_DIRS | tr ":" "\n")/applications 2>/dev/null | grep <name>
   mimeapps = {
-    "application/pdf" = ["org.gnome.Evince.desktop"];
+    "application/pdf" = ["org.pwmt.zathura.desktop"];
   };
 in {
   imports = [
@@ -32,7 +34,7 @@ in {
     arandr
     pulseaudio
     pavucontrol
-    evince
+    zathura
     gparted
     # yandex-music
     cassette
