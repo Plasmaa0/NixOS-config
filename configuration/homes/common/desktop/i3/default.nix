@@ -15,6 +15,23 @@ in {
       enable = true;
     };
   };
+  home.packages = with pkgs; [
+    (writeShellApplication {
+      name = "i3-mouse-to-center";
+      runtimeInputs = with pkgs; [xdotool i3 jq coreutils];
+      text = ''
+        eval "$(xdotool getactivewindow getwindowgeometry --shell 2>/dev/null && echo FAIL=1)";
+        if [ -z "$FAIL" ]; then
+          cwg="$(i3-msg -t get_workspaces | jq --unbuffered -r '.[] | select(.focused == true).rect')"
+          X="$(echo "$cwg" | jq '.x')"
+          Y="$(echo "$cwg" | jq '.y')"
+          WIDTH="$(echo "$cwg" | jq '.width')"
+          HEIGHT="$(echo "$cwg" | jq '.height')"
+        fi
+        xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2));
+      '';
+    })
+  ];
   xsession.windowManager.i3.extraConfig = ''
     tiling_drag modifier titlebar
   '';
@@ -74,7 +91,8 @@ in {
       step = "5%";
       send_brightness_notification = ''notify-send -a bright -u low -h int:value:$(brightnessctl | grep -o '[0-9]\+%') Brightness --hint=string:x-dunst-stack-tag:brightness'';
       # move mouse to center of currently focused window (FIXME moves mouse to top left if no window in focus)
-      mouse_to_focused = ''"${pkgs.bash}/bin/sh -c 'eval `${pkgs.xdotool}/bin/xdotool getactivewindow getwindowgeometry --shell`; ${pkgs.xdotool}/bin/xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"'';
+      # mouse_to_focused = ''"${pkgs.bash}/bin/sh -c 'eval `${pkgs.xdotool}/bin/xdotool getactivewindow getwindowgeometry --shell`; ${pkgs.xdotool}/bin/xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"'';
+      mouse_to_focused = "i3-mouse-to-center";
       ws1 = "1";
       ws2 = "2";
       ws3 = "3";
