@@ -14,6 +14,7 @@
 
   boot.initrd.availableKernelModules = ["xhci_pci" "nvme"];
   boot.initrd.kernelModules = [];
+  boot.initrd.systemd.enable = true;
   boot.kernelModules = ["kvm-intel"];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [];
@@ -37,6 +38,10 @@
 
   swapDevices = [
     {device = "/dev/disk/by-uuid/c3ee8d1f-0771-48a0-b379-508a8acd8be5";}
+    {
+      device = "/var/swapfile";
+      size = 16 * 1024;
+    }
   ];
   zramSwap.enable = true;
 
