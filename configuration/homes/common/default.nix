@@ -4,6 +4,7 @@
   ...
 }: {
   programs.home-manager.enable = true;
+  xsession.scriptPath = ".hm-xsession";
   imports = [
     ./secrets/secrets.nix
     ./shell_templates
