@@ -34,6 +34,11 @@ in {
   ];
   xsession.windowManager.i3.extraConfig = ''
     tiling_drag modifier titlebar
+
+    # enable window icons for all windows
+    for_window [all] title_window_icon on
+    # enable window icons for all windows with extra horizontal padding
+    for_window [all] title_window_icon padding 3px
   '';
   xsession.windowManager.i3.config = {
     modifier = "Mod4";
@@ -111,7 +116,7 @@ in {
         "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send -u low $(pactl get-sink-mute @DEFAULT_SINK@) -i audio-volume-muted --hint=string:x-dunst-stack-tag:volume";
         "XF86AudioMicMute" = "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send -u low $(pactl get-source-mute @DEFAULT_SOURCE@) -i audio-volume-muted --hint=string:x-dunst-stack-tag:volume";
         "${mod}+semicolon" = "move to scratchpad";
-        "${mod}+l" = "scratchpad show";
+        "${mod}+l" = "scratchpad show; resize set height 80 ppt; resize set width 80 ppt; move position center";
         "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${step}+ && ${send_brightness_notification} # increase screen brightness";
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${step}- && ${send_brightness_notification} # decrease screen brightness";
         "${mod}+Return" = "exec wezterm";
@@ -157,7 +162,7 @@ in {
         "${mod}+t" = "exec telegram-desktop";
         "Print" = "exec pkill picom; exec flameshot gui";
         "${mod}+r" = ''mode "resize"'';
-        "${mod}+m" = ''[class="Cider"] scratchpad show; resize set height 80 ppt; resize set width 80 ppt; move position center'';
+        "${mod}+m" = ''[class="cassette"] scratchpad show; resize set height 80 ppt; resize set width 80 ppt; move position center'';
       };
     modes = {
       resize = {
@@ -205,6 +210,10 @@ in {
         {
           command = "move to scratchpad";
           criteria = {class = "Cider";};
+        }
+        {
+          command = "move to scratchpad";
+          criteria = {class = "cassette";};
         }
         {
           command = "floating enable border pixel 1";
