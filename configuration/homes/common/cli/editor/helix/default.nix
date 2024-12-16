@@ -14,6 +14,7 @@ in {
       docker-compose-language-service
       yaml-language-server
       texlab
+      zathura
       clang-tools
       lua-language-server
       marksman
