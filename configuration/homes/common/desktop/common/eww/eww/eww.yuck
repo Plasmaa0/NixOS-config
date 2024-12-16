@@ -134,9 +134,9 @@
     
 		(button
     :class {
-      arraylength(search(focused-workspace, "1")) > 0 ? "focused-workspace" : 
-      arraylength(search(urgent-workspace, "1")) > 0 ? "urgent-workspace" : 
-      arraylength(search(active-workspace, "1")) > 0 ? "active-workspace" : 
+      arraylength(search(focused-workspace, "1\\b")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "1\\b")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "1\\b")) > 0 ? "active-workspace" : 
       "regular"
     }
     :onclick "i3-msg workspace 1" 1)
