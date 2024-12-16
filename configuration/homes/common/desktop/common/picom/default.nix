@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   services.picom = {
     enable = true;
     # idk how tf make it use picom.conf as config in any way.

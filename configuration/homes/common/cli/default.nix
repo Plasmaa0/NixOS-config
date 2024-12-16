@@ -38,5 +38,7 @@
     glow
     mdcat
     alejandra
+    statix
+    deadnix
   ];
 }

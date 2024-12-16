@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{...}: {
   imports = [
     ./hardware-configuration.nix
     ./I_HATE_NVIDIA.nix
