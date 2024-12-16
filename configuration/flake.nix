@@ -25,44 +25,42 @@
       config.nvidia.acceptLicense = true;
       system = "x86_64-linux";
     };
-    mkSystem = (
-      {
-        host,
-        homes,
-      }:
-        nixpkgs.lib.nixosSystem {
-          modules = [
-            ./hosts/${host}
-            {
-              networking.hostName = host;
-              users.users = nixpkgs.lib.genAttrs homes (user: {
-                isNormalUser = true;
-                description = user;
-                extraGroups = ["networkmanager" "wheel"];
-              });
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  inherit inputs outputs;
-                };
-                users = nixpkgs.lib.genAttrs homes (user: {
-                  imports = [
-                    {
-                      home.username = user;
-                      home.homeDirectory = "/home/${user}";
-                    }
-                    ./homes/${user}
-                    inputs.stylix.homeManagerModules.stylix
-                    inputs.nixvim.homeManagerModules.nixvim
-                  ];
-                });
+    mkSystem = {
+      host,
+      homes,
+    }:
+      nixpkgs.lib.nixosSystem {
+        modules = [
+          ./hosts/${host}
+          {
+            networking.hostName = host;
+            users.users = nixpkgs.lib.genAttrs homes (user: {
+              isNormalUser = true;
+              description = user;
+              extraGroups = ["networkmanager" "wheel"];
+            });
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {
+                inherit inputs outputs;
               };
-            }
-          ];
-          specialArgs = {inherit inputs outputs pkgs home-manager;};
-        }
-    );
+              users = nixpkgs.lib.genAttrs homes (user: {
+                imports = [
+                  {
+                    home.username = user;
+                    home.homeDirectory = "/home/${user}";
+                  }
+                  ./homes/${user}
+                  inputs.stylix.homeManagerModules.stylix
+                  inputs.nixvim.homeManagerModules.nixvim
+                ];
+              });
+            };
+          }
+        ];
+        specialArgs = {inherit inputs outputs pkgs home-manager;};
+      };
   in {
     nixosConfigurations = {
       nb = mkSystem {

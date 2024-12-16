@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   # to look for proper names of apps
   # ls $(echo $XDG_DATA_DIRS | tr ":" "\n")/applications 2>/dev/null | grep <name>
   mimeapps = {

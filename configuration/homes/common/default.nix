@@ -1,8 +1,4 @@
-{
-  config,
-  outputs,
-  ...
-}: {
+{...}: {
   programs.home-manager.enable = true;
   xsession.scriptPath = ".hm-xsession";
   imports = [
