@@ -74,6 +74,8 @@ return {
   default_prog = { 'fish' },
   window_decorations = "RESIZE",
   -- warn_about_missing_glyphs = true,
+  max_fps = 144,
+  animation_fps = 24,
   initial_cols = 100,
   initial_rows = 30,
   hide_tab_bar_if_only_one_tab = true
