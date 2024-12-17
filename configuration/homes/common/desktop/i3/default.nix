@@ -87,7 +87,7 @@ in {
     gaps = {
       smartBorders = "on";
       smartGaps = true;
-      inner = 5;
+      inner = 10;
       outer = 10;
     };
     keybindings = let
@@ -205,7 +205,7 @@ in {
       }
     ];
     window = {
-      border = 2;
+      border = 4;
       commands = [
         {
           command = "move to scratchpad";
