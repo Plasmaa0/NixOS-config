@@ -29,7 +29,6 @@ in {
     arandr
     pulseaudio
     pavucontrol
-    zathura
     gparted
     # yandex-music
     cassette
