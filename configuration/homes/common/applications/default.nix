@@ -4,5 +4,6 @@
     ./social/telegram.nix
     ./editor/vscode.nix
     ./editor/texstudio.nix
+    ./media/zathura.nix
   ];
 }
