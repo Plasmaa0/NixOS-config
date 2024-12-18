@@ -15,7 +15,7 @@ in {
       "<Right>" = "navigate next";
       "<Left>" = "navigate previous";
       "D" = ''set "first-page-column 1:1"'';
-      "<A-D>" = ''set "first-page-column 1:2"'';
+      "<A-d>" = ''set "first-page-column 1:2"'';
       "." = "focus_inputbar /"; # russian layout same search button
       "т" = "search forward"; # same purpose (russian т)
       "Т" = "search backward"; # same purpose (russian т)
