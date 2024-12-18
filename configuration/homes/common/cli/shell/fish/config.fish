@@ -145,16 +145,8 @@ abbr venv source venv/bin/activate.fish
 # git abbreviations
 abbr icat wezterm imgcat
 # abbr fastfetch ~/infa/nitch/nitch
-abbr g git
-abbr ga git add
-abbr gaa git add --all
-abbr gb git branch
-abbr gc git commit -v
-abbr gcm git commit -v -m
-abbr gco git checkout
-abbr gd git diff
-abbr gp git push
-abbr gl git pull
+abbr gd "git diff --color | diff-so-fancy"
+abbr gD "git diff --color | diffnav"
 abbr glg git log --graph --decorate --oneline
 
 
