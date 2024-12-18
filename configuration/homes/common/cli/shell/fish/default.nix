@@ -8,5 +8,7 @@
     fish
     fishPlugins.done
     jump
+    diffnav
+    diff-so-fancy
   ];
 }
