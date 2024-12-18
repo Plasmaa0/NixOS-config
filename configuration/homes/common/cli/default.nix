@@ -8,6 +8,7 @@
 
     ./terminal/alacritty
     ./terminal/wezterm
+    ./terminal/kitty
 
     ./utils/fastfetch
     ./utils/git.nix

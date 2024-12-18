@@ -119,7 +119,7 @@ in {
         "${mod}+l" = "scratchpad show; resize set height 80 ppt; resize set width 80 ppt; move position center";
         "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${step}+ && ${send_brightness_notification} # increase screen brightness";
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${step}- && ${send_brightness_notification} # decrease screen brightness";
-        "${mod}+Return" = "exec wezterm";
+        "${mod}+Return" = "exec kitty";
         "${mod}+q" = "kill";
         "${mod}+Shift+Return" = "exec ~/.config/rofi/launchers/type-2/launcher.sh";
         "${mod}+a" = "focus left; exec --no-startup-id ${mouse_to_focused}";
