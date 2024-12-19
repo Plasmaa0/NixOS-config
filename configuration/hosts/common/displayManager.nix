@@ -18,6 +18,10 @@
       variants = ["qt5"];
     })
   ];
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "where_is_my_sddm_theme_qt5";
+  };
   services.xserver = {
     enable = true;
     displayManager.session = [
@@ -30,12 +34,8 @@
         '';
       }
     ];
-    displayManager.sddm = {
-      enable = true;
-      theme = "where_is_my_sddm_theme_qt5";
-    };
     displayManager.lightdm = {
-      # enable = true;
+      enable = false;
       greeters.slick = {
         enable = true;
         font = {
@@ -46,18 +46,6 @@
           package = pkgs.papirus-icon-theme;
           name = "Papirus-Dark";
         };
-        extraConfig = ''
-          [Greeter]
-              background="#699ad7"
-              logo="${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"
-              show-hostname=true
-              show-power=true
-              show-a11y=true
-              show-keyboard=true
-              show-clock=true
-              show-quit=true
-              xft-dpi=192
-        '';
       };
     };
   };
