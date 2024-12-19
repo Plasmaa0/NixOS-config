@@ -53,8 +53,8 @@ in {
       };
       unfocused = {
         border = "#${c.base05}";
-        background = "#${c.base01}";
-        text = "#${c.base06}";
+        background = "#${c.base05}";
+        text = "#${c.base01}";
         indicator = "#${c.base06}";
         childBorder = "#${c.base05}";
       };
@@ -116,7 +116,7 @@ in {
         "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send -u low $(pactl get-sink-mute @DEFAULT_SINK@) -i audio-volume-muted --hint=string:x-dunst-stack-tag:volume";
         "XF86AudioMicMute" = "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send -u low $(pactl get-source-mute @DEFAULT_SOURCE@) -i audio-volume-muted --hint=string:x-dunst-stack-tag:volume";
         "${mod}+semicolon" = "move to scratchpad";
-        "${mod}+l" = "scratchpad show; resize set height 80 ppt; resize set width 80 ppt; move position center";
+        "${mod}+l" = "scratchpad show";
         "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${step}+ && ${send_brightness_notification} # increase screen brightness";
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${step}- && ${send_brightness_notification} # decrease screen brightness";
         "${mod}+Return" = "exec kitty";
@@ -171,6 +171,8 @@ in {
         "l" = "resize shrink height 10 px or 10 ppt";
         "semicolon" = "resize grow width 10 px or 10 ppt";
         "space" = "resize set width 50ppt";
+        "w" = "resize set height 80 ppt; resize set width 80 ppt"; # "w" for wide
+        "c" = "move position center";
 
         "Left" = "resize shrink width 10 px or 10 ppt";
         "Down" = "resize grow height 10 px or 10 ppt";
