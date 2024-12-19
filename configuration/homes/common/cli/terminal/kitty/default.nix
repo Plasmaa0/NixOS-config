@@ -53,6 +53,7 @@
       "ctrl+down" = "scroll_to_prompt 1";
     };
     settings = {
+      shell = "fish";
       enabled_layouts = "splits";
       visual_window_select_characters = "SADFGQWERZXCV";
       disable_ligatures = "never";
