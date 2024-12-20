@@ -48,36 +48,36 @@ in {
         border = "#${c.base0B}";
         background = "#${c.base0B}";
         text = "#${c.base01}";
-        indicator = "#${c.base0C}";
+        indicator = "#${c.base0E}";
         childBorder = "#${c.base0B}";
       };
       unfocused = {
-        border = "#${c.base05}";
-        background = "#${c.base05}";
-        text = "#${c.base01}";
-        indicator = "#${c.base06}";
-        childBorder = "#${c.base05}";
+        border = "#${c.base01}aa";
+        background = "#${c.base01}";
+        text = "#${c.base04}";
+        indicator = "#${c.base03}aa";
+        childBorder = "#${c.base01}aa";
       };
       focusedInactive = {
-        border = "#${c.base0C}";
-        background = "#${c.base0C}";
-        text = "#${c.base01}";
-        indicator = "#${c.base0A}";
-        childBorder = "#${c.base0C}";
+        border = "#${c.base04}cc";
+        background = "#${c.base04}";
+        text = "#${c.base05}";
+        indicator = "#${c.base0A}cc";
+        childBorder = "#${c.base04}cc";
       };
       urgent = {
         border = "#${c.base0F}";
         background = "#${c.base0F}";
-        text = "#${c.base05}";
+        text = "#${c.base07}";
         indicator = "#${c.base0F}";
         childBorder = "#${c.base0F}";
       };
       placeholder = {
-        border = "#${c.base00}";
-        background = "#${c.base00}";
-        text = "#${c.base05}";
-        indicator = "#${c.base00}";
-        childBorder = "#${c.base00}";
+        border = "#${c.base00}aa";
+        background = "#${c.base00}aa";
+        text = "#${c.base04}";
+        indicator = "#${c.base04}aa";
+        childBorder = "#${c.base00}aa";
       };
     };
     fonts = {
