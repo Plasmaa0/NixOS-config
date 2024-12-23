@@ -37,11 +37,11 @@ in {
       statusbar-fg = rgb "base05";
       statusbar-bg = rgb "base02";
 
-      notification-bg = rgb "base04";
+      notification-bg = rgb "base02";
       notification-fg = rgb "base07";
-      notification-error-bg = rgb "base04";
+      notification-error-bg = rgb "base02";
       notification-error-fg = rgb "base08";
-      notification-warning-bg = rgb "base04";
+      notification-warning-bg = rgb "base02";
       notification-warning-fg = rgb "base09";
 
       inputbar-fg = rgb "base07";
