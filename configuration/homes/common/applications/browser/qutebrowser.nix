@@ -21,11 +21,20 @@ in {
       "x-scheme-handler/unknown" = ["org.qutebrowser.qutebrowser.desktop"];
     };
   };
+  home.sessionVariables = {
+    PASSWORD_STORE_DIR = "$HOME/.password-store";
+  };
   programs.password-store = {
     enable = true;
     package = pkgs.pass.withExtensions (ext: with ext; [pass-import]);
+    settings = {
+      PASSWORD_STORE_DIR = "$HOME/.password-store";
+    };
   };
-  programs.rofi.pass.enable = true;
+  programs.rofi.pass = {
+    enable = true;
+    stores = ["$HOME/.password-store"];
+  };
   home.file."${config.xdg.configHome}/qutebrowser/rofi" = {
     source = ../../desktop/common/rofi/rofi/launchers/type-2;
     recursive = true;
