@@ -90,6 +90,7 @@ in {
       inner = 10;
       outer = 10;
     };
+    defaultWorkspace = "workspace number 1";
     keybindings = let
       mod = config.xsession.windowManager.i3.config.modifier;
       send_volume_notification = ''notify-send -a volume -u low -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1) Volume --hint=string:x-dunst-stack-tag:volume'';
@@ -107,20 +108,22 @@ in {
       ws7 = "7";
       ws8 = "8";
       ws9 = "9";
+      ws10 = "10";
     in
-      lib.mkOptionDefault {
+      # fully override default config (with lib.mkOptionDefault options that exist in default config, but not provided here will still remain defined)
+      lib.mkForce {
         "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +${step} && ${send_volume_notification}";
         "--whole-window ${mod}+Shift+button4" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +${step} && ${send_volume_notification}";
         "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -${step} && ${send_volume_notification}";
         "--whole-window ${mod}+Shift+button5" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -${step} && ${send_volume_notification}";
         "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send -u low $(pactl get-sink-mute @DEFAULT_SINK@) -i audio-volume-muted --hint=string:x-dunst-stack-tag:volume";
         "XF86AudioMicMute" = "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send -u low $(pactl get-source-mute @DEFAULT_SOURCE@) -i audio-volume-muted --hint=string:x-dunst-stack-tag:volume";
-        "${mod}+semicolon" = "move to scratchpad";
-        "${mod}+l" = "scratchpad show";
+        "${mod}+semicolon" = "move to scratchpad; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+l" = "scratchpad show; exec --no-startup-id ${mouse_to_focused}";
         "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${step}+ && ${send_brightness_notification} # increase screen brightness";
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${step}- && ${send_brightness_notification} # decrease screen brightness";
-        "${mod}+Return" = "exec kitty";
-        "${mod}+q" = "kill";
+        "${mod}+Return" = "exec kitty; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+q" = "kill; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+Return" = "exec ~/.config/rofi/launchers/type-2/launcher.sh";
         "${mod}+a" = "focus left; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+s" = "focus down; exec --no-startup-id ${mouse_to_focused}";
@@ -133,9 +136,9 @@ in {
         "${mod}+h" = "split h";
         "${mod}+v" = "split v";
         "${mod}+f" = "fullscreen toggle";
-        "${mod}+Tab" = "layout toggle tabbed split";
-        "${mod}+Shift+space" = "floating toggle";
-        "${mod}+space" = "focus mode_toggle";
+        "${mod}+Tab" = "layout toggle tabbed split; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+Shift+space" = "floating toggle; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+space" = "focus mode_toggle; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+p" = "focus parent; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+c" = "focus child; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+1" = "workspace number ${ws1}; exec --no-startup-id ${mouse_to_focused}";
@@ -147,6 +150,7 @@ in {
         "${mod}+7" = "workspace number ${ws7}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+8" = "workspace number ${ws8}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+9" = "workspace number ${ws9}; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+0" = "workspace number ${ws10}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+1" = "move container to workspace number ${ws1}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+2" = "move container to workspace number ${ws2}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+3" = "move container to workspace number ${ws3}; exec --no-startup-id ${mouse_to_focused}";
@@ -156,6 +160,7 @@ in {
         "${mod}+Shift+7" = "move container to workspace number ${ws7}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+8" = "move container to workspace number ${ws8}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+9" = "move container to workspace number ${ws9}; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+Shift+0" = "move container to workspace number ${ws10}; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+r" = "restart";
         "${mod}+Shift+e" = "exec ~/.config/rofi/powermenu/type-2/powermenu.sh";
@@ -218,8 +223,19 @@ in {
           criteria = {class = "cassette";};
         }
         {
-          command = "floating enable border pixel 1";
+          command = "move to scratchpad";
+          criteria = {
+            class = "TelegramDesktop";
+            window_type = "normal";
+          };
+        }
+        {
+          command = "floating enable border pixel 3";
           criteria = {class = "Yad";};
+        }
+        {
+          command = "floating enable border pixel 3";
+          criteria = {class = "feh";};
         }
       ];
     };
