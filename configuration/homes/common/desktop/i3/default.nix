@@ -191,23 +191,20 @@ in {
     };
     floating.modifier = config.xsession.windowManager.i3.config.modifier;
     bars = [];
-    startup = [
+    # add notification = false; to all entries of this list
+    startup = map (set: set // {notification = false;}) [
       {
         command = "nm-applet --indicator";
-        notification = false;
       }
       {
         command = "xhost +";
-        notification = false;
       }
       {
         command = "feh --bg-fill ${config.stylix.image}";
-        notification = false;
         always = true;
       }
       {
         command = "eww open --toggle bar";
-        notification = false;
         always = true;
       }
     ];
