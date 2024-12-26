@@ -19,21 +19,23 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772";
-    fsType = "ext4";
-  };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772";
+      fsType = "ext4";
+    };
 
-  #old uuid of /boot C46E-7DFA
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/B24C-64BF";
-    fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
-  };
+    #old uuid of /boot C46E-7DFA
+    "/boot" = {
+      device = "/dev/disk/by-uuid/B24C-64BF";
+      fsType = "vfat";
+      options = ["fmask=0077" "dmask=0077"];
+    };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3";
-    fsType = "btrfs";
+    "/home" = {
+      device = "/dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3";
+      fsType = "btrfs";
+    };
   };
 
   swapDevices = [
