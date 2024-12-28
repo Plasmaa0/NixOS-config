@@ -8,4 +8,5 @@
     ../common/modules/bluetooth.nix
   ];
   hardware.bluetooth.powerOnBoot = false;
+  programs.dconf.enable = true;
 }

@@ -24,7 +24,6 @@ in {
     poweralertd
     xorg.xbacklight
     brightnessctl
-    dconf
     feh
     arandr
     pulseaudio
