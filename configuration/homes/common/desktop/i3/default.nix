@@ -123,6 +123,7 @@ in {
         "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${step}+ && ${send_brightness_notification} # increase screen brightness";
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${step}- && ${send_brightness_notification} # decrease screen brightness";
         "${mod}+Return" = "exec kitty; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+n" = "exec eww open --toggle nc";
         "${mod}+q" = "kill; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+Return" = "exec ~/.config/rofi/launchers/type-2/launcher.sh";
         "${mod}+a" = "focus left; exec --no-startup-id ${mouse_to_focused}";
@@ -200,7 +201,7 @@ in {
         command = "xhost +";
       }
       {
-        command = "feh --bg-fill ${config.stylix.image}";
+        command = "feh --no-fehbg --bg-fill ${config.stylix.image}";
         always = true;
       }
       {
@@ -218,13 +219,6 @@ in {
         {
           command = "move to scratchpad";
           criteria = {class = "cassette";};
-        }
-        {
-          command = "move to scratchpad";
-          criteria = {
-            class = "TelegramDesktop";
-            window_type = "normal";
-          };
         }
         {
           command = "floating enable border pixel 3";
