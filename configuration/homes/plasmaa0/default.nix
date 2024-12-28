@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  config,
+  ...
+}: let
   # to look for proper names of apps
   # ls $(echo $XDG_DATA_DIRS | tr ":" "\n")/applications 2>/dev/null | grep <name>
   mimeapps = {
@@ -46,5 +50,15 @@ in {
       defaultApplications = mimeapps;
       associations.added = mimeapps;
     };
+  };
+
+  home.persistence."/persist/home/${config.home.username}" = {
+    allowOther = true;
+    directories = [
+      "infa"
+      "uni"
+      "games"
+      "home-manager"
+    ];
   };
 }

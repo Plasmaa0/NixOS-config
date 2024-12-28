@@ -7,7 +7,12 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}: let
+  rootPartition = "/dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772";
+  bootPartition = "/dev/disk/by-uuid/B24C-64BF";
+  homePartition = "/dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3";
+  swapPartition = "/dev/disk/by-uuid/c3ee8d1f-0771-48a0-b379-508a8acd8be5";
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -19,27 +24,72 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [];
 
+  # fileSystems = {
+  #   "/" = {
+  #     device = rootPartition;
+  #     fsType = "ext4";
+  #   };
+
+  #   #old uuid of /boot C46E-7DFA
+  #   "/boot" = {
+  #     device = bootPartition;
+  #     fsType = "vfat";
+  #     options = ["fmask=0077" "dmask=0077"];
+  #   };
+
+  #   "/home" = {
+  #     device = homePartition;
+  #     fsType = "btrfs";
+  #   };
+  # };
+
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772";
-      fsType = "ext4";
-    };
-
-    #old uuid of /boot C46E-7DFA
-    "/boot" = {
-      device = "/dev/disk/by-uuid/B24C-64BF";
-      fsType = "vfat";
-      options = ["fmask=0077" "dmask=0077"];
+      device = "none";
+      fsType = "tmpfs";
+      neededForBoot = true;
+      options = [
+        "defaults"
+        # "size=2G"
+        "size=25%"
+        "mode=755"
+      ];
     };
 
     "/home" = {
-      device = "/dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3";
+      device = "none";
+      fsType = "tmpfs";
+      neededForBoot = true;
+      options = [
+        "defaults"
+        # "size=2G"
+        "size=25%"
+        "mode=755"
+      ];
+    };
+
+    "/persist" = {
+      device = rootPartition;
+      fsType = "ext4";
+      neededForBoot = true;
+    };
+
+    "/persist/home" = {
+      device = homePartition;
       fsType = "btrfs";
+      neededForBoot = true;
+    };
+
+    "/boot" = {
+      device = bootPartition;
+      fsType = "vfat";
+      options = ["fmask=0077" "dmask=0077"];
+      neededForBoot = true;
     };
   };
 
   swapDevices = [
-    {device = "/dev/disk/by-uuid/c3ee8d1f-0771-48a0-b379-508a8acd8be5";}
+    {device = swapPartition;}
     {
       device = "/var/swapfile";
       size = 16 * 1024;

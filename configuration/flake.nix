@@ -4,6 +4,7 @@
   inputs = {
     # nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    impermanence.url = "github:nix-community/impermanence";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,11 +35,18 @@
           ./hosts/${host}
           {
             networking.hostName = host;
-            users.users = nixpkgs.lib.genAttrs homes (user: {
-              isNormalUser = true;
-              description = user;
-              extraGroups = ["networkmanager" "wheel"];
-            });
+            users.users =
+              (nixpkgs.lib.genAttrs homes (user: {
+                isNormalUser = true;
+                description = user;
+                extraGroups = ["networkmanager" "wheel"];
+                hashedPasswordFile = toString ./homes/common/secrets/${user}_hashed_password;
+              }))
+              // {root.hashedPasswordFile = toString ./homes/common/secrets/root_hashed_password;};
+            # https://wiki.nixos.org/wiki/Home_Manager#Workaround_with_home_on_tmpfs_and_standalone_installation
+            system.activationScripts.profile-init.text = nixpkgs.lib.concatStringsSep "\n" (map
+              (user: "ln -sfn /home/${user}/.local/state/nix/profiles/profile /home/${user}/.nix-profile")
+              homes);
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -52,8 +60,6 @@
                     home.homeDirectory = "/home/${user}";
                   }
                   ./homes/${user}
-                  inputs.stylix.homeManagerModules.stylix
-                  inputs.nixvim.homeManagerModules.nixvim
                 ];
               });
             };

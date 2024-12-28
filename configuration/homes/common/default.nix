@@ -1,4 +1,8 @@
-{...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   programs.home-manager.enable = true;
   xsession.scriptPath = ".hm-xsession";
   imports = [
@@ -6,8 +10,43 @@
     ./shell_templates
 
     ./stylix.nix
+    inputs.impermanence.homeManagerModules.impermanence
   ];
-  # ++ (builtins.attrValues outputs.homeManagerModules);
+
+  home.persistence."/persist/home/${config.home.username}" = {
+    allowOther = true;
+    directories = [
+      "Desktop"
+      "Documents"
+      "Downloads"
+      "Music"
+      "Pictures"
+      "Videos"
+
+      ".gnupg"
+      ".ssh"
+      ".jump"
+      ".password-store"
+      ".cache/dconf"
+      ".local/share/applications"
+      {
+        directory = ".local/share/Steam";
+        method = "symlink";
+      }
+      {
+        directory = ".steam";
+        method = "symlink";
+      }
+      {
+        directory = ".factorio";
+        method = "symlink";
+      }
+    ];
+    files = [
+      ".steampath"
+      ".steampid"
+    ];
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

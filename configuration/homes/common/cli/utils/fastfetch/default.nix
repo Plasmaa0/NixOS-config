@@ -1,4 +1,5 @@
 {config, ...}: {
+  home.persistence."/persist/home/${config.home.username}".directories = [".cache/fastfetch"];
   home.file."${config.xdg.configHome}/fastfetch/config.jsonc".text = ''
     {
         "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
@@ -56,12 +57,12 @@
             {
                 "key": "│ {#34}󰉉 disk    {#keys}│",
                 "type": "disk",
-                "folders": "/"
+                "folders": "/persist"
             },
             {
                 "key": "│ {#35}🏠 home   {#keys}│",
                 "type": "disk",
-                "folders": "/home"
+                "folders": "/persist/home"
             },
             {
                 "key": "│ {#36} memory  {#keys}│",

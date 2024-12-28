@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   lib,
   ...
@@ -14,6 +15,9 @@
     '';
   };
 in {
+  imports = [
+    inputs.stylix.homeManagerModules.stylix
+  ];
   stylix.enable = true;
   stylix.autoEnable = true;
   stylix.image = ./wallpapers/monokai.jpg;

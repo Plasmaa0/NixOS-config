@@ -8,6 +8,7 @@
   rgb = color: ''rgb(${getColorCh color "r"}, ${getColorCh color "g"}, ${getColorCh color "b"})'';
   rgba = color: ''rgba(${getColorCh color "r"}, ${getColorCh color "g"}, ${getColorCh color "b"}, ${highlightTransparency})'';
 in {
+  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/zathura"];
   programs.zathura = {
     enable = true;
     # extraConfig = "";
