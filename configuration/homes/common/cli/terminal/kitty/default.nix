@@ -3,6 +3,7 @@
   lib,
   ...
 }: {
+  home.persistence."/persist/home/${config.home.username}".directories = [".cache/kitty"];
   programs.kitty = {
     enable = true;
     font.size = lib.mkForce 20;

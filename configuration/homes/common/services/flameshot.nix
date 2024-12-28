@@ -1,4 +1,5 @@
 {config, ...}: {
+  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/flameshot"];
   services.flameshot = {
     enable = true;
     settings = {

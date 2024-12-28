@@ -5,6 +5,10 @@
 }: let
   c = config.lib.stylix.colors;
 in {
+  home.persistence."/persist/home/${config.home.username}" = {
+    directories = [".local/share/rofi"];
+    files = [".cache/rofi-2.sshcache" ".cache/rofi3.druncache" ".cache/rofi3.filebrowsercache"];
+  };
   home.packages = with pkgs; [
     (nerdfonts.override {fonts = ["JetBrainsMono" "Iosevka"];})
     openmoji-color
