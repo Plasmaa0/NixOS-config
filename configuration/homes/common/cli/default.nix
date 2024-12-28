@@ -13,6 +13,7 @@
     ./utils/fastfetch
     ./utils/git.nix
     ./utils/nnn.nix
+    ./utils/btop.nix
   ];
   home.packages = with pkgs; [
     eza

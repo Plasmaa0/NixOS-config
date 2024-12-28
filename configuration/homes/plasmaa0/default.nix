@@ -22,7 +22,6 @@ in {
 
   home.packages = with pkgs; [
     spaceFM
-    (btop.override {cudaSupport = true;})
     networkmanagerapplet
     upower
     poweralertd
