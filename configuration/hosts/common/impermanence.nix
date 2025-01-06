@@ -33,6 +33,7 @@
           "/etc/nixos"
           "/var/log"
           "/var/lib/bluetooth"
+          "/var/lib/alsa"
           "/etc/ssh"
           "/root"
           "/nix"
@@ -75,6 +76,9 @@
             group = "root";
             mode = "0700";
           }
+        ]
+        ++ lib.optionals config.powerManagement.powertop.enable [
+          /var/cache/powertop
         ]
         ++ lib.optionals (builtins.any (x: x.useDHCP) (builtins.attrValues config.networking.interfaces) || config.networking.useDHCP) [
           {
