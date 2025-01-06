@@ -4,6 +4,32 @@
   ...
 }: let
   c = config.lib.stylix.colors;
+  # fadeBrightness = pkgs.writeShellApplication {
+  #   name = "fade-brightness";
+  #   runtimeInputs = with pkgs; [brightnessctl coreutils];
+  #   text = ''
+  #     target_level="$1"
+  #     fade_step_time="$2"
+  #     get_brightness() {
+  #         brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'
+  #     }
+  #     set_brightness() {
+  #         brightnessctl set "$1"% > /dev/null
+  #     }
+  #     fade_brightness() {
+  #         local level
+  #         for level in "$(eval echo {$(get_brightness)..$1})"; do
+  #             set_brightness "$level"
+  #             sleep "$fade_step_time"
+  #         done
+  #     }
+  #     trap 'exit 0' TERM INT
+  #     trap 'set_brightness "$(get_brightness)"; kill %%' EXIT
+  #     fade_brightness "$target_level"
+  #     sleep 2147483647 &
+  #     wait
+  #   '';
+  # };
 in {
   home.packages = with pkgs; [
     betterlockscreen
@@ -20,11 +46,14 @@ in {
         # -corners xxxx       : corner actions (0, +, -) in this order:
         #                       topleft topright bottomleft bottomright
         " -corners '----'" # put your cursor in one of corners of the screen to prevent locking
+        " -bell 60"
+        " -notify 15"
+        ''-notifier '${pkgs.libnotify}/bin/notify-send -i system-lock-screen "xautolock" "Locking in 15 seconds"' ''
       ];
     };
-    xss-lock.extraOptions = [
-      " -n ${pkgs.xss-lock}/share/doc/xss-lock/dim-screen.sh"
-    ];
+    # xss-lock.extraOptions = [
+    #   " -n ${fadeBrightness}/bin/fade-brightness 5 0.05"
+    # ];
   };
 
   # services.logind.extraConfig = ''
