@@ -14,6 +14,7 @@
     ./utils/git.nix
     ./utils/nnn.nix
     ./utils/btop.nix
+    ./utils/direnv.nix
   ];
   home.packages = with pkgs; [
     eza
