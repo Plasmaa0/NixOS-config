@@ -25,7 +25,7 @@
     };
     # plymouth settings
     plymouth = let
-      theme_name = "colorful_loop";
+      theme_name = "hexagon_alt";
     in {
       enable = true;
       theme = theme_name;
@@ -35,6 +35,7 @@
     };
     # # Enable "Silent Boot"
     consoleLogLevel = 0;
+    initrd.systemd.enable = true;
     initrd.verbose = false;
     kernelParams = [
       "quiet"
