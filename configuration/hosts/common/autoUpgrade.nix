@@ -8,7 +8,7 @@
       "-L" # print build logs
     ];
     dates = "daily";
-    randomizedDelaySec = "45min";
+    randomizedDelaySec = "15min";
     allowReboot = true;
   };
 }
