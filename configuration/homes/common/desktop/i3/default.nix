@@ -198,6 +198,9 @@ in {
         command = "nm-applet --indicator";
       }
       {
+        command = "blueman-applet";
+      }
+      {
         command = "xhost +";
       }
       {
