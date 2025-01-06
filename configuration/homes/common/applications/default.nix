@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./mime.nix
     ./browser/qutebrowser.nix
     ./social/telegram.nix
     ./social/cassette.nix

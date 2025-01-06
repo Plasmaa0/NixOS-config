@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   highlightTransparency = "0.5";
@@ -9,6 +10,12 @@
   rgba = color: ''rgba(${getColorCh color "r"}, ${getColorCh color "g"}, ${getColorCh color "b"}, ${highlightTransparency})'';
 in {
   home.persistence."/persist/home/${config.home.username}".directories = [".local/share/zathura"];
+  mime.list = [
+    {
+      mimeTypes = ["application/pdf"];
+      handler = pkgs.zathura;
+    }
+  ];
   programs.zathura = {
     enable = true;
     # extraConfig = "";
