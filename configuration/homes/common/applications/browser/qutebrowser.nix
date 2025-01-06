@@ -16,16 +16,19 @@ in {
     ".cache/qutebrowser"
     ".config/qutebrowser/bookmarks"
   ];
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "text/html" = ["org.qutebrowser.qutebrowser.desktop"];
-      "x-scheme-handler/http" = ["org.qutebrowser.qutebrowser.desktop"];
-      "x-scheme-handler/https" = ["org.qutebrowser.qutebrowser.desktop"];
-      "x-scheme-handler/about" = ["org.qutebrowser.qutebrowser.desktop"];
-      "x-scheme-handler/unknown" = ["org.qutebrowser.qutebrowser.desktop"];
-    };
-  };
+  mime.list = [
+    {
+      mimeTypes = [
+        "text/html"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+        "x-scheme-handler/about"
+        "x-scheme-handler/unknown"
+      ];
+      handler = pkgs.qutebrowser;
+    }
+  ];
+
   home.sessionVariables = {
     PASSWORD_STORE_DIR = "$HOME/.password-store";
   };
@@ -71,6 +74,7 @@ in {
       DEFAULT = lib.mkForce "https://ya.ru/search/?text={}";
       g = "https://www.google.com/search?hl=en&q={}";
       w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
+      hm = "https://home-manager-options.extranix.com/?query={}&release=master";
 
       # nix (w)iki, (p)ackages, (o)ptions
       nw = "https://wiki.nixos.org/index.php?search={}";
