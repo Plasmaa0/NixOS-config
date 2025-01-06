@@ -1,6 +1,10 @@
 {...}: {
   services.thermald.enable = true; # cooler control (as i understand this)
-  services.upower.enable = true;
+  services.upower = {
+    enable = true;
+    percentageCritical = 3;
+    criticalPowerAction = "Hibernate";
+  };
   powerManagement.powertop.enable = true;
   services.tlp = {
     enable = true;
