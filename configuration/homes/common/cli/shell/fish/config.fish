@@ -91,6 +91,7 @@ end
 
 # thefuck --alias | source
 jump shell fish | source
+direnv hook fish | source
 
 function take --argument dir
     mkdir -p $dir
