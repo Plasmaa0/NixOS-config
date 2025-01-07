@@ -22,6 +22,7 @@
     ./systemd-lock-handler.nix
     ./printing.nix
     ./impermanence.nix
+    ./automount.nix
     inputs.home-manager.nixosModules.home-manager
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
