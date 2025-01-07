@@ -18,7 +18,6 @@
     spaceFM
     networkmanagerapplet
     upower
-    poweralertd
     xorg.xbacklight
     brightnessctl
     feh
