@@ -27,6 +27,9 @@
    </div>
 </h1>
 
+> [!CAUTION]
+> This `README.md` is highly out of date
+
 <h1 align="center"> Preview </h1>
 
 ![few windows opened](./assets_readme/animation.gif)
