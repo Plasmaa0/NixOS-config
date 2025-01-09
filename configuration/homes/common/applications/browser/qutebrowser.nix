@@ -24,6 +24,7 @@ in {
         "x-scheme-handler/https"
         "x-scheme-handler/about"
         "x-scheme-handler/unknown"
+        "application/xhtml+xml"
       ];
       handler = pkgs.qutebrowser;
     }
