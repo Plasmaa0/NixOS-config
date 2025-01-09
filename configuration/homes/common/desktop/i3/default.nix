@@ -124,6 +124,7 @@ in {
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${step}- && ${send_brightness_notification} # decrease screen brightness";
         "${mod}+Return" = "exec kitty; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+n" = "exec eww open --toggle nc";
+        "${mod}+b" = "exec eww open --toggle bar";
         "${mod}+q" = "kill; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+Shift+Return" = "exec ~/.config/rofi/launchers/type-2/launcher.sh";
         "${mod}+a" = "focus left; exec --no-startup-id ${mouse_to_focused}";
