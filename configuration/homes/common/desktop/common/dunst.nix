@@ -153,7 +153,7 @@ in {
         offset = "0x55"
 
         # Radius of the four corners of the notification
-        # corner_radius = 15
+        corner_radius = 10
         progress_bar_corner_radius = 5
 
         # Show how many messages are currently hidden (because of geometry).
@@ -226,7 +226,7 @@ in {
         hide_duplicate_count = "false"
 
         # Display indicators for URLs (U) and actions (A).
-        show_indicators = "no"
+        show_indicators = "yes"
 
         # Align icons left/right/off
         icon_position = "left"

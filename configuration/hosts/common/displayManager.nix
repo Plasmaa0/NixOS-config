@@ -2,7 +2,7 @@
   fonts.fontDir.enable = true;
   fonts.fontconfig.enable = true;
   fonts.packages = with pkgs; [
-    (nerdfonts.override {fonts = ["IosevkaTermSlab"];})
+    nerd-fonts.iosevka-term-slab
   ];
   environment.systemPackages = with pkgs; [
     (where-is-my-sddm-theme.override {
@@ -39,7 +39,7 @@
       greeters.slick = {
         enable = true;
         font = {
-          package = pkgs.nerdfonts.override {fonts = ["IosevkaTermSlab"];};
+          package = pkgs.nerd-fonts.iosevka-term-slab;
           name = "IosevkaTermSlab";
         };
         iconTheme = {

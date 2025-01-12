@@ -2,6 +2,7 @@
   imports = [
     ./editor/helix
     ./editor/neovim
+    ./editor/markdown-oxide
 
     ./shell/fish
     ./shell/starship

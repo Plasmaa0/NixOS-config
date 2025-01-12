@@ -1,7 +1,7 @@
 {...}: {
   security.rtkit.enable = true;
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   # avahi required for service discovery
   services.avahi.enable = true;
