@@ -208,7 +208,7 @@
       };
       time = {
         disabled = false;
-        format = " [$time]($style)";
+        format = "[$time]($style)";
         style = "bold purple";
         time_format = "%T";
       };
