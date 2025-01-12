@@ -7,6 +7,6 @@
     vlc
   ];
   home.persistence."/persist/home/${config.home.username}" = {
-    directories = [".local/share/vlc" ".cache/vlc"];
+    directories = [".local/share/vlc" ".cache/vlc" ".config/vlc"];
   };
 }
