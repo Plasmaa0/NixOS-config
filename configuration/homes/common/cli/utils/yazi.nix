@@ -1,5 +1,5 @@
 {...}: {
-  programs.nnn = {
+  programs.yazi = {
     enable = true;
   };
 }

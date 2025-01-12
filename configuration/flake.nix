@@ -46,7 +46,7 @@
                 isNormalUser = true;
                 description = user;
                 extraGroups = ["networkmanager" "wheel"];
-                hashedPasswordFile = toString ./homes/common/secrets/${user}_hashed_password;
+                password = import ./homes/common/secrets/${user}_password.nix;
               }))
               // {root.hashedPasswordFile = toString ./homes/common/secrets/root_hashed_password;};
             # https://wiki.nixos.org/wiki/Home_Manager#Workaround_with_home_on_tmpfs_and_standalone_installation
