@@ -19,6 +19,7 @@ in {
       clang-tools
       lua-language-server
       marksman
+      markdown-oxide
       nil
       python311Packages.python-lsp-server
       python312Packages.python-lsp-server
@@ -41,6 +42,7 @@ in {
         lsp = {
           display-messages = true;
           display-inlay-hints = true;
+          goto-reference-include-declaration = false;
         };
         cursor-shape = {
           insert = "bar";
@@ -52,7 +54,7 @@ in {
         };
         indent-guides = {
           render = true;
-          character = "╎";
+          character = "";
           skip-levels = 1;
         };
         soft-wrap = {
@@ -60,11 +62,43 @@ in {
           max-wrap = 25;
           max-indent-retain = 0;
         };
-        statusline = {
-          left = ["spinner" "mode" "file-modification-indicator" "read-only-indicator"];
-          center = ["version-control" "file-name"];
-          right = ["diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type"];
-          separator = "│";
+        statusline = let
+          sep = "separator";
+          sp = "spacer";
+        in {
+          left = [
+            "spinner"
+            "mode"
+            "file-modification-indicator"
+            "read-only-indicator"
+          ];
+          center = [
+            "version-control"
+            sep
+            "file-name"
+          ];
+          right = [
+            "diagnostics"
+            sep
+            "workspace-diagnostics"
+            sp
+
+            "selections"
+            sp
+
+            "position"
+            sep
+            "position-percentage"
+            sp
+
+            "file-encoding"
+            "file-line-ending"
+            "file-type"
+          ];
+          separator = " ";
+          mode.normal = "N 󰅨";
+          mode.insert = "I 󰏪";
+          mode.select = "S 󰒉";
         };
         whitespace = {
           characters = {
@@ -187,7 +221,7 @@ in {
     };
     themes = {
       stylix = {
-        "ui.linenr.selected" = {bg = "base3";};
+        "ui.linenr.selected" = {bg = "base2";};
         "ui.text.focus" = {
           fg = "yellow";
           modifiers = ["bold"];
@@ -230,7 +264,7 @@ in {
         };
 
         # active line, highlighting
-        "ui.selection" = {bg = "base4";};
+        "ui.selection" = {bg = "base2";};
         "ui.cursor.match" = {bg = "base4";};
         "ui.cursorline" = {bg = "base1";};
 
@@ -243,7 +277,7 @@ in {
           fg = "base8";
           bg = "base4";
         };
-        "ui.virtual.inlay-hint" = {fg = "base6";};
+        "ui.virtual.inlay-hint" = {fg = "base4";};
 
         # comments, nord3 based lighter color
         "comment" = {
