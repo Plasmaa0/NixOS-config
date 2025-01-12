@@ -15,7 +15,6 @@
   ];
 
   home.packages = with pkgs; [
-    spaceFM
     networkmanagerapplet
     upower
     xorg.xbacklight

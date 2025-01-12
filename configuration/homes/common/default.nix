@@ -28,6 +28,11 @@
       ".jump"
       ".password-store"
       ".cache/dconf"
+      {
+        directory = ".config/pulse";
+        # mode = "0766";
+        method = "symlink";
+      }
       ".local/share/applications"
       {
         directory = ".local/share/Steam";

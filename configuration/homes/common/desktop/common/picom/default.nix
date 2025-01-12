@@ -131,7 +131,12 @@
       #################################
       #             Rules             #
       #################################
-      rules = [
+      rules = let
+        opFULL = 1;
+        opMAX = 0.9;
+        opNORM = 0.8;
+        opLOW = 0.6;
+      in [
         {
           match = "_GTK_FRAME_EXTENTS@";
           shadow = false;
@@ -155,36 +160,37 @@
         }
         {
           match = "fullscreen";
-          opacity = 1;
+          opacity = opFULL;
           corner-radius = 0;
         }
         {
           match = "(focused || group_focused) && (!fullscreen)"; #active
-          opacity = 0.85;
+          opacity = opNORM;
         }
         {
           match = "!(focused || group_focused) && (!fullscreen)"; #inactive
-          opacity = 0.7;
+          opacity = opLOW;
           dim = 0.1;
         }
         {
           match = "class_g = 'Darktable'";
-          opacity = false;
+          opacity = opFULL;
         }
         {
           match = "class_g = 'Polybar'";
-          opacity = 1;
+          opacity = opMAX;
           shadow = false;
           dim = 0;
         }
         {
-          match = "class_g = 'eww'";
-          opacity = 1;
+          match = "class_g = 'Eww' || name = 'Eww - bar' || class_g = 'Rofi'";
+          opacity = opNORM;
           shadow = false;
           dim = 0;
         }
         {
           match = "class_g = 'i3-frame' || class_i = 'i3-frame'";
+          opacity = opMAX;
           transparent-clipping = false;
           shadow = false;
           animations = let
@@ -211,6 +217,7 @@
         }
         {
           match = "name = 'Dunst' || name = 'Notification'";
+          opacity = opNORM;
           transparent-clipping = false;
           full-shadow = false;
           animations = let

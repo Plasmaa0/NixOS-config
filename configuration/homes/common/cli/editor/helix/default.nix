@@ -30,6 +30,7 @@ in {
       taplo
       alejandra
     ];
+
     settings = {
       theme = "stylix";
       editor = {
@@ -39,6 +40,12 @@ in {
         rulers = [100];
         auto-info = true;
         gutters = ["diagnostics" "spacer" "line-numbers" "spacer" "diff"];
+        end-of-line-diagnostics = "hint";
+        inline-diagnostics = {
+          cursor-line = "info";
+          other-lines = "error";
+          max-wrap = 50;
+        };
         lsp = {
           display-messages = true;
           display-inlay-hints = true;

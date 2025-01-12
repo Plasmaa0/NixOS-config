@@ -9,10 +9,14 @@ in {
     directories = [".local/share/rofi"];
     files = [".cache/rofi-2.sshcache" ".cache/rofi3.druncache" ".cache/rofi3.filebrowsercache"];
   };
-  home.packages = with pkgs; [
-    (nerdfonts.override {fonts = ["JetBrainsMono" "Iosevka"];})
-    openmoji-color
-  ];
+  home.packages = with pkgs;
+    [
+      openmoji-color
+    ]
+    ++ (with pkgs.nerd-fonts; [
+      iosevka
+      jetbrains-mono
+    ]);
   programs.rofi.enable = true;
   home.file."${config.xdg.configHome}/rofi" = {
     source = ./rofi;
