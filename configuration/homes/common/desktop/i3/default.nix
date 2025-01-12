@@ -54,14 +54,14 @@ in {
       unfocused = {
         border = "#${c.base01}aa";
         background = "#${c.base01}";
-        text = "#${c.base04}";
+        text = "#${c.base05}";
         indicator = "#${c.base03}aa";
         childBorder = "#${c.base01}aa";
       };
       focusedInactive = {
         border = "#${c.base04}cc";
         background = "#${c.base04}";
-        text = "#${c.base05}";
+        text = "#${c.base00}";
         indicator = "#${c.base0A}cc";
         childBorder = "#${c.base04}cc";
       };
@@ -87,8 +87,8 @@ in {
     gaps = {
       smartBorders = "on";
       smartGaps = true;
-      inner = 10;
-      outer = 10;
+      inner = 5;
+      outer = 5;
     };
     defaultWorkspace = "workspace number 1";
     keybindings = let
