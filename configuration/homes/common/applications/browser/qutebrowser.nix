@@ -92,6 +92,8 @@ in {
         "<Space>tl" = "set colors.webpage.darkmode.enabled false;; set colors.webpage.preferred_color_scheme light";
         "<Alt+d>" = "tab-next";
         "<Alt+a>" = "tab-prev";
+        "<Ctrl+Alt+d>" = "tab-move +";
+        "<Ctrl+Alt+a>" = "tab-move -";
         "<Alt+Left>" = "back";
         "<Alt+Right>" = "forward";
       };
