@@ -180,6 +180,7 @@ List of applications with colors tweaked by me:
 - [ ] sops-nix secret management
 - [ ] kitty theme recolor
 - [ ] i3 resize mode show in eww
+- [ ] i3 `bindsym` -> `bindcode`
 - [ ] show caps lock
 
 # In case of emergency
