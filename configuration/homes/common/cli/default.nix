@@ -40,8 +40,5 @@
     gnumake
     glow
     mdcat
-    alejandra
-    statix
-    deadnix
   ];
 }
