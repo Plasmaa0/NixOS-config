@@ -176,8 +176,51 @@ List of applications with colors tweaked by me:
 - `betterlockscreen`
 
 # TODO
-- [x] fix freezing on suspend (something with `betterlockscreen`)
-- [x] system.autoUpgrade
-- [x] eww notification center
 - [ ] maintain `README.md`
 - [ ] sops-nix secret management
+- [ ] kitty theme recolor
+- [ ] i3 resize mode show in eww
+- [ ] show caps lock
+
+# In case of emergency
+## Recovery steps.
+Load from usb. (In debug mode you won't be able to connect to wifi, so i'd prefer default mode)
+### Mount everything:
+1. As in `hardware-configuration.nix` (like with impermanence):
+```bash
+mount -t tmpfs -o "defaults,size=25%,mode=755" tmpfs /mnt
+
+mkdir -p /mnt/home
+mount -t tmpfs -o "defaults,size=25%,mode=755" tmpfs /mnt/home
+
+mkdir -p /mnt/persist/home
+mount /dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772 /mnt/persist
+mount /dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3 /mnt/persist/home
+
+mkdir -p /mnt/boot
+mount -o "fmask=0077,dmask=0077" /dev/disk/by-uuid/B24C-64BF /mnt/boot
+```
+2. Or in a simple way:
+```bash
+mkdir -p /mnt/home
+mount /dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772 /mnt
+mount /dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3 /mnt/home
+
+mkdir -p /mnt/boot
+mount -o "fmask=0077,dmask=0077" /dev/disk/by-uuid/B24C-64BF /mnt/boot
+```
+3. Or even simpler (if you haven't splitted `/home` and `/`)
+```bash
+mount /dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772 /mnt
+
+mkdir -p /mnt/boot
+mount -o "fmask=0077,dmask=0077" /dev/disk/by-uuid/B24C-64BF /mnt/boot
+```
+### Activate and enter your system
+```bash
+chroot /mnt /nix/var/nix/profiles/system/activate
+chroot /mnt /run/current-system/sw/bin/bash
+# any recovery steps needed, for example:
+passwd
+```
+Alternatively look into `nix-enter`
