@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: let
   activation-script = {
@@ -14,20 +15,22 @@
       run ${pkgs.procps}/bin/pkill -USR1 hx || true
     '';
   };
+  theme = import ./themes/dark/monokai.nix;
+  alternateTheme = import ./themes/dark/xmas.nix;
 in {
   imports = [
     inputs.stylix.homeManagerModules.stylix
   ];
   stylix.enable = true;
   stylix.autoEnable = true;
-  stylix.image = ./wallpapers/monokai.jpg;
+  stylix.image = ./wallpapers/${theme.wallpaper};
   stylix.targets = {
     i3.enable = false;
     helix.enable = false;
   };
   stylix.imageScalingMode = "fill";
-  stylix.polarity = "dark";
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/monokai.yaml";
+  stylix.polarity = theme.polarity;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/${theme.scheme}.yaml";
   home.packages = with pkgs; [
     (writeShellApplication {
       name = "toggle-theme";
@@ -43,9 +46,9 @@ in {
   home.activation = activation-script;
   specialisation.light-theme.configuration = {
     # stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";
-    stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
-    stylix.image = lib.mkForce ./wallpapers/desert_day.jpg;
-    stylix.polarity = lib.mkForce "light";
+    stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/${alternateTheme.scheme}.yaml";
+    stylix.image = lib.mkForce ./wallpapers/${alternateTheme.wallpaper};
+    stylix.polarity = lib.mkForce alternateTheme.polarity;
     home.activation = activation-script;
   };
   # home-manager generations | head -1 | tr " " "\n" | grep "/nix.*
@@ -61,15 +64,15 @@ in {
   };
   stylix.fonts = {
     serif = {
-      package = pkgs.nerdfonts.override {fonts = ["IosevkaTermSlab"];};
+      package = pkgs.nerd-fonts.iosevka-term-slab;
       name = "IosevkaTermSlab";
     };
     sansSerif = {
-      package = pkgs.nerdfonts.override {fonts = ["Arimo"];};
+      package = pkgs.nerd-fonts.arimo;
       name = "Arimo";
     };
     monospace = {
-      package = pkgs.nerdfonts.override {fonts = ["Iosevka"];};
+      package = pkgs.nerd-fonts.iosevka;
       name = "Iosevka";
     };
     emoji = {
