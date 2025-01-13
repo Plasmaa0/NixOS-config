@@ -7,7 +7,7 @@
       "nixpkgs"
       "-L" # print build logs
     ];
-    dates = "daily";
+    dates = "weekly";
     randomizedDelaySec = "15min";
     allowReboot = true;
   };
