@@ -33,10 +33,15 @@
           "/etc/nixos"
           "/var/log"
           "/var/lib/bluetooth"
-          "/var/lib/alsa"
           "/etc/ssh"
           "/root"
           "/nix"
+          {
+            directory = /var/lib/alsa;
+            user = "root";
+            group = "root";
+            mode = "0777";
+          }
           {
             directory = /var/lib/nixos;
             user = "root";
