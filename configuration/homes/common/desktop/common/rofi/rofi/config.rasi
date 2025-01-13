@@ -1,6 +1,6 @@
 configuration {
 	/*---------- General setting ----------*/
-	modi: "drun,run,filebrowser,window";
+	modi: "drun,filebrowser,window,combi";
 	case-sensitive: false;
 	cycle: true;
 	filter: "";
@@ -54,9 +54,9 @@ configuration {
 	window-thumbnail: false;
 
 	/*---------- Combi settings ----------*/
-/*	combi-modi: "window,run";*/
-/*	combi-hide-mode-prefix: false;*/
-/*	combi-display-format: "{mode} {text}";*/
+	combi-modi: "window,drun";
+	combi-hide-mode-prefix: false;
+	combi-display-format: "{mode} {text}";
 
 	/*---------- History and Sorting ----------*/
 	disable-history: false;
@@ -84,9 +84,10 @@ configuration {
 
 	/*---------- File browser settings ----------*/
     filebrowser {
-/*	  directory: "/home";*/
+	  directory: "/home";
       directories-first: true;
       sorting-method:    "name";
+	  show-hidden: false;
     }
 
 	/*---------- Other settings ----------*/
