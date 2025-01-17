@@ -30,6 +30,7 @@ in {
     };
     options = lib.mkForce {
       synctex = true;
+      selection-clipboard = "clipboard";
       # synctex-editor-command = "vim --servername VIM --remote +\%{lie} \%{input}";
 
       default-fg = rgb "base07";
