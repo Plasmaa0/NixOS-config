@@ -1,0 +1,3 @@
+[submodule "configuration/homes/common/cli/utils/yazi/plugins/restore.yazi"]
+	path = configuration/homes/common/cli/utils/yazi/plugins/restore.yazi
+	url = git@github.com:boydaihungst/restore.yazi.git
