@@ -11,7 +11,6 @@ check_dead:
 [group('checks')]
 format:
     just --fmt --unstable
-    @echo "alejandra \$(fd .nix)"
     alejandra --quiet $(fd .nix)
 
 # statix linter
