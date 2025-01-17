@@ -44,6 +44,6 @@
         homes = ["plasmaa0"];
       };
     };
-    devShells = forAllSystems (system: import ./shell.nix {inherit pkgs;});
+    devShells = forAllSystems (_: import ./shell.nix {inherit pkgs;});
   };
 }
