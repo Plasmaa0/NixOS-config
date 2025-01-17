@@ -126,6 +126,7 @@ in {
           A-j = ["search_selection" "extend_search_next"];
           C-q = ":bc";
           C-A-l = ":format";
+          Y = ":clipboard-yank";
           C-o = ":open ~/.config/helix/config.toml";
           esc = ["collapse_selection" "keep_primary_selection"];
           ret = ["open_below" "normal_mode"];
