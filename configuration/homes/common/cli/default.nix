@@ -12,7 +12,7 @@
 
     ./utils/fastfetch
     ./utils/git.nix
-    ./utils/yazi.nix
+    ./utils/yazi
     ./utils/btop.nix
     ./utils/direnv.nix
   ];
