@@ -6,7 +6,7 @@
 }: {
   home.file."${config.xdg.configHome}/fish/config.fish".source = ./config.fish;
   home.persistence."/persist/home/${config.home.username}".directories = [".local/share/fish" ".jump"];
-  home.activation.fish_update_completions = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.fish_update_completions = lib.hm.dag.entryAfter ["linkGeneration"] ''
     run ${pkgs.fish}/bin/fish -c fish_update_completions || true
   '';
   home.packages = with pkgs; [
