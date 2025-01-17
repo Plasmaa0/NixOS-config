@@ -7,6 +7,7 @@
       home-manager
       git
       gnumake
+      just
       cloc
       alejandra
       statix

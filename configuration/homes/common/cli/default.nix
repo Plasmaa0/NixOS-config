@@ -38,6 +38,7 @@
     jq
     file
     gnumake
+    just
     glow
     mdcat
   ];
