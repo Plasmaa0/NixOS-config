@@ -12,7 +12,7 @@ get_icon () {
 }
 
 case "$1" in
-    --vol) get_vol ;;
+    --vol) get_vol; pactl subscribe | grep --line-buffered "sink" | while read -r UNUSED_LINE; do get_vol; done ;;
     --icon) get_icon ;;
     --toggle-muted) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
 esac
