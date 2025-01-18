@@ -75,20 +75,23 @@ in {
 
       critical_count() {
         crits=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.gnugrep}/bin/grep -c CRITICAL)
-        total=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.coreutils}/bin/wc --lines)
-        [ $total -eq 0 ] && ${pkgs.coreutils}/bin/echo 0 || ${pkgs.coreutils}/bin/echo $(((crits*100)/total))
+        ${pkgs.coreutils}/bin/echo $crits
+        # total=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.coreutils}/bin/wc --lines)
+        # [ $total -eq 0 ] && ${pkgs.coreutils}/bin/echo 0 || ${pkgs.coreutils}/bin/echo $(((crits*100)/total))
       }
 
       normal_count() {
         norms=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.gnugrep}/bin/grep -c NORMAL)
-        total=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.coreutils}/bin/wc --lines)
-        [ "$total" -eq 0 ] && ${pkgs.coreutils}/bin/echo 0 || ${pkgs.coreutils}/bin/echo $(((norms*100)/total))
+        ${pkgs.coreutils}/bin/echo $norms
+        # total=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.coreutils}/bin/wc --lines)
+        # [ "$total" -eq 0 ] && ${pkgs.coreutils}/bin/echo 0 || ${pkgs.coreutils}/bin/echo $(((norms*100)/total))
       }
 
       low_count() {
         lows=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.gnugrep}/bin/grep -c LOW)
-        total=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.coreutils}/bin/wc --lines)
-        [ "$total" -eq 0 ] && ${pkgs.coreutils}/bin/echo 0 || ${pkgs.coreutils}/bin/echo $(((lows*100)/total))
+        ${pkgs.coreutils}/bin/echo $lows
+        # total=$(${pkgs.coreutils}/bin/cat $DUNST_LOG | ${pkgs.coreutils}/bin/wc --lines)
+        # [ "$total" -eq 0 ] && ${pkgs.coreutils}/bin/echo 0 || ${pkgs.coreutils}/bin/echo $(((lows*100)/total))
       }
 
       total_count() {

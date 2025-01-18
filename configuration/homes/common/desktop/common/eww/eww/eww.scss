@@ -1,45 +1,4 @@
 @import 'colors';
-/* for testing purposes */
-/* $bg: #272822; */
-/* $bg-alt: #383830; */
-/* $active: #49483e; */
-/* $borderbg: #f5f4f1; */
-/* $fg: #f8f8f2; */
-/* $urgent: #cc6633; */
-/* $selected: #a6e22e; */
-/* $highlight: #f92672; */
-
-/* $critical_frame_color: #f92672; */
-/* $critical_background: #cc6633; */
-/* $critical_foreground: #272822; */
-
-/* $normal_background: #a6e22e; */
-/* $normal_foreground: #383830; */
-/* $normal_frame_color: #a6e22e; */
-
-/* $low_frame_color: #f8f8f2; */
-/* $low_foreground: #f5f4f1; */
-/* $low_background: #383830; */
-
-/* $base00:#272822; */
-/* $base01:#383830; */
-/* $base02:#49483e; */
-/* $base03:#75715e; */
-/* $base04:#a59f85; */
-/* $base05:#f8f8f2; */
-/* $base06:#f5f4f1; */
-/* $base07:#f9f8f5; */
-/* $base08:#f92672; */
-/* $base09:#fd971f; */
-/* $base0A:#f4bf75; */
-/* $base0B:#a6e22e; */
-/* $base0C:#a1efe4; */
-/* $base0D:#66d9ef; */
-/* $base0E:#ae81ff; */
-/* $base0F:#cc6633; */
-
-/* $yellow:$base0A; */
-/* $blue:$base0D; */
 
 $regular: 0.6rem;
 $small: 0.4rem;
@@ -67,6 +26,7 @@ tooltip {
 
 .allbars {
   margin: 0.5*$small $regular;
+  padding: 0;
 }
 
 .mainbars {
@@ -83,6 +43,7 @@ tooltip {
   background-size: 2*$regular;
   min-height: 2*$regular;
   min-width: 2*$regular;
+  transition: all .7s ease-in-out;
 }
 
 .icon-power {
@@ -98,6 +59,17 @@ tooltip {
   padding: 0 5px;
   font-size: 1.5*$regular;
   /* font-weight: bold; */
+}
+.notification-infotext {
+  /* background-color: $bg-alt; */
+  /* border-radius: 16px; */
+  padding: 0 0 0 $small;
+  font-size: 1.5*$regular;
+  /* font-weight: bold; */
+}
+.lang{
+  margin: 0px;
+  padding: 0px;
 }
 
 .infotext-pac {
@@ -167,7 +139,7 @@ tooltip {
   /* background-color: $yellow; */
   padding: 0px 5px;
   border-radius: 15px;
-  margin: .5*$small 0.2*$small;
+  margin: .5*$small 0.5*$small;
   transition: all 0.15s ease-out;
 }
 
@@ -192,10 +164,16 @@ tooltip {
   color: $yellow;
   background-color: $bg-alt;
 }
+.brightness_progress highlight {
+  background-image: linear-gradient(to left, $bg-alt 0%, $yellow 100% );
+}
 
 .volume_progress {
   color: $blue;
   background-color: $bg-alt;
+}
+.volume_progress highlight {
+  background-image: linear-gradient(to left, $bg-alt 0%, $blue 100% );
 }
 
 $N_TITLE: 2*$regular;
@@ -346,9 +324,89 @@ $N_CLEAR: 1.5*$regular;
   background: rgba($active, 0.8);
   font-size: 1.3*$regular;
   margin: 0 0 0 $small;
-  /* padding: 0px 2px 0px 2px; */
-  /* border-radius: 10px 10px 10px 10px; */
-  /* min-width: 10px; */
-  /* color: $normal_foreground; */
-  /* border:1px solid $normal_background; */
+}
+.notification-crits{
+  background: rgba($urgent, 0.8);
+  font-weight: bold;
+}
+.notification-norms{
+  background: rgba($borderbg, 0.8);
+  color: $bg-alt;
+}
+.notification-lows{
+  background: rgba($active, 0.8);
+}
+
+trough highlight {
+  border-radius: $small;
+}
+scale trough {
+  background-color: $bg-alt;
+  min-height: $small;
+  min-width: $regular*10;
+  margin: 0px $small 0px $small;
+}
+slider{
+  background-color: $bg-alt;
+  margin: $small;
+}
+scale {
+  min-height: 8px;
+  min-width: 70px;
+  all: unset;
+  background-color: $bg-alt;
+  border-radius: 20px;
+}
+
+.calendar-box {
+  font-weight: Bold;
+  font-size: 0.9rem;
+  background-color: $bg;
+  border-radius: 10px;
+  padding: 0 1rem 0.5rem;
+  color: $fg;
+  box-shadow: 0 0 4px 2px rgba(#000000, 0.3);
+
+  .calendar-indicator {
+    background-color: $bg-alt;
+    border-radius: 10px;
+    padding: 0.5rem 0.15rem 0.2rem;
+    margin: 30px;
+
+    & > * {
+      border: solid 0px transparent;
+    }
+
+    &.highlight {
+      padding: 10rem;
+      color: $yellow;
+    }
+  }
+  .label-calendar {
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+calendar:selected {
+  color: $selected;
+}
+
+calendar.header {
+  color: mix($selected, $fg, 80%);
+  font-weight: bold;
+}
+
+calendar.button {
+  color: $fg;
+}
+
+calendar.highlight {
+  color: $base0A;
+  font-weight: bold;
+}
+
+calendar:indeterminate {
+  color: mix($bg, $fg, 40%);
 }
