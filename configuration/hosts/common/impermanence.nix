@@ -43,6 +43,12 @@
             mode = "0777";
           }
           {
+            directory = /etc/alsa;
+            user = "root";
+            group = "root";
+            mode = "0777";
+          }
+          {
             directory = /var/lib/nixos;
             user = "root";
             group = "root";
