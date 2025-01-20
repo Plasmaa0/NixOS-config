@@ -232,6 +232,10 @@ in {
           command = "floating enable border pixel 3";
           criteria = {class = "feh";};
         }
+        {
+          command = "floating enable border pixel 3";
+          criteria = {class = "SimpleScreenRecorder";};
+        }
       ];
     };
   };
