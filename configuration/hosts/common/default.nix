@@ -24,6 +24,7 @@
     ./impermanence.nix
     ./automount.nix
     ./ananicy.nix
+    ./modules/HighDPI.nix
     inputs.home-manager.nixosModules.home-manager
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];

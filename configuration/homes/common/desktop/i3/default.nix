@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  hidpiScalingFactor,
   ...
 }: let
   c = config.lib.stylix.colors;
@@ -82,13 +83,13 @@ in {
     };
     fonts = {
       names = [config.stylix.fonts.serif.name];
-      size = 10.0;
+      size = 5 * hidpiScalingFactor;
     };
     gaps = {
       smartBorders = "on";
       smartGaps = true;
-      inner = 5;
-      outer = 5;
+      inner = builtins.ceil (3 * hidpiScalingFactor);
+      outer = builtins.ceil (3 * hidpiScalingFactor);
     };
     defaultWorkspace = "workspace number 1";
     keybindings = let
@@ -210,7 +211,7 @@ in {
       }
     ];
     window = {
-      border = 4;
+      border = builtins.ceil (2 * hidpiScalingFactor);
       commands = [
         {
           command = "move to scratchpad";

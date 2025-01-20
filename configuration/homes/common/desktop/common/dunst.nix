@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  hidpiScalingFactor,
   ...
 }: let
   c = config.lib.stylix.colors;
@@ -150,10 +151,10 @@ in {
         follow = "mouse"
 
         # Geometery reference --> [{width}]x{height}[+/-{x}+/-{y}]
-        width = 300
-        height = 150
+        width = ${toString (builtins.ceil (150 * hidpiScalingFactor))}
+        height = ${toString (builtins.ceil (80 * hidpiScalingFactor))}
         origin = "top-center"
-        offset = "0x55"
+        offset = "0x${toString (builtins.ceil (30 * hidpiScalingFactor))}"
 
         # Radius of the four corners of the notification
         corner_radius = 10

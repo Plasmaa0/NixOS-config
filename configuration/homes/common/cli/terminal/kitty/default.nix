@@ -1,12 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   home.persistence."/persist/home/${config.home.username}".directories = [".cache/kitty"];
   programs.kitty = {
     enable = true;
-    font.size = lib.mkForce 20;
     keybindings = let
       mod = "ctrl+a";
     in {

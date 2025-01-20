@@ -18,8 +18,12 @@ in {
       jetbrains-mono
     ]);
   programs.rofi.enable = true;
-  home.file."${config.xdg.configHome}/rofi" = {
-    source = ./rofi;
+  home.file."${config.xdg.configHome}/rofi/launchers" = {
+    source = ./rofi/launchers;
+    recursive = true;
+  };
+  home.file."${config.xdg.configHome}/rofi/powermenu" = {
+    source = ./rofi/powermenu;
     recursive = true;
   };
   home.file."${config.xdg.configHome}/rofi/colors/stylix_theme.rasi".text = ''
@@ -30,6 +34,8 @@ in {
       selected: #${c.base06};
       active: #${c.base0D};
       urgent: #${c.base08};
+      powermenu-font: "JetBrains Mono Nerd Font ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
+      launcher-font: "Iosevka Nerd Font ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
     }
   '';
 }
