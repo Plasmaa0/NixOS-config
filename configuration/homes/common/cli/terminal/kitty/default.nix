@@ -64,6 +64,7 @@
       tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{index}:{title}";
       window_padding_width = 10;
       single_window_padding_width = 10;
+      confirm_os_window_close = -1;
       window_border_width = "3pt";
     };
     shellIntegration.enableFishIntegration = true;
