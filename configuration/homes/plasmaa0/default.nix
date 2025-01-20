@@ -29,6 +29,7 @@
     qbittorrent
     libreoffice
     xarchiver
+    simplescreenrecorder
     # cider
     # i3wsr # i3 workspace names
   ];
