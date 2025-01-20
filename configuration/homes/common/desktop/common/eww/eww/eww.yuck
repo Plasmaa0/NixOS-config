@@ -288,7 +288,7 @@
 		:onhover "${EWW_CMD} update battery_status_show=true"
     :onhoverlost "${EWW_CMD} update battery_status_show=false"
 (box :space-evenly false :spacing 2
-(label :text {(status == 'Charging' ? charge :
+(label :class "battery-emoji" :text {(status == 'Charging' ? charge :
 capacity < 10 ? eleventy :
 capacity < 20 ? twenty :
 capacity < 30 ? thirty :

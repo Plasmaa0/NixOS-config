@@ -9,9 +9,10 @@
     reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${pkgs.i3}/bin/i3-msg reload || true
       run ${pkgs.i3}/bin/i3-msg restart || true
-      run ${pkgs.i3}/bin/i3-msg restart || true
       run ${pkgs.procps}/bin/pkill dunst || true
       run ${pkgs.libnotify}/bin/notify-send "Dunst" "Dunst reloaded successfully" || true
+      run ${pkgs.procps}/bin/pkill eww || true
+      run ${pkgs.eww}/bin/eww open bar || true
       run ${pkgs.procps}/bin/pkill -USR1 hx || true
     '';
   };

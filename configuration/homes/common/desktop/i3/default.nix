@@ -208,10 +208,6 @@ in {
         command = "feh --no-fehbg --bg-fill ${config.stylix.image}";
         always = true;
       }
-      {
-        command = "eww open --toggle bar";
-        always = true;
-      }
     ];
     window = {
       border = 4;
