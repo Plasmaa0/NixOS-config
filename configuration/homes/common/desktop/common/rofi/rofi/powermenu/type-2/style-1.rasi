@@ -6,12 +6,8 @@ configuration {
 /*****----- Global Properties -----*****/
 @import "~/.config/rofi/colors/stylix_theme.rasi"
 * {
-    font: "JetBrains Mono Nerd Font 28";
+    font: @powermenu-font;
 }
-
-/*
-USE_BUTTONS=YES
-*/
 
 /*****----- Main Window -----*****/
 window {
@@ -20,7 +16,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       1000px;
+    width:                       20em;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -29,7 +25,7 @@ window {
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               0.3em;
     border-color:                @selected;
     cursor:                      "default";
     background-color:            @background;
@@ -38,9 +34,9 @@ window {
 /*****----- Main Box -----*****/
 mainbox {
     enabled:                     true;
-    spacing:                     15px;
+    spacing:                     0.3em;
     margin:                      0px;
-    padding:                     30px;
+    padding:                     0.6em;
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @selected;
@@ -51,11 +47,11 @@ mainbox {
 /*****----- Inputbar -----*****/
 inputbar {
     enabled:                     true;
-    spacing:                     15px;
+    spacing:                     0.3em;
     margin:                      0px;
     padding:                     0px;
     border:                      0px;
-    border-radius:               0px;
+    border-radius:               0.3em;
     border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
@@ -70,15 +66,16 @@ textbox-prompt-colon {
     enabled:                     true;
     expand:                      false;
     str:                         " ";
-    padding:                     12px 16px;
-    border-radius:               0px;
+    padding:                     0.2em 0.1em 0.1em 0.35em;
+    border-radius:               0.3em;
     background-color:            @urgent;
     text-color:                  @background;
 }
 prompt {
+    font:                        "monospace bold 24";
     enabled:                     true;
-    padding:                     12px;
-    border-radius:               0px;
+    padding:                     0.25em;
+    border-radius:               0.3em;
     background-color:            @active;
     text-color:                  @background;
 }
@@ -87,9 +84,9 @@ prompt {
 message {
     enabled:                     true;
     margin:                      0px;
-    padding:                     12px;
+    padding:                     0.25em;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               0.3em;
     border-color:                @selected;
     background-color:            @background-alt;
     text-color:                  @foreground;
@@ -104,9 +101,9 @@ textbox {
     markup:                      true;
 }
 error-message {
-    padding:                     12px;
+    padding:                     0.25em;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               0.3em;
     border-color:                @selected;
     background-color:            @background;
     text-color:                  @foreground;
@@ -115,8 +112,8 @@ error-message {
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
-    columns:                     5;
-    lines:                       1;
+    columns:                     3;
+    lines:                       2;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -125,7 +122,7 @@ listview {
     fixed-height:                true;
     fixed-columns:               true;
     
-    spacing:                     15px;
+    spacing:                     0.3em;
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
@@ -141,16 +138,16 @@ element {
     enabled:                     true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     40px 10px;
+    padding:                     0.5em;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               0.3em;
     border-color:                @selected;
     background-color:            @background-alt;
     text-color:                  @foreground;
     cursor:                      pointer;
 }
 element-text {
-    font:                        "feather bold 32";
+    font:                        "feather bold 48";
     background-color:            transparent;
     text-color:                  inherit;
     cursor:                      inherit;

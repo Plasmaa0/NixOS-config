@@ -2,12 +2,14 @@
   config,
   pkgs,
   lib,
+  hidpiScalingFactor,
   ...
 }: let
   # theme for password selection
   # rofi_theme = ../dotfiles/rofi/launchers/type-2/style-1.rasi;
   rofi_theme = "${config.xdg.configHome}/qutebrowser/rofi/style-1.rasi";
   qute_pass_common_args = "--always-show-selection --dmenu-invocation 'rofi -dmenu -theme ${rofi_theme}'";
+  inherit (lib) mkForce;
 in {
   home.sessionVariables.BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
   home.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
@@ -72,7 +74,7 @@ in {
       github-gh = "https://github.com/${config.home.username}?tab=repositories";
     };
     searchEngines = {
-      DEFAULT = lib.mkForce "https://ya.ru/search/?text={}";
+      DEFAULT = mkForce "https://ya.ru/search/?text={}";
       g = "https://www.google.com/search?hl=en&q={}";
       w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
       hm = "https://home-manager-options.extranix.com/?query={}&release=master";
@@ -99,12 +101,11 @@ in {
       };
     };
     settings = {
-      zoom.default = "200%";
+      zoom.default = "${toString (builtins.ceil (100 * hidpiScalingFactor))}%";
       qt = {
         highdpi = true;
       };
-      # tabs.position = "left";
-      # scrolling.smooth = true;
+      tabs.show = "multiple";
       # auto_save.session = true;
       session = {
         default_name = "${config.home.username}_session";
@@ -113,12 +114,12 @@ in {
       tabs.last_close = "blank";
       input.spatial_navigation = true;
       fonts = {
-        default_size = lib.mkForce "24pt";
-        default_family = lib.mkForce config.stylix.fonts.serif.name;
-        # web.size = {
-        # 	default = lib.mkForce 24;
-        # 	default_fixed = lib.mkForce 20;
-        # };
+        default_size = mkForce "${toString (builtins.ceil config.stylix.fonts.sizes.applications)}pt";
+        default_family = mkForce config.stylix.fonts.serif.name;
+        web.size = {
+          default = mkForce (builtins.ceil config.stylix.fonts.sizes.applications);
+          default_fixed = mkForce (builtins.ceil config.stylix.fonts.sizes.terminal);
+        };
       };
       url = {
         start_pages = "about:blank"; # "https://ya.ru";

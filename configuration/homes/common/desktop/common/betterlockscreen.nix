@@ -95,10 +95,10 @@ in {
     loginshadow=000000ff
     locktext="Hello $(whoami)!"
     font="${config.stylix.fonts.monospace.name}"
-    fontXL=72
-    fontlg=42
-    fontmd=36
-    fontsm=24
+    fontXL=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * 3))}
+    fontlg=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * 2))}
+    fontmd=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * 1.5))}
+    fontsm=${toString (builtins.ceil config.stylix.fonts.sizes.applications)}
     ringcolor=$base0E
     insidecolor="''${base01}aa"
     separatorcolor=00000000

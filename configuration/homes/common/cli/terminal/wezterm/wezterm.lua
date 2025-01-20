@@ -62,7 +62,6 @@ return {
     'Noto Color Emoji',
     harfbuzz_features = { 'calt=1', 'clig=1', 'liga=1' }
   },
-  font_size = 20.0,
   -- https://www.reddit.com/r/wezterm/comments/1eze6zt/colored_blocks_instead_of_text/
   -- https://github.com/wez/wezterm/issues/5990
   front_end = "WebGpu", -- when you see colored blocks instead of text

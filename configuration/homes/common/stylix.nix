@@ -3,6 +3,7 @@
   pkgs,
   lib,
   config,
+  hidpiScalingFactor,
   ...
 }: let
   activation-script = {
@@ -79,6 +80,12 @@ in {
     emoji = {
       package = pkgs.openmoji-color;
       name = "OpenMoji Color";
+    };
+    sizes = {
+      applications = 12 * hidpiScalingFactor;
+      desktop = 10 * hidpiScalingFactor;
+      popups = 10 * hidpiScalingFactor;
+      terminal = 10 * hidpiScalingFactor;
     };
   };
   stylix.cursor = {
