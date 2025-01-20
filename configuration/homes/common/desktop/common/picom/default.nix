@@ -259,7 +259,7 @@
           };
         }
         {
-          match = "class_g = 'Rofi' || class_g='eww'";
+          match = "class_g = 'Rofi' || class_g = 'Eww' || name = 'Eww - bar'";
           transparent-clipping = false;
           animations = let
             d = 0.3;

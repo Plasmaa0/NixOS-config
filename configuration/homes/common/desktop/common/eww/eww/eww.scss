@@ -1,7 +1,7 @@
 @import 'colors';
 
-$regular: 0.6rem;
-$small: 0.4rem;
+$regular: 0.3rem;
+$small: 0.2rem;
 
 // Global //
 * {
@@ -15,7 +15,7 @@ tooltip {
   background-color: $bg;
   color: $fg;
   font-weight: Bold;
-  font-size: 0.8rem;
+  font-size: $regular;
 }
 
 //----- Main Bar widget -----//
@@ -60,6 +60,10 @@ tooltip {
   font-size: 1.5*$regular;
   /* font-weight: bold; */
 }
+.battery-emoji {
+  font-size: 1.5*$regular;
+  /* font-weight: bold; */
+}
 .notification-infotext {
   /* background-color: $bg-alt; */
   /* border-radius: 16px; */
@@ -70,6 +74,7 @@ tooltip {
 .lang{
   margin: 0px;
   padding: 0px;
+  font-size: 1.5*$regular;
 }
 
 .infotext-pac {
@@ -360,7 +365,7 @@ scale {
 
 .calendar-box {
   font-weight: Bold;
-  font-size: 0.9rem;
+  font-size: 1.5*$regular;
   background-color: $bg;
   border-radius: 10px;
   padding: 0 1rem 0.5rem;
@@ -374,6 +379,7 @@ scale {
     margin: 30px;
 
     & > * {
+      font-size: 1.5*$regular;
       border: solid 0px transparent;
     }
 
@@ -385,7 +391,7 @@ scale {
   .label-calendar {
     margin-top: 0.5rem;
     margin-bottom: 0.2rem;
-    font-size: 0.9rem;
+    font-size: 1.5*$regular;
   }
 }
 

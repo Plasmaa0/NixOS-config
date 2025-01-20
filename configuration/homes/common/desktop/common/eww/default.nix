@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   c = config.lib.stylix.colors;
@@ -13,6 +14,7 @@ in {
     eww
     playerctl
   ];
+  xsession.initExtra = "${lib.getExe pkgs.eww} -c ${config.xdg.configHome}/eww open bar";
   home.file."${config.xdg.configHome}/eww/images" = {
     source = ./eww/images;
     recursive = true;
