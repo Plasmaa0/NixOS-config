@@ -31,6 +31,7 @@
 ;; Workspaces
 (deflisten active-workspace "scripts/getactivews")
 (deflisten urgent-workspace "scripts/geturgentws")
+(deflisten resize-mode "scripts/getresizemode")
 (deflisten focused-workspace :initial "1" "scripts/getfocusedws")
 
 ;; Language
@@ -109,7 +110,7 @@
           (label :class "${class} notification-app-name" :text "${application}" :halign "start")
           (button :onclick "~/.config/dunst/logger.sh rm_id ${SL}"
           :class "notification-card-notify-close" :halign "end"
-          (label :class "notification-card-notify-close" :text "󰅙 " :xalign "0.5" :tooltip "Remove this notification.")))
+          (label :text "󰅙 " :xalign "0.5" :tooltip "Remove this notification.")))
       (box :space-evenly "false" :orientation "h"
       ; (box :class "notification-image" :style "background-image: url(\"${image}\");")
 			(image
@@ -161,6 +162,19 @@
 )
 
 ;; Workspaces Widgets ;;
+(defwidget resize-indicator []
+	(revealer :transition "slideright" :duration "450ms" :reveal {resize-mode=="1"}
+	(box
+    :class "resize-indicator mainbars"
+    :orientation "h"
+		:space-evenly false
+    :halign "start"
+	  (label :class "resize-indicator infotext"
+	  :halign "start"
+	  :valign "center"
+	  :text "RESIZE 󰘖")
+		))
+)
 (defwidget workspaces [active-workspace focused-workspace urgent-workspace]
 	(box
     :class "mainbars workspaces"
@@ -597,6 +611,7 @@ capacity < 60 ? sixty :
 	:active-workspace active-workspace
 	:focused-workspace focused-workspace
 	:urgent-workspace urgent-workspace)
+(resize-indicator)
 ; (apps)
 ))
 
