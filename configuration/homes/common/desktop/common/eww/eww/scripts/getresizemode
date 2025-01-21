@@ -1,0 +1,5 @@
+#!/bin/sh
+i3-msg -t subscribe -m '[ "mode" ]' |
+while read -r status; do
+    echo "$status" | grep -c "resize"
+done
