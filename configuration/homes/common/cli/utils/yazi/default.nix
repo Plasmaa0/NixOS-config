@@ -6,7 +6,21 @@
 }: {
   # list of useful plugins i found https://github.com/yazi-rs/plugins
   # TODO: look into https://github.com/yazi-rs/plugins/tree/main/mount.yazi
-  home.packages = [pkgs.trash-cli];
+  home.packages = with pkgs; [
+    trash-cli
+    file
+    ueberzugpp
+    ffmpeg
+    poppler_utils
+    imagemagick
+    fzf
+    fd
+    ripgrep
+    chafa
+    p7zip
+    _7zz
+    jq
+  ];
   home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash" ".cache/yazi"];
   programs.yazi = {
     enable = true;
