@@ -4,10 +4,63 @@
   config,
   ...
 }: {
+  # list of useful plugins i found https://github.com/yazi-rs/plugins
+  # TODO: look into https://github.com/yazi-rs/plugins/tree/main/mount.yazi
   home.packages = [pkgs.trash-cli];
-  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash"];
+  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash" ".cache/yazi"];
   programs.yazi = {
     enable = true;
+    settings = {
+      manager = {
+        layout = [1 4 3];
+        sort_by = "natural";
+        sort_sensitive = false;
+        sort_reverse = false;
+        sort_dir_first = true;
+        linemode = "size";
+        show_hidden = true;
+        show_symlink = true;
+      };
+
+      preview = {
+        wrap = "yes";
+        tab_size = 1;
+        image_filter = "triangle";
+        image_quality = 70;
+        image_delay = 100; #ms
+        cache_dir = "~/.cache/yazi";
+        ueberzug_scale = 1;
+        ueberzug_offset = [0 0 0 0];
+      };
+
+      tasks = {
+        micro_workers = 10;
+        macro_workers = 20;
+        bizarre_retry = 5;
+        image_alloc = 0; # 512MB
+        image_bound = [0 0];
+      };
+
+      plugin = {
+        fetchers = let
+          common = {
+            id = "git";
+            run = "git";
+            prio = "normal";
+          };
+        in
+          map (elem: elem // common) [
+            {
+              name = "*";
+            }
+
+            {
+              name = "*/";
+            }
+          ];
+      };
+    };
+
     plugins = let
       plugin-list = builtins.attrNames (builtins.readDir ./plugins);
       remove-yazi-extension = filename: lib.elemAt (builtins.split ".yazi" filename) 0;
@@ -29,6 +82,21 @@
           on = "u";
           run = "plugin restore";
           desc = "Restore last deleted files/folders";
+        }
+        {
+          on = ["<Enter>"];
+          run = "plugin smart-enter";
+          desc = "Enter the child directory, or open the file";
+        }
+        {
+          on = "F";
+          run = "plugin smart-filter";
+          desc = "Smart filter";
+        }
+        {
+          on = ["c" "a"];
+          run = "plugin compress";
+          desc = "Archive selected files";
         }
         {
           desc = "drag&drop FROM yazi. Popup from current selection.";
@@ -60,5 +128,8 @@
         }
       ];
     };
+    initLua = ''
+      require("git"):setup()
+    '';
   };
 }

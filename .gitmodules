@@ -1,3 +1,9 @@
 [submodule "configuration/homes/common/cli/utils/yazi/plugins/restore.yazi"]
 	path = configuration/homes/common/cli/utils/yazi/plugins/restore.yazi
 	url = git@github.com:boydaihungst/restore.yazi.git
+[submodule "configuration/homes/common/cli/utils/yazi/plugins/smart-enter.yazi"]
+	path = configuration/homes/common/cli/utils/yazi/plugins/smart-enter.yazi
+	url = git@github.com:Ape/smart-enter.yazi.git
+[submodule "configuration/homes/common/cli/utils/yazi/plugins/compress.yazi"]
+	path = configuration/homes/common/cli/utils/yazi/plugins/compress.yazi
+	url = git@github.com:KKV9/compress.yazi.git
