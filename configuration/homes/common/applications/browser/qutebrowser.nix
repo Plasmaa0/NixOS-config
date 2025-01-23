@@ -106,7 +106,7 @@ in {
         highdpi = true;
       };
       tabs.show = "multiple";
-      # auto_save.session = true;
+      auto_save.session = true;
       session = {
         default_name = "${config.home.username}_session";
         lazy_restore = true;
