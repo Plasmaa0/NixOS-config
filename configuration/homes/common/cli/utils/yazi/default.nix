@@ -39,10 +39,10 @@
       preview = {
         wrap = "yes";
         tab_size = 1;
-        image_filter = "triangle";
-        image_quality = 70;
-        image_delay = 100; #ms
-        cache_dir = "~/.cache/yazi";
+        image_filter = "lanczos3";
+        image_quality = 90;
+        image_delay = 10; #ms
+        cache_dir = "";
         ueberzug_scale = 1;
         ueberzug_offset = [0 0 0 0];
       };
@@ -56,7 +56,7 @@
       };
 
       plugin = {
-        fetchers = let
+        prepend_fetchers = let
           common = {
             id = "git";
             run = "git";
