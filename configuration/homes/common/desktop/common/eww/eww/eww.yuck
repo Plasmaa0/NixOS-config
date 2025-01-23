@@ -32,7 +32,7 @@
 (deflisten active-workspace "scripts/getactivews")
 (deflisten urgent-workspace "scripts/geturgentws")
 (deflisten resize-mode "scripts/getresizemode")
-(deflisten focused-workspace :initial "1" "scripts/getfocusedws")
+(deflisten focused-workspace "scripts/getfocusedws")
 
 ;; Language
 ; (defvar en_reveal true)
