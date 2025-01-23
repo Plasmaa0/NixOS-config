@@ -252,8 +252,8 @@ in {
         force_xinerama = "false"
 
         mouse_left_click = "close_current"
-        # mouse_middle_click = close_all
-        # mouse_right_click = close_current
+        mouse_right_click = "close_all"
+        mouse_middle_click = "action"
 
     [urgency_critical]
         frame_color = "#${c.base08}"
