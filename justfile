@@ -95,6 +95,8 @@ gc:
         --force-lang=nix,template \
         --force-lang=ini,conf \
         --force-lang=lisp,yuck \
+        --exclude-list-file=configuration/homes/common/cli/editor/helix/languages/YuckLS-lsp/deps.json \
+        --exclude-list-file=configuration/homes/common/cli/utils/yazi/plugins/ \
         .
 
 # Create a new host directory
