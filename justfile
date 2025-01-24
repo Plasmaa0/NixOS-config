@@ -95,9 +95,14 @@ gc:
         --force-lang=nix,template \
         --force-lang=ini,conf \
         --force-lang=lisp,yuck \
-        --exclude-list-file=configuration/homes/common/cli/editor/helix/languages/YuckLS-lsp/deps.json \
-        --exclude-list-file=configuration/homes/common/cli/utils/yazi/plugins/ \
+        --exclude-ext=json \
+        --exclude-list-file=.clocignore \
+        --ignored=ignored.txt \
+        --vcs=git \
         .
+    echo Ignored files:
+    cat ignored.txt
+    rm ignored.txt
 
 # Create a new host directory
 [group('util')]
