@@ -5,6 +5,7 @@
     ./python.nix
     ./latex.nix
     ./typst.nix
+    ./yuck.nix
   ];
 
   # lsp for languages without extra configs
