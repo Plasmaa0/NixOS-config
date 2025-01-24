@@ -1,21 +1,28 @@
 [private]
 default:
+    @echo -n {{ GREEN + BOLD }}
     @just --list
 
 # deadnix check
 [group('checks')]
-check_dead:
+@check_dead:
+    echo "{{ GREEN + INVERT }}Check:{{ NORMAL }}"
+    echo -e "{{ CYAN }}\t- checking with {{ BLUE + ITALIC }}deadnix{{ NORMAL }}"
     deadnix
 
 # alejandra format .nix files
 [group('checks')]
-format:
+@format:
+    echo "{{ GREEN + INVERT }}Format:{{ NORMAL }}"
+    echo -e "{{ CYAN }}\t- formatting justfile{{ NORMAL }}"
     just --fmt --unstable
+    echo -e "{{ CYAN }}\t- formatting {{ BLUE + UNDERLINE }}*.nix{{ NORMAL }}{{ CYAN }} with {{ BLUE + ITALIC }}alejandra{{ NORMAL }}"
     alejandra --quiet $(fd .nix)
 
 # statix linter
 [group('checks')]
-lint:
+@lint:
+    echo -e "{{ CYAN }}\t- checking with {{ BLUE + ITALIC }}statix{{ NORMAL }}"
     statix check
 
 # Run all checks
@@ -24,68 +31,90 @@ all-checks: format check_dead lint
 
 # Make configuration
 [private]
-make-configuration:
+@make-configuration:
+    echo "{{ GREEN + INVERT }}Build:{{ NORMAL }}"
+    echo -e "{{ CYAN }}\t- cleaning {{ BLUE + UNDERLINE }}/etc/nixos/*{{ NORMAL }}"
     sudo rm -rf /etc/nixos/*
+    echo -e "{{ CYAN }}\t- moving your new config to {{ BLUE + UNDERLINE }}/etc/nixos{{ NORMAL }}"
     sudo cp -r configuration/* /etc/nixos
 
 # Rebuild boot configurations
 [group('rebuild boot')]
-rebuild-boot: all-checks make-configuration
+@rebuild-boot: all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding config {{ RED + UNDERLINE }}(boot){{ NORMAL }}"
     sudo nixos-rebuild boot --flake /etc/nixos --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # Rebuild boot configurations for a specific host
 [group('rebuild boot')]
-rebuild-boot-specific host: all-checks make-configuration listHosts
+@rebuild-boot-specific host: listHosts all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding config {{ RED + UNDERLINE }}(boot){{ NORMAL }}{{ CYAN }} for host{{ YELLOW }} {{ host }}"
     sudo nixos-rebuild boot --flake /etc/nixos#{{ host }} --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # Rebuild switch configurations
 [group('rebuild switch')]
-rebuild-switch: all-checks make-configuration
+@rebuild-switch: all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding config {{ GREEN + UNDERLINE }}(switch){{ NORMAL }}"
     sudo nixos-rebuild switch --flake /etc/nixos --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # Rebuild switch configurations for a specific host
 [group('rebuild switch')]
-rebuild-switch-specific host: all-checks make-configuration listHosts
+@rebuild-switch-specific host: listHosts all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding config {{ GREEN + UNDERLINE }}(switch){{ NORMAL }}{{ CYAN }} for host{{ YELLOW }} {{ host }}"
     sudo nixos-rebuild switch --flake /etc/nixos#{{ host }} --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # Rebuild test configurations
 [group('rebuild test')]
-rebuild-test: all-checks make-configuration
+@rebuild-test: all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding config {{ WHITE + UNDERLINE }}(test){{ NORMAL }}"
     sudo nixos-rebuild test --flake /etc/nixos --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # Rebuild test configurations for a specific host
 [group('rebuild test')]
-rebuild-test-specific host: all-checks make-configuration listHosts
+@rebuild-test-specific host: listHosts all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding config {{ WHITE + UNDERLINE }}(test){{ NORMAL }}{{ CYAN }} for host{{ YELLOW }} {{ host }}"
     sudo nixos-rebuild test --flake /etc/nixos#{{ host }} --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # Update configurations
 [group('rebuild update')]
-rebuild-update: all-checks make-configuration
+@rebuild-update: all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding {{ YELLOW + BOLD }}and updating{{ NORMAL }}{{ CYAN }} config {{ RED + UNDERLINE }}(boot){{ NORMAL }}"
     sudo nix-channel --update
     sudo nixos-rebuild boot --flake /etc/nixos --upgrade --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # Update configurations for a specific host
 [group('rebuild update')]
-rebuild-update-specific host: all-checks make-configuration listHosts
+@rebuild-update-specific host: listHosts all-checks make-configuration
+    echo -e "{{ CYAN }}\t- rebuilding {{ YELLOW + BOLD }}and updating{{ NORMAL }}{{ CYAN }} config {{ RED + UNDERLINE }}(boot){{ NORMAL }}{{ CYAN }} for host{{ YELLOW }} {{ host }}"
     sudo nix-channel --update
     sudo nixos-rebuild boot --flake /etc/nixos#{{ host }} --upgrade --show-trace
+    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
 
 # List available hosts
 [group('util')]
 @listHosts:
-    echo "{{ BOLD + CYAN }}Available hosts:{{ NORMAL }}"
+    echo "{{ BOLD + BLUE + INVERT }}Available hosts:{{ NORMAL }}{{ CYAN }}"
     ls configuration/hosts -I common
+    echo
 
 # Garbage collection
 [confirm('Are you sure? [y/N]')]
 [group('util')]
-gc:
+@gc:
+    echo "{{ BOLD + RED }}Cleaning garbage{{ NORMAL }}"
     sudo nix-collect-garbage --delete-older-than 5d
     nix-collect-garbage
 
 # Count lines of code
 [group('util')]
 @cloc: format
+    echo "{{ BOLD + GREEN }}Counting lines of code!{{ NORMAL }}"
     # rofi       .rasi     -> .css
     # dev shells .template -> .nix
     # picom      .conf     -> .ini
@@ -95,19 +124,20 @@ gc:
         --force-lang=nix,template \
         --force-lang=ini,conf \
         --force-lang=lisp,yuck \
+        --progress-rate=1 \
         --exclude-ext=json \
         --exclude-list-file=.clocignore \
         --ignored=ignored.txt \
         --vcs=git \
         .
-    echo Ignored files:
+    echo "{{ BOLD + RED }}Ignored files:{{ NORMAL }}"
     cat ignored.txt
     rm ignored.txt
 
 # Create a new host directory
 [group('util')]
-create-host host:
+@create-host host:
     mkdir -p configuration/hosts/{{ host }}/hardware
     touch configuration/hosts/{{ host }}/default.nix
     touch configuration/hosts/{{ host }}/hardware/hardware-configuration.nix
-    @echo "{{ BOLD + CYAN }}Created empty host directory '{{ host }}' in configuration/hosts{{ NORMAL }}"
+    echo "{{ BOLD + GREEN }}Created empty host directory {{ BLUE + UNDERLINE }}{{ host }}{{ NORMAL }}{{ BOLD + GREEN }} in {{ BLUE + UNDERLINE }}configuration/hosts{{ NORMAL }}"
