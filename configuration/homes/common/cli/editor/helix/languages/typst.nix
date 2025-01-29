@@ -2,7 +2,6 @@
   programs.helix = {
     extraPackages = with pkgs; [
       tinymist
-      typst-lsp
       typstyle
     ];
     languages = {
