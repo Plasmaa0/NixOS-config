@@ -80,7 +80,7 @@ in {
       hm = "https://home-manager-options.extranix.com/?query={}&release=master";
 
       # nix (w)iki, (p)ackages, (o)ptions
-      nw = "https://wiki.nixos.org/index.php?search={}";
+      nw = "https://nixos.wiki/index.php?search={}&fulltext=1";
       np = "https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query={}";
       no = "https://search.nixos.org/options?channel=unstable&size=50&sort=relevance&type=packages&query={}";
     };
