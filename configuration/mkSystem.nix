@@ -2,7 +2,6 @@
   nixpkgs,
   inputs,
   outputs,
-  pkgs,
   home-manager,
 }: {
   host,
@@ -26,8 +25,6 @@ nixpkgs.lib.nixosSystem {
         (user: "ln -sfn /home/${user}/.local/state/nix/profiles/profile /home/${user}/.nix-profile")
         homes);
       home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
@@ -44,5 +41,5 @@ nixpkgs.lib.nixosSystem {
       };
     }
   ];
-  specialArgs = {inherit inputs outputs pkgs home-manager;};
+  specialArgs = {inherit inputs outputs home-manager;};
 }

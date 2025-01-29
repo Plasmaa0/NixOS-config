@@ -3,6 +3,10 @@
   config,
   ...
 }: {
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
   programs.home-manager.enable = true;
   xsession.scriptPath = ".hm-xsession";
   imports = [
