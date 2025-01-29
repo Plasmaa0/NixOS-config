@@ -30,6 +30,8 @@
     libreoffice
     xarchiver
     simplescreenrecorder
+    gimp
+    darktable
     # cider
     # i3wsr # i3 workspace names
   ];
