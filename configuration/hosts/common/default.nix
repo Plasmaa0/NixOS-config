@@ -27,6 +27,10 @@
     ./modules/HighDPI.nix
     inputs.home-manager.nixosModules.home-manager
   ];
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.package = lib.mkForce pkgs.nix;
 }

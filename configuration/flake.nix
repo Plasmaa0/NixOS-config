@@ -26,13 +26,7 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      config.allowUnfree = true;
-      config.nvidia.acceptLicense = true;
-      inherit system;
-    };
-    mkSystem = import ./mkSystem.nix {inherit nixpkgs inputs outputs pkgs home-manager;};
+    mkSystem = import ./mkSystem.nix {inherit nixpkgs inputs outputs home-manager;};
     forAllSystems = nixpkgs.lib.genAttrs [
       "aarch64-linux"
       "x86_64-linux"
@@ -44,6 +38,9 @@
         homes = ["plasmaa0"];
       };
     };
-    devShells = forAllSystems (_: import ./shell.nix {inherit pkgs;});
+    devShells = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+      import ./shell.nix {inherit pkgs;});
   };
 }
