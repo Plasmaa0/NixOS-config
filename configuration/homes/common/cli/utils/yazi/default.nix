@@ -22,7 +22,7 @@
     _7zz
     jq
   ];
-  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash" ".cache/yazi"];
+  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash"];
   programs.yazi = {
     enable = true;
     settings = {
@@ -40,12 +40,11 @@
       preview = {
         wrap = "yes";
         tab_size = 1;
-        image_filter = "lanczos3";
-        image_quality = 90;
+        image_filter = "catmull-rom";
+        image_quality = 70;
         image_delay = 10; #ms
         max_width = builtins.floor (1200 * hidpiScalingFactor);
         max_height = builtins.floor (800 * hidpiScalingFactor);
-        cache_dir = "";
         ueberzug_scale = 1;
         ueberzug_offset = [0 0 0 0];
       };
