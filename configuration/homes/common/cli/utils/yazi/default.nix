@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  hidpiScalingFactor,
   ...
 }: {
   # list of useful plugins i found https://github.com/yazi-rs/plugins
@@ -42,6 +43,8 @@
         image_filter = "lanczos3";
         image_quality = 90;
         image_delay = 10; #ms
+        max_width = builtins.floor (1200 * hidpiScalingFactor);
+        max_height = builtins.floor (800 * hidpiScalingFactor);
         cache_dir = "";
         ueberzug_scale = 1;
         ueberzug_offset = [0 0 0 0];
@@ -111,6 +114,11 @@
           on = ["c" "a"];
           run = "plugin compress";
           desc = "Archive selected files";
+        }
+        {
+          on = "T";
+          run = "plugin max-preview";
+          desc = "Maximize or restore preview";
         }
         {
           desc = "drag&drop FROM yazi. Popup from current selection.";
