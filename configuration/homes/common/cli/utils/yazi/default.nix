@@ -37,6 +37,16 @@
         show_symlink = true;
       };
 
+      opener = {
+        open = [
+          {
+            run = "xdg-open \"$@\"";
+            orphan = true;
+            desc = "Open";
+          }
+        ];
+      };
+
       preview = {
         wrap = "yes";
         tab_size = 1;
