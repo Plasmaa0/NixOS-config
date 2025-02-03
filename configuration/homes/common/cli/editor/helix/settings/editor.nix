@@ -17,6 +17,7 @@
       display-inlay-hints = true;
       goto-reference-include-declaration = false;
     };
+    jump-label-alphabet = "asdfqwerzxcvjklmiuopghtybn";
     cursor-shape = {
       insert = "bar";
       normal = "block";
