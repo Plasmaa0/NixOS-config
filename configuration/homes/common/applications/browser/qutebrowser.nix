@@ -5,10 +5,6 @@
   hidpiScalingFactor,
   ...
 }: let
-  # theme for password selection
-  # rofi_theme = ../dotfiles/rofi/launchers/type-2/style-1.rasi;
-  rofi_theme = "${config.xdg.configHome}/qutebrowser/rofi/style-1.rasi";
-  qute_pass_common_args = "--always-show-selection --dmenu-invocation 'rofi -dmenu -theme ${rofi_theme}'";
   inherit (lib) mkForce;
 in {
   home.sessionVariables.BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
@@ -85,7 +81,13 @@ in {
       no = "https://search.nixos.org/options?channel=unstable&size=50&sort=relevance&type=packages&query={}";
     };
     keyBindings = {
-      normal = {
+      normal = let
+        # theme for password selection
+        rofi_theme = "${config.xdg.configHome}/qutebrowser/rofi/style-1.rasi";
+        rofi_invokation = "--dmenu-invocation 'rofi -dmenu -theme ${rofi_theme}'";
+        extract_login_from_secret = ''--username-target secret --username-pattern "login: (.+)"'';
+        qute_pass_common_args = "--always-show-selection ${extract_login_from_secret} ${rofi_invokation}";
+      in {
         "<Space>pp" = "spawn --userscript qute-pass ${qute_pass_common_args}";
         "<Space>pU" = "spawn --userscript qute-pass --username-only ${qute_pass_common_args}";
         "<Space>pP" = "spawn --userscript qute-pass --password-only ${qute_pass_common_args}";
