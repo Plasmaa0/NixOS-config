@@ -19,6 +19,8 @@
             exportPdf = "onType"; # onSave
             formatterMode = "typstyle";
             outputPath = "$root/target/$dir/$name";
+            projectResolution = "lockDatabase";
+            compileStatus = "enable";
           };
         };
       };
