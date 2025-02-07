@@ -10,12 +10,11 @@
       Y = ":clipboard-yank";
       C-o = ":open ~/.config/helix/config.toml";
       esc = ["collapse_selection" "keep_primary_selection"];
-      ret = ["open_below" "normal_mode"];
       S-up = ["extend_to_line_bounds" "delete_selection" "move_line_up" "paste_before"];
       S-down = ["extend_to_line_bounds" "delete_selection" "paste_after"];
       C-left = ["jump_backward"];
       C-right = ["jump_forward"];
-      space.space = "goto_word";
+      ret = "goto_word";
     };
   };
 }

@@ -4,6 +4,7 @@
     mouse = true;
     cursorline = true;
     rulers = [100];
+    scrolloff = 15;
     auto-info = true;
     gutters = ["diagnostics" "spacer" "line-numbers" "spacer" "diff"];
     end-of-line-diagnostics = "hint";
