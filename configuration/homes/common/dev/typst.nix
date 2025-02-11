@@ -9,5 +9,6 @@
   ];
   home.persistence."/persist/home/${config.home.username}".directories = [
     ".cache/typst"
+    ".local/share/typst"
   ];
 }
