@@ -18,7 +18,6 @@
     '';
   };
   theme = import ./themes/dark/monokai.nix;
-  alternateTheme = import ./themes/dark/xmas.nix;
 in {
   imports = [
     inputs.stylix.homeManagerModules.stylix
@@ -33,27 +32,7 @@ in {
   stylix.imageScalingMode = "fill";
   stylix.polarity = theme.polarity;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/${theme.scheme}.yaml";
-  home.packages = with pkgs; [
-    (writeShellApplication {
-      name = "toggle-theme";
-      runtimeInputs = with pkgs; [home-manager coreutils brightnessctl gnugrep ripgrep];
-      text = ''
-        brightnessctl -s
-        brightnessctl -q set 0% || true
-        "$(home-manager generations | head -1 | rg -o '/[^ ]*')"/specialisation/light-theme/activate || "$(home-manager generations | head -2 | tail -1 | rg -o '/[^ ]*')"/activate
-        brightnessctl -r
-      '';
-    })
-  ];
   home.activation = activation-script;
-  specialisation.light-theme.configuration = {
-    # stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";
-    stylix.base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/${alternateTheme.scheme}.yaml";
-    stylix.image = lib.mkForce ./wallpapers/${alternateTheme.wallpaper};
-    stylix.polarity = lib.mkForce alternateTheme.polarity;
-    home.activation = activation-script;
-  };
-  # home-manager generations | head -1 | tr " " "\n" | grep "/nix.*
   # see also common/fonts.nix
   fonts.fontconfig = {
     enable = true;
