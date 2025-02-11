@@ -12,6 +12,7 @@ nixpkgs.lib.nixosSystem {
     ./hosts/${host}
     {
       networking.hostName = host;
+      nix.settings.trusted-users = homes;
       users.users =
         (nixpkgs.lib.genAttrs homes (user: {
           isNormalUser = true;
