@@ -5,7 +5,6 @@
       python312Packages.python-lsp-server
       black
       mypy
-      basedpyright
       ruff
       taplo
     ];
@@ -26,7 +25,6 @@
           enabled = true;
           live_mode = true;
         };
-        basedpyright.config.basedpyright.analysis.typeCheckingMode = "recommended";
         ruff = {
           command = "ruff";
           args = ["server"];
