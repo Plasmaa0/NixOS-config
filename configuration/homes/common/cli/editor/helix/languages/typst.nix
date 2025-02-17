@@ -16,7 +16,7 @@
         tinymist = {
           command = "tinymist";
           config = {
-            exportPdf = "onType"; # onSave
+            exportPdf = "never"; # onSave
             formatterMode = "typstyle";
             outputPath = "$root/target/$dir/$name";
             projectResolution = "lockDatabase";
