@@ -46,6 +46,10 @@
         host = "nb";
         homes = ["plasmaa0"];
       };
+      zep = mkSystem {
+        host = "zep";
+        homes = ["plasmaa0"];
+      };
     };
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
