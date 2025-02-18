@@ -24,6 +24,7 @@
     ./impermanence.nix
     ./automount.nix
     ./ananicy.nix
+    ./gamemode.nix
     ./modules/HighDPI.nix
     inputs.home-manager.nixosModules.home-manager
   ];
