@@ -1,10 +1,11 @@
 {...}: {
   imports = [
     ./betterlockscreen.nix
-    ./eww
+    # ./eww
     # ./polybar
-    ./picom
+    # ./picom
     ./dunst.nix
     ./rofi
+    ./i3status-rust
   ];
 }
