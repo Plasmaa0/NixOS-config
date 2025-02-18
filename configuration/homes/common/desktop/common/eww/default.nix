@@ -14,6 +14,10 @@ in {
     eww
     playerctl
   ];
+  home.activation.eww_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    run ${pkgs.procps}/bin/pkill eww || true
+    run ${pkgs.eww}/bin/eww open bar || true
+  '';
   xsession.initExtra = "${lib.getExe pkgs.eww} -c ${config.xdg.configHome}/eww open bar";
   home.file."${config.xdg.configHome}/eww/images" = {
     source = ./eww/images;
