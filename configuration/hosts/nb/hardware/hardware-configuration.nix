@@ -21,7 +21,7 @@ in {
   boot.initrd.kernelModules = [];
   boot.initrd.systemd.enable = true;
   boot.kernelModules = ["kvm-intel"];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.extraModulePackages = [];
 
   # fileSystems = {
