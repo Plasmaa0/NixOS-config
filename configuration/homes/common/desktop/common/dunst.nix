@@ -9,6 +9,10 @@
   icons_path = "${builtins.unsafeDiscardStringContext config.gtk.iconTheme.package}/share/icons/${builtins.unsafeDiscardStringContext config.gtk.iconTheme.name}/128x128";
 in {
   services.dunst.enable = true;
+  home.activation.dunst_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    run ${pkgs.procps}/bin/pkill dunst || true
+    run ${pkgs.libnotify}/bin/notify-send -u low "Dunst" "Dunst reloaded" || true
+  '';
   # services.dunst.configFile = ../dotfiles/dunst/dunstrc;
   # home.file."${config.xdg.configHome}/dunst/dunstrc".text = ''
   home.file."${config.xdg.configHome}/dunst/logger.sh" = {
