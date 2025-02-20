@@ -7,6 +7,7 @@
 }: let
   c = config.lib.stylix.colors;
   icons_path = "${builtins.unsafeDiscardStringContext config.gtk.iconTheme.package}/share/icons/${builtins.unsafeDiscardStringContext config.gtk.iconTheme.name}/128x128";
+  symbolic_icons_path = "${builtins.unsafeDiscardStringContext config.gtk.iconTheme.package}/share/icons/${builtins.unsafeDiscardStringContext config.gtk.iconTheme.name}/symbolic";
 in {
   services.dunst.enable = true;
   home.activation.dunst_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
@@ -243,7 +244,7 @@ in {
         max_icon_size = 64
         icon_corner_radius = 5
 
-        icon_path = "${icons_path}/status/:${icons_path}/devices/:${icons_path}/apps/"
+        icon_path = "${symbolic_icons_path}/status/:${icons_path}/devices/:${icons_path}/apps/"
 
         history_length = 20
         sticky_history = "true"
