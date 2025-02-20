@@ -11,5 +11,7 @@
     ./media/vlc.nix
     ./media/easyeffects.nix
     ./utils/gparted.nix
+    ./utils/mangohud.nix
+    ./games/minecraft.nix
   ];
 }
