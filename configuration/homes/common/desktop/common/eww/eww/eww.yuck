@@ -6,7 +6,7 @@
 
 ;; Brightness
 (defpoll brightness_value :initial "0" :interval "1s"                        
-    `brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%' &`
+    `brightnessctl -d amdgpu_bl0 -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%' &`
   )
 
 ;; Time left to discharge
@@ -466,7 +466,7 @@ capacity < 60 ? sixty :
 				:space-evenly "false"
 				(revealer :reveal bright_show :transition "slideleft" :duration "450ms"
 				(scale :min 0 :max 101 :value brightness_value :orientation "h" :flipped true :class "brightness_progress"
-				:onchange "brightnessctl set {}%"
+				:onchange "brightnessctl -d amdgpu_bl0 set {}%"
 				)
 				)
 				(revealer :reveal {!bright_show} :transition "slideleft" :duration "250ms"
@@ -522,8 +522,8 @@ capacity < 60 ? sixty :
 	  )
 	   )
 
-		 (battery :status {EWW_BATTERY.BAT0.status}
-            :capacity {EWW_BATTERY.BAT0.capacity}
+		 (battery :status {EWW_BATTERY.BAT1.status}
+            :capacity {EWW_BATTERY.BAT1.capacity}
             :charge "󰂄" :full "󰁹" :ninety "󰂂" :eighty "󰂁" :seventy "󰂀" :sixty "󰁿" 
             :fifty "󰁾"  :fourty "󰁽" :thirty "󰁼" :twenty "󰁻" :eleventy "󱃍 ")
 
