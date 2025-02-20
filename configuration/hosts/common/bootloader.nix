@@ -10,6 +10,14 @@
         efiInstallAsRemovable = false; # in case canTouchEfiVariables doesn't work for your system
         device = "nodev";
         useOSProber = true;
+        extraEntries = ''
+          menuentry "Shut Down" {
+            halt
+          }
+          menuentry "Reboot" {
+            reboot
+          }
+        '';
         theme = pkgs.stdenv.mkDerivation {
           pname = "distro-grub-themes";
           version = "3.1";
@@ -25,7 +33,7 @@
     };
     # plymouth settings
     plymouth = let
-      theme_name = "hexagon_alt";
+      theme_name = "splash";
     in {
       enable = true;
       theme = theme_name;
