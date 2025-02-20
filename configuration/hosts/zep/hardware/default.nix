@@ -4,7 +4,7 @@
     sha256 = "sha256:1qjivy929fpjf736f78v6hdhv64jgx2m1aff85w1d3cw7c4ppmag";
   };
 in {
-  imports = builtins.abort "CHECK hardware-configuration.nix !!" [
+  imports = [
     ./hardware-configuration.nix
 
     "${nixos-hardware}/common/cpu/amd"
@@ -15,9 +15,9 @@ in {
   ];
 
   hardware.nvidia = {
-    prime = builtins.abort "CHECK intelBusId AND nvidiaBusId !!" {
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
+    prime = {
+      amdgpuBusId = "PCI:101:0:0";
+      nvidiaBusId = "PCI:100:0:0";
     };
 
     dynamicBoost.enable = lib.mkDefault true;
@@ -38,5 +38,5 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = builtins.trace "check system.stateVersion" "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
