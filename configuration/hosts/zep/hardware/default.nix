@@ -7,17 +7,23 @@ in {
   imports = [
     ./hardware-configuration.nix
 
-    "${nixos-hardware}/common/cpu/amd"
+    "${nixos-hardware}/common/cpu/amd/pstate.nix"
+
     "${nixos-hardware}/common/gpu/nvidia/prime.nix"
     "${nixos-hardware}/common/gpu/nvidia/ada-lovelace"
+
     "${nixos-hardware}/common/pc/laptop"
     "${nixos-hardware}/common/pc/ssd"
   ];
 
   hardware.nvidia = {
     prime = {
-      amdgpuBusId = "PCI:101:0:0";
-      nvidiaBusId = "PCI:100:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      amdgpuBusId = "PCI:102:0:0";
+      nvidiaBusId = "PCI:101:0:0";
     };
 
     dynamicBoost.enable = lib.mkDefault true;
