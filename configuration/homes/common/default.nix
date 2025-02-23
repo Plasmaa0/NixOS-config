@@ -42,6 +42,7 @@
         directory = ".local/share/Steam";
         method = "symlink";
       }
+      ".local/share/CKAN"
       {
         directory = ".steam";
         method = "symlink";
