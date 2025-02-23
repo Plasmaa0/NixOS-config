@@ -6,7 +6,7 @@
 
 ;; Brightness
 (defpoll brightness_value :initial "0" :interval "1s"                        
-    `brightnessctl -d amdgpu_bl0 -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%' &`
+    `brightnessctl -d amdgpu_bl1 -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%' &`
   )
 
 ;; Time left to discharge
@@ -466,7 +466,7 @@ capacity < 60 ? sixty :
 				:space-evenly "false"
 				(revealer :reveal bright_show :transition "slideleft" :duration "450ms"
 				(scale :min 0 :max 101 :value brightness_value :orientation "h" :flipped true :class "brightness_progress"
-				:onchange "brightnessctl -d amdgpu_bl0 set {}%"
+				:onchange "brightnessctl -d amdgpu_bl1 set {}%"
 				)
 				)
 				(revealer :reveal {!bright_show} :transition "slideleft" :duration "250ms"
