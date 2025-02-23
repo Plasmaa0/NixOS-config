@@ -17,4 +17,12 @@
   home.activation.helix_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
     run ${pkgs.procps}/bin/pkill -USR1 hx || true
   '';
+  xdg.configFile = let
+    reloadScript = ''
+      ${pkgs.procps}/bin/pkill -USR1 hx || true
+    '';
+  in {
+    "helix/config.toml".onChange = reloadScript;
+    "helix/languages.toml".onChange = reloadScript;
+  };
 }
