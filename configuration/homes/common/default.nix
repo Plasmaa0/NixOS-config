@@ -17,6 +17,10 @@
     inputs.impermanence.homeManagerModules.impermanence
   ];
 
+  home.persistence."/persist" = {
+    allowOther = true;
+    directories = ["data"];
+  };
   home.persistence."/persist/home/${config.home.username}" = {
     allowOther = true;
     directories = [
