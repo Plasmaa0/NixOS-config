@@ -16,9 +16,13 @@ in {
       enable = true;
     };
   };
-  home.activation.i3_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run ${pkgs.i3}/bin/i3-msg reload || true
-    run ${pkgs.i3}/bin/i3-msg restart || true
+  # home.activation.i3_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  #   run ${pkgs.i3}/bin/i3-msg reload || true
+  #   run ${pkgs.i3}/bin/i3-msg restart || true
+  # '';
+  xdg.configFile."i3/config".onChange = ''
+    i3-msg reload || true
+    i3-msg restart || true
   '';
   home.packages = with pkgs; [
     (writeShellApplication {
@@ -100,13 +104,13 @@ in {
       mod = config.xsession.windowManager.i3.config.modifier;
       send_volume_notification = ''notify-send -a volume -u low -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1) Volume --hint=string:x-dunst-stack-tag:volume'';
       step = "5%";
-      send_brightness_notification = ''notify-send -a bright -u low -h int:value:$(brightnessctl -d amdgpu_bl0  | grep -o '[0-9]\+%') Brightness --hint=string:x-dunst-stack-tag:brightness'';
+      send_brightness_notification = ''notify-send -a bright -u low -h int:value:$(brightnessctl -d amdgpu_bl1  | grep -o '[0-9]\+%') Brightness --hint=string:x-dunst-stack-tag:brightness'';
       # move mouse to center of currently focused window (FIXME moves mouse to top left if no window in focus)
       # mouse_to_focused = ''"${pkgs.bash}/bin/sh -c 'eval `${pkgs.xdotool}/bin/xdotool getactivewindow getwindowgeometry --shell`; ${pkgs.xdotool}/bin/xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"'';
       send_kb_brightness_notification = ''notify-send -i keyboard -u low "Keyboard brightness" $(asusctl -k | tr ' ' '\n' | tail -1) --hint=string:x-dunst-stack-tag:kbbrightness'';
       send_fan_profile_notification = ''notify-send -i sensors-fan-symbolic -u low "Fan profile" $(asusctl profile -p | tr ' ' '\n' | tail -1) --hint=string:x-dunst-stack-tag:fans'';
       send_aura_notification = ''notify-send -i keyboard-brightness-symbolic -u low "Aura" "Next mode"'';
-      send_touchpad_notification = ''xinput | grep floating && notify-send -u low "Touchpad" "Off" || notify-send -u low "Touchpad" "On"'';
+      send_touchpad_notification = ''xinput | grep floating && notify-send -i touchpad-disabled-symbolic -u low "Touchpad" "Off" --hint=string:x-dunst-stack-tag:volume || notify-send -i touchpad-enabled-symbolic -u low "Touchpad" "On" --hint=string:x-dunst-stack-tag:volume'';
       mouse_to_focused = "i3-mouse-to-center";
       ws1 = "1";
       ws2 = "2";
@@ -129,15 +133,15 @@ in {
         "XF86AudioMicMute" = ''exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send -u low "Microphone" "$(pactl get-source-mute @DEFAULT_SOURCE@)" -i audio-volume-muted --hint=string:x-dunst-stack-tag:volume'';
         "${mod}+semicolon" = "move to scratchpad; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+l" = "scratchpad show; exec --no-startup-id ${mouse_to_focused}";
-        "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -d amdgpu_bl0  set ${step}+ && ${send_brightness_notification} # increase screen brightness";
-        "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -d amdgpu_bl0  set ${step}- && ${send_brightness_notification} # decrease screen brightness";
+        "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -d amdgpu_bl1  set ${step}+ && ${send_brightness_notification} # increase screen brightness";
+        "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -d amdgpu_bl1  set ${step}- && ${send_brightness_notification} # decrease screen brightness";
         "XF86KbdBrightnessUp" = "exec --no-startup-id asusctl -n && ${send_kb_brightness_notification}"; # keyboard backlight +
         "XF86KbdBrightnessDown" = "exec --no-startup-id asusctl -p && ${send_kb_brightness_notification}"; # keyboard backlight -
-        "XF86Launch1" = "exec --no-startup-id betterlockscreen -l --show-layout"; # m4 macro key above keyboard
+        "XF86Launch1" = "exec pkill picom; exec flameshot gui"; # m4 macro key above keyboard
         "XF86Launch3" = "exec --no-startup-id asusctl aura -n && ${send_aura_notification}"; # aura button
         "XF86Launch4" = "exec --no-startup-id asusctl profile -n && ${send_fan_profile_notification}"; # fan profile
         "XF86TouchpadToggle" = "exec --no-startup-id xinput | grep floating && xinput enable 12 || xinput disable 12 && ${send_touchpad_notification}";
-        "${mod}+Return" = "exec kitty; exec --no-startup-id ${mouse_to_focused}";
+        "${mod}+Return" = "exec wezterm; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+n" = "exec eww open --toggle nc";
         "${mod}+b" = "exec eww open --toggle bar";
         "${mod}+q" = "kill; exec --no-startup-id ${mouse_to_focused}";
@@ -218,6 +222,14 @@ in {
       }
       {
         command = "xhost +";
+      }
+      {
+        command = "asusctl slash -l 16 -m Flux -B true -S true -s true -b true -w true";
+        always = true;
+      }
+      {
+        command = "asusctl aura breathe -c 33ffaa && asusctl -k low";
+        always = true;
       }
       {
         command = "feh --no-fehbg --bg-fill ${config.stylix.image}";
