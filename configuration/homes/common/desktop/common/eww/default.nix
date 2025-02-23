@@ -5,6 +5,10 @@
   ...
 }: let
   c = config.lib.stylix.colors;
+  reloadScript = ''
+    ${pkgs.procps}/bin/pkill eww || true
+    ${pkgs.eww}/bin/eww open bar || true
+  '';
 in {
   home.packages = with pkgs; [
     pulseaudio
@@ -14,10 +18,10 @@ in {
     eww
     playerctl
   ];
-  home.activation.eww_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run ${pkgs.procps}/bin/pkill eww || true
-    run ${pkgs.eww}/bin/eww open bar || true
-  '';
+  # home.activation.eww_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  #   run ${pkgs.procps}/bin/pkill eww || true
+  #   run ${pkgs.eww}/bin/eww open bar || true
+  # '';
   xsession.initExtra = "${lib.getExe pkgs.eww} -c ${config.xdg.configHome}/eww open bar";
   home.file."${config.xdg.configHome}/eww/images" = {
     source = ./eww/images;
@@ -27,8 +31,14 @@ in {
     source = ./eww/scripts;
     recursive = true;
   };
-  home.file."${config.xdg.configHome}/eww/eww.scss".source = ./eww/eww.scss;
-  home.file."${config.xdg.configHome}/eww/eww.yuck".source = ./eww/eww.yuck;
+  home.file."${config.xdg.configHome}/eww/eww.scss" = {
+    source = ./eww/eww.scss;
+    onChange = reloadScript;
+  };
+  home.file."${config.xdg.configHome}/eww/eww.yuck" = {
+    source = ./eww/eww.yuck;
+    onChange = reloadScript;
+  };
   home.file."${config.xdg.configHome}/eww/colors.scss".text = ''
     // Colors //
     $bg: #${c.base00};
