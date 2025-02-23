@@ -10,10 +10,18 @@
   ];
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "sdhci_pci"];
-  boot.initrd.kernelModules = [];
+  boot.initrd.kernelModules = ["amdgpu"];
   boot.initrd.systemd.enable = true;
+  hardware.amdgpu.initrd.enable = true;
   boot.kernelModules = ["kvm-amd"];
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelParams = [
+    "mem_sleep_default=deep"
+    "pcie_aspm.policy=powersupersave"
+    "amdgpu.gpu_recovery=1"
+    "amdgpu.dcdebugmask=0x12"
+    "acpi.prefer_microsoft_dsm_guid=1"
+  ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [];
 
   fileSystems = {
@@ -39,29 +47,34 @@
     };
 
     "/persist" = {
-      device = "/dev/disk/by-uuid/5f63edb3-b587-410c-96ee-88eb964677f1";
+      device = "/dev/disk/by-label/root";
       fsType = "ext4";
       neededForBoot = true;
     };
 
     "/persist/home" = {
-      device = "/dev/disk/by-uuid/4f0a4994-a958-4d24-8f75-1803392a44c0";
+      device = "/dev/disk/by-label/home";
       fsType = "btrfs";
       neededForBoot = true;
     };
 
     "/boot" = {
-      device = "/dev/disk/by-uuid/74D4-6E08";
+      device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
       options = ["fmask=0077" "dmask=0077"];
       neededForBoot = true;
     };
+
+    "/persist/data" = {
+      device = "/dev/disk/by-label/data";
+      fsType = "ntfs";
+    };
   };
   swapDevices = [
-    {device = "/dev/disk/by-uuid/5d2bbd8b-a8b3-4070-b287-532ec7d7748f";}
+    {device = "/dev/disk/by-label/swap";}
     {
       device = "/var/swapfile";
-      size = 16 * 1024;
+      size = 24 * 1024;
     }
   ];
   zramSwap.enable = true;
@@ -74,5 +87,6 @@
   # networking.interfaces.enp103s0f4u1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
