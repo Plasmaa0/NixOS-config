@@ -127,6 +127,7 @@ alias lt='exa -aT --color=always --group-directories-first --icons' # tree listi
 alias ltg='exa -aT --color=always --group-directories-first --icons --git' # tree listing
 alias l.="exa -a | egrep '^\.'" # show only dotfiles
 alias ip="ip -color"
+abbr nixrepl "nix repl --expr \"{pkgs = import <nixpkgs> {};}\""
 
 # custom
 alias perlin="/home/plasmaa0/infa/perlinfetch/venv/bin/python /home/plasmaa0/infa/perlinfetch/perlinfetch.py"
