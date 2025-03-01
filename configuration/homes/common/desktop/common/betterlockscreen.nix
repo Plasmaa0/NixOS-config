@@ -4,65 +4,56 @@
   pkgs,
   ...
 }: {
-  services.betterlockscreen = {
+  services.xidlehook = let
+    lockTimeout = 15;
+    sleepTimeout = 30;
+  in {
     enable = true;
-    inactiveInterval = 15; # minutes
-    arguments = ["--show-layout"];
+    not-when-audio = true;
+    not-when-fullscreen = true;
+    detect-sleep = true;
+    # NOTE: The delays add onto the previous value (and the value is in seconds)
+    timers = let
+      min = m: 60 * m;
+    in [
+      {
+        delay = min (lockTimeout - 1);
+        command = ''${pkgs.libnotify}/bin/notify-send -i system-lock-screen "Lockscreen" "Locking in 1 minute" -u critical'';
+        canceller = ''${pkgs.libnotify}/bin/notify-send -i system-lock-screen "Lockscreen" "Lockscreen cancelled" '';
+      }
+      {
+        delay = min 1;
+        command = "${pkgs.xorg.xset}/bin/xset dpms force off"; # screen off + lock
+      }
+      {
+        delay = min (sleepTimeout - 1);
+        command = ''${pkgs.notify-desktop}/bin/notify-desktop --app-name=systemctl --urgency=critical "Sleeping in 1 min"'';
+        canceller = ''${pkgs.notify-desktop}/bin/notify-desktop --app-name=systemctl "Sleep cancelled"'';
+      }
+      {
+        delay = min 1;
+        command = "${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
+      }
+    ];
   };
-  services.screen-locker.xautolock.enable = false;
+  systemd.user.services.xss-lock = let
+    locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l --show-layout"; # just lock
+  in {
+    Unit = {
+      Description = "xss-lock, session locker service";
+      After = ["graphical-session-pre.target"];
+      PartOf = ["graphical-session.target"];
+    };
 
-  # services.logind.extraConfig = ''
-  #   HandlePowerKey=suspend
-  # '';
-  home.file."${config.xdg.configHome}/betterlockscreen/custom-pre.sh" = {
-    text = let
-      runtimeInputs = with pkgs; [brightnessctl coreutils gawk xprintidle libnotify dunst];
-      targetBrightness = 5;
-    in ''
-      export PATH="${lib.makeBinPath runtimeInputs}:$PATH"
-      target_level="${toString targetBrightness}"
-      fade_step_time="0.005"
-      kill_group(){
-          pgid=$(ps -p "$$" -o pgid=)
-          kill -- "$pgid"
-      }
-      get_brightness() {
-          brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'
-      }
-      set_brightness() {
-          brightnessctl set "$1"% > /dev/null
-      }
-      fade_brightness() {
-          local level
-          for level in $(eval echo {$(get_brightness)..$1}); do
-              idle=$(xprintidle)
-              if (( idle < 20 )); then
-                  brightnessctl -r > /dev/null
-                  dunstctl set-paused false
-                  kill_group
-                  exit
-              fi
-              set_brightness "$level"
-              sleep "$fade_step_time"
-          done
-      }
-      dunstctl set-paused false
-      notify-send -i system-lock-screen "Locking soon" -u low
-      brightnessctl -s > /dev/null
-      fade_brightness "$target_level"
-      dunstctl set-paused true
-    '';
-    executable = true;
+    Install = {WantedBy = ["graphical-session.target"];};
+
+    Service = {
+      ExecStart =
+        lib.concatStringsSep " "
+        ["${pkgs.xss-lock}/bin/xss-lock" "-s \${XDG_SESSION_ID}" "-- ${locker}"];
+    };
   };
-  home.file."${config.xdg.configHome}/betterlockscreen/custom-post.sh" = {
-    text = let
-      runtimeInputs = with pkgs; [brightnessctl];
-    in ''
-      export PATH="${lib.makeBinPath runtimeInputs}:$PATH"
-      brightnessctl -r > /dev/null
-    '';
-    executable = true;
-  };
+
   home.file."${config.xdg.configHome}/betterlockscreen/betterlockscreenrc".text = let
     c = config.lib.stylix.colors;
   in ''
