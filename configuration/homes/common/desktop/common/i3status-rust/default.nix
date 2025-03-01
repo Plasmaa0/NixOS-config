@@ -151,6 +151,7 @@ in {
           backlight = {
             block = "backlight";
             format = " $icon  $brightness ";
+            device = "amdgpu_bl1";
             click = [
               {
                 button = "left";
