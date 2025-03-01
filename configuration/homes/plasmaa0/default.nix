@@ -37,6 +37,12 @@
   ];
 
   mime.enable = true;
+  mime.list = [
+    {
+      mimeTypes = ["image/png"];
+      handler = pkgs.feh;
+    }
+  ];
 
   home.persistence."/persist/home/${config.home.username}" = {
     allowOther = true;
