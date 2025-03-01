@@ -7,7 +7,8 @@ in {
   imports = [
     ./hardware-configuration.nix
 
-    "${nixos-hardware}/common/cpu/amd/pstate.nix"
+    # "${nixos-hardware}/common/cpu/amd" # sets hardware.cpu.amd.updateMicrocode which is already done in ./hardware-configuration.nix
+    # "${nixos-hardware}/common/cpu/amd/pstate.nix" # sets kernelParams = [ "amd_pstate=active" ];
 
     "${nixos-hardware}/common/gpu/nvidia/prime.nix"
     "${nixos-hardware}/common/gpu/nvidia/ada-lovelace"
@@ -29,14 +30,10 @@ in {
     dynamicBoost.enable = lib.mkDefault true;
   };
 
-  services = {
-    asusd.enable = lib.mkDefault true;
-
-    udev.extraHwdb = ''
-      evdev:name:*:dmi:bvn*:bvr*:bd*:svnASUS*:pn*:*
-       KEYBOARD_KEY_ff31007c=f20    # fixes mic mute button
-    '';
-  };
+  services.udev.extraHwdb = ''
+    evdev:name:*:dmi:bvn*:bvr*:bd*:svnASUS*:pn*:*
+     KEYBOARD_KEY_ff31007c=f20    # fixes mic mute button
+  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -34,7 +34,6 @@
     enable = true;
     enableUserService = true;
   };
-  # services.power-profiles-daemon.enable = true;
   #systemd.services.power-profiles-daemon = {
   #  enable = true;
   #  wantedBy = ["multi-user.target"];
