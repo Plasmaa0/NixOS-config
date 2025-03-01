@@ -224,7 +224,7 @@ in {
         command = "xhost +";
       }
       {
-        command = "asusctl slash -l 16 -m Flux -B true -S true -s true -b true -w true";
+        command = "asusctl slash -l 128 -m Flux -B true -S true -s true -b true -w true";
         always = true;
       }
       {
