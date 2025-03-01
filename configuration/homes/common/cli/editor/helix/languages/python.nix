@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   programs.helix = {
     extraPackages = with pkgs; [
-      python311Packages.python-lsp-server
       python312Packages.python-lsp-server
       black
       mypy
