@@ -103,7 +103,10 @@ in {
       };
     };
     settings = {
-      zoom.default = "${toString (builtins.ceil (100 * hidpiScalingFactor))}%";
+      zoom.default =
+        if hidpiScalingFactor > 1
+        then "150%"
+        else "100%";
       qt = {
         highdpi = true;
       };
