@@ -82,26 +82,35 @@ all-checks: format check_dead lint
 
 # Update configurations
 [group('rebuild update')]
-@rebuild-update: all-checks make-configuration
+@rebuild-update: updateFlakeLock
     echo -e "{{ CYAN }}\t- rebuilding {{ YELLOW + BOLD }}and updating{{ NORMAL }}{{ CYAN }} config {{ RED + UNDERLINE }}(boot){{ NORMAL }}"
-    sudo nix-channel --update
-    sudo nixos-rebuild boot --flake /etc/nixos --upgrade --show-trace
-    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
+    just rebuild-boot
+    echo "{{ GREEN + INVERT }}Update done!{{ NORMAL }}"
 
 # Update configurations for a specific host
 [group('rebuild update')]
-@rebuild-update-specific host: listHosts all-checks make-configuration
+@rebuild-update-specific host: updateFlakeLock
     echo -e "{{ CYAN }}\t- rebuilding {{ YELLOW + BOLD }}and updating{{ NORMAL }}{{ CYAN }} config {{ RED + UNDERLINE }}(boot){{ NORMAL }}{{ CYAN }} for host{{ YELLOW }} {{ host }}"
-    sudo nix-channel --update
-    sudo nixos-rebuild boot --flake /etc/nixos#{{ host }} --upgrade --show-trace
-    echo "{{ GREEN + INVERT }}Done!{{ NORMAL }}"
+    just rebuild-boot-specific {{ host }}
+    echo "{{ GREEN + INVERT }}Update done!{{ NORMAL }}"
 
 # List available hosts
 [group('util')]
 @listHosts:
     echo "{{ BOLD + BLUE + INVERT }}Available hosts:{{ NORMAL }}{{ CYAN }}"
     ls configuration/hosts -I common
-    echo
+
+backupFile := "flake_$(date '+%d-%m-%Y_%H-%M-%S').lock"
+
+# Update flake.lock
+[group('util')]
+@updateFlakeLock:
+    echo "{{ GREEN + INVERT }}Update:{{ NORMAL }}"
+    cp configuration/flake.lock {{ backupFile }}
+    echo -e "{{ CYAN }}\t- {{ BLUE + UNDERLINE }}./configuration/flake.lock{{ NORMAL }}{{ CYAN }} backup is at {{ BLUE + UNDERLINE }}./{{ backupFile }}{{ NORMAL }}"
+    echo -e "{{ CYAN }}\t- {{ GREEN }}updating {{ BLUE + UNDERLINE }}flake.lock{{ NORMAL }}"
+    @nix flake update --flake configuration/
+    echo -e "{{ CYAN }}\t- flake.lock updated"
 
 # Garbage collection
 [confirm('Are you sure? [y/N]')]
