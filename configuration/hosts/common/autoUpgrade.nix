@@ -9,6 +9,6 @@
     ];
     dates = "weekly";
     randomizedDelaySec = "15min";
-    allowReboot = true;
+    allowReboot = false;
   };
 }
