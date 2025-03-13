@@ -53,6 +53,7 @@ in {
     modifier = "Mod4";
     colors = {
       background = "#${c.base05}";
+      # currently focused window
       focused = {
         border = "#${c.base0B}";
         background = "#${c.base0B}";
@@ -60,19 +61,21 @@ in {
         indicator = "#${c.base0E}";
         childBorder = "#${c.base0B}";
       };
-      unfocused = {
-        border = "#${c.base01}aa";
-        background = "#${c.base01}";
-        text = "#${c.base05}";
-        indicator = "#${c.base03}aa";
-        childBorder = "#${c.base01}aa";
-      };
+      # window that is focused but in other container (i.e. other monitor or split)
       focusedInactive = {
-        border = "#${c.base04}cc";
+        border = "#${c.base04}";
         background = "#${c.base04}";
         text = "#${c.base00}";
-        indicator = "#${c.base0A}cc";
-        childBorder = "#${c.base04}cc";
+        indicator = "#${c.base0A}";
+        childBorder = "#${c.base04}";
+      };
+      # not focused in any container
+      unfocused = {
+        border = "#${c.base01}";
+        background = "#${c.base01}";
+        text = "#${c.base05}";
+        indicator = "#${c.base03}";
+        childBorder = "#${c.base01}";
       };
       urgent = {
         border = "#${c.base0F}";
@@ -96,8 +99,8 @@ in {
     gaps = {
       smartBorders = "on";
       smartGaps = true;
-      inner = builtins.ceil (3 * hidpiScalingFactor);
-      outer = builtins.ceil (3 * hidpiScalingFactor);
+      inner = builtins.ceil (5 * hidpiScalingFactor); # space between two adjacent windows (or split containers)
+      outer = builtins.ceil (2 * hidpiScalingFactor); # space along the screen edges
     };
     defaultWorkspace = "workspace number 1";
     keybindings = let
@@ -140,8 +143,10 @@ in {
         "XF86Launch1" = "exec pkill picom; exec flameshot gui"; # m4 macro key above keyboard
         "XF86Launch3" = "exec --no-startup-id asusctl aura -n && ${send_aura_notification}"; # aura button
         "XF86Launch4" = "exec --no-startup-id asusctl profile -n && ${send_fan_profile_notification}"; # fan profile
-        "XF86TouchpadToggle" = "exec --no-startup-id xinput | grep floating && xinput enable 12 || xinput disable 12 && ${send_touchpad_notification}";
-        "${mod}+Return" = "exec wezterm; exec --no-startup-id ${mouse_to_focused}";
+        "XF86TouchpadToggle" = let
+          touchpadId = ''"$(xinput | grep Touchpad | tr '\t' '\n' | grep "id=[0-9]*" | tr '=' '\n' | tail -1)"'';
+        in "exec --no-startup-id xinput | grep floating && xinput enable ${touchpadId} || xinput disable ${touchpadId} && ${send_touchpad_notification}";
+        "${mod}+Return" = "exec kitty; exec --no-startup-id ${mouse_to_focused}";
         "${mod}+n" = "exec eww open --toggle nc";
         "${mod}+b" = "exec eww open --toggle bar";
         "${mod}+q" = "kill; exec --no-startup-id ${mouse_to_focused}";
@@ -224,11 +229,11 @@ in {
         command = "xhost +";
       }
       {
-        command = "asusctl slash -l 128 -m Flux -B true -S true -s true -b true -w true";
+        command = "asusctl slash -l 128 -m Flux -B true -S true -s false -b false -w true";
         always = true;
       }
       {
-        command = "asusctl aura breathe -c 33ffaa && asusctl -k low";
+        command = "asusctl aura static -c ${c.base0C} && asusctl -k low";
         always = true;
       }
       {
@@ -254,6 +259,10 @@ in {
         {
           command = "floating enable border pixel 3";
           criteria = {class = "feh";};
+        }
+        {
+          command = "border pixel 4";
+          criteria = {class = "kitty";};
         }
         {
           command = "floating enable border pixel 3";
