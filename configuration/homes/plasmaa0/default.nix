@@ -32,6 +32,7 @@
     simplescreenrecorder
     gimp
     darktable
+    mindustry
     # cider
     # i3wsr # i3 workspace names
   ];
@@ -51,6 +52,7 @@
       "uni"
       "games"
       "home-manager"
+      ".local/share/Mindustry"
     ];
   };
 }
