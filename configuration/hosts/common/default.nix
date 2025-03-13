@@ -26,6 +26,7 @@
     ./ananicy.nix
     ./gamemode.nix
     ./modules/HighDPI.nix
+    ./firewall.nix
     inputs.home-manager.nixosModules.home-manager
   ];
   nixpkgs.config = {
