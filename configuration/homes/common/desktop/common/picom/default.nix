@@ -134,8 +134,8 @@
       rules = let
         opFULL = 1;
         opMAX = 0.9;
-        opNORM = 0.8;
-        opLOW = 0.6;
+        opNORM = 0.9;
+        opLOW = 0.8;
       in [
         {
           match = "_GTK_FRAME_EXTENTS@";
