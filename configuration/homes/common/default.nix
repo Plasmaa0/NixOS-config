@@ -41,6 +41,8 @@
         # mode = "0766";
         method = "symlink";
       }
+      ".cache/AmneziaVPN.ORG"
+      ".config/AmneziaVPN.ORG"
       ".local/share/applications"
       {
         directory = ".local/share/Steam";
