@@ -14,6 +14,9 @@
         C-e = "page_cursor_half_up";
         C-r = ":reload";
         C-s = ":w";
+        backspace = ":w";
+        "C-." = "goto_next_buffer";
+        "C-," = "goto_next_buffer";
         A-j = ["search_selection" "extend_search_next"];
         C-q = ":bc";
         C-A-l = ":format";

@@ -55,11 +55,11 @@
         # bufferline, inlay hints
         "ui.bufferline" = {
           fg = "base6";
-          bg = "base8x0c";
+          bg = "base2";
         };
         "ui.bufferline.active" = {
           fg = "base8";
-          bg = "base4";
+          bg = "base3";
         };
         "ui.virtual.inlay-hint" = {fg = "base4";};
 

@@ -3,9 +3,11 @@
     line-number = "relative";
     mouse = true;
     cursorline = true;
+    color-modes = true;
     rulers = [100];
     scrolloff = 15;
     auto-info = true;
+    bufferline = "multiple";
     gutters = ["diagnostics" "spacer" "line-numbers" "spacer" "diff"];
     end-of-line-diagnostics = "hint";
     inline-diagnostics = {
