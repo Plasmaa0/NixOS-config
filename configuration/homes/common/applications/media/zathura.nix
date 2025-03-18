@@ -29,6 +29,7 @@ in {
       "Т" = "search backward"; # same purpose (russian т)
     };
     options = lib.mkForce {
+      font = "${config.stylix.fonts.monospace.name} ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
       synctex = true;
       selection-clipboard = "clipboard";
       # synctex-editor-command = "vim --servername VIM --remote +\%{lie} \%{input}";
