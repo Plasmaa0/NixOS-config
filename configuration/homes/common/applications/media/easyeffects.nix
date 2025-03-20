@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   services.easyeffects = {
     enable = true;
   };
@@ -7,4 +11,7 @@
   # override default value which is
   # Install.WantedBy = [ "graphical-session.target" ];
   systemd.user.services.easyeffects.Install.WantedBy = pkgs.lib.mkForce [];
+  home.persistence."/persist/home/${config.home.username}" = {
+    directories = [".config/easyeffects"];
+  };
 }
