@@ -33,6 +33,8 @@
     gimp
     darktable
     mindustry
+    nvtopPackages.full
+    aria2
     # cider
     # i3wsr # i3 workspace names
   ];
