@@ -1,8 +1,8 @@
 {...}: {
   imports = [
     ./betterlockscreen.nix
-    ./eww
-    # ./polybar
+    # ./eww
+    ./polybar
     ./picom
     ./dunst.nix
     ./rofi
