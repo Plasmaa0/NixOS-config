@@ -19,6 +19,7 @@
       display-messages = true;
       display-inlay-hints = true;
       goto-reference-include-declaration = false;
+      display-color-swatches = true;
     };
     jump-label-alphabet = "asdfqwerzxcvjklmiuopghtybn";
     cursor-shape = {

@@ -6,6 +6,7 @@
     ./latex.nix
     ./typst.nix
     ./yuck.nix
+    ./cpp.nix
   ];
 
   # lsp for languages without extra configs
@@ -19,9 +20,6 @@
     # markdown
     marksman
     markdown-oxide
-
-    # cpp
-    clang-tools
 
     # other
     yaml-language-server
