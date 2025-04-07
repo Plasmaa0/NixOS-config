@@ -150,3 +150,11 @@ backupFile := "flake_$(date '+%d-%m-%Y_%H-%M-%S').lock"
     touch configuration/hosts/{{ host }}/default.nix
     touch configuration/hosts/{{ host }}/hardware/hardware-configuration.nix
     echo "{{ BOLD + GREEN }}Created empty host directory {{ BLUE + UNDERLINE }}{{ host }}{{ NORMAL }}{{ BOLD + GREEN }} in {{ BLUE + UNDERLINE }}configuration/hosts{{ NORMAL }}"
+
+# Visualize memory used by nix derivations
+[group('util')]
+@memory:
+    nix-shell -p nix-du graphviz --command "nix-du -s=100MB | dot -Tpng > store.png"
+    feh store.png
+    rm store.png
+    rm feh*.png
