@@ -53,7 +53,7 @@ in {
       home-manager = "https://nix-community.github.io/home-manager/options.xhtml";
       stylix = "https://stylix.danth.me/options/nixos.html";
       cheatsheet = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
-      base-16-themes = "https://tinted-theming.github.io/base16-gallery/";
+      base-16-themes = "https://tinted-theming.github.io/tinted-gallery/";
 
       # social
       music = "https://next.music.yandex.ru";
