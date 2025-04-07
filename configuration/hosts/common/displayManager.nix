@@ -7,10 +7,10 @@
   environment.systemPackages = with pkgs; [
     (where-is-my-sddm-theme.override {
       themeConfig.General = {
-        background = "${../../homes/common/wallpapers/monokai.jpg}";
-        blurRadius = 40;
-        showUsersByDefault = true;
-        showSessionsByDefault = true;
+        background = "${../../homes/common/wallpapers/a_rocky_shore_with_waves_crashing_on_rocks.jpg}";
+        blurRadius = 20;
+        passwordInputWidth = 0.75;
+        passwordFontSize = 64;
         font = "IosevkaTermSlab";
         helpFont = "IosevkaTermSlab";
         backgroundMode = "fill";
