@@ -28,6 +28,12 @@ in {
     };
 
     dynamicBoost.enable = lib.mkDefault true;
+
+    powerManagement = {
+      # This is unreliable on the 4060;  works a few times, then hangs:
+      enable = true;
+      finegrained = true;
+    };
   };
 
   services.udev.extraHwdb = ''
