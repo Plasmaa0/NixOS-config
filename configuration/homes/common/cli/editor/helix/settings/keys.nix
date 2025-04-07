@@ -16,7 +16,9 @@
         C-s = ":w";
         backspace = ":w";
         "C-." = "goto_next_buffer";
-        "C-," = "goto_next_buffer";
+        "C-," = "goto_previous_buffer";
+        # "C->" = "rotate_selection_contents_forward";
+        # "C-<" = "rotate_selection_contents_backward";
         A-j = ["search_selection" "extend_search_next"];
         C-q = ":bc";
         C-A-l = ":format";
