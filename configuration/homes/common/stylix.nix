@@ -5,7 +5,7 @@
   hidpiScalingFactor,
   ...
 }: let
-  theme = import ./themes/dark/anime.nix;
+  theme = import ./themes/dark/graphite.nix;
 in {
   imports = [
     inputs.stylix.homeManagerModules.stylix
@@ -24,6 +24,7 @@ in {
     base16Scheme =
       lib.mkIf (lib.elem "scheme" (lib.attrNames theme))
       "${pkgs.base16-schemes}/share/themes/${theme.scheme}.yaml";
+    # stylix font config
     # see also common/fonts.nix
     fonts = {
       serif = {
@@ -55,6 +56,7 @@ in {
       size = 34;
     };
   };
+  # home manager font config
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
