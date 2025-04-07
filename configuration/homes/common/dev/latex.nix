@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    texlive.combined.scheme-full
-    tectonic
+    texlive.combined.scheme-basic
     zathura
   ];
 }
