@@ -46,22 +46,7 @@
         };
         hooks.postswitch = postHook;
       };
-      "zep" = {
-        fingerprint = {
-          eDP = zepMonitorFingerprint;
-        };
-        config = {
-          eDP = {
-            enable = true;
-            primary = true;
-            position = "0x0";
-            mode = "2560x1600";
-            rate = "60.00";
-          };
-        };
-        hooks.postswitch = postHook;
-      };
-      "zep_gaming" = {
+      "zep_240" = {
         fingerprint = {
           eDP = zepMonitorFingerprint;
         };
@@ -72,6 +57,21 @@
             position = "0x0";
             mode = "2560x1600";
             rate = "240.00";
+          };
+        };
+        hooks.postswitch = postHook;
+      };
+      "zep_60" = {
+        fingerprint = {
+          eDP = zepMonitorFingerprint;
+        };
+        config = {
+          eDP = {
+            enable = true;
+            primary = true;
+            position = "0x0";
+            mode = "2560x1600";
+            rate = "60.00";
           };
         };
         hooks.postswitch = postHook;
