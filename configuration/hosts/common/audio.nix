@@ -9,14 +9,6 @@
   services.pipewire = {
     enable = true;
 
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-
-    pulse.enable = true;
-    jack.enable = true;
-
     wireplumber.extraConfig."10-bluez" = {
       "monitor.bluez.properties" = {
         "bluez5.enable-sbc-xq" = true;
