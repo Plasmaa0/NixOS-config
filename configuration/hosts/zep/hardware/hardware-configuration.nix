@@ -17,11 +17,11 @@
   # https://gitlab.freedesktop.org/drm/amd/-/issues/3545#note_2538277
   # https://universal-blue.discourse.group/t/linux-bluefin-on-asus-laptop-with-amd-ryzen-ai-vivobook-m5406w/4071
   boot.kernelParams = [
-    # "iommu=1"
+    "iommu=1"
     # "mem_sleep_default=deep" # Adding mem_sleep_default=deep doesn't work on AMD systems.
     "amd_pstate=passive"
     "pcie_aspm.policy=powersupersave"
-    "pcie_aspm=off"
+    # "pcie_aspm=off"
     "acpi.prefer_microsoft_dsm_guid=1"
 
     # Hopefully fixes for where the kernel sometimes hangs when suspending or hibernating
@@ -47,10 +47,11 @@
     # "amdgpu.dcdebugmask=0x12"
     # "amdgpu.dcdebugmask=0x10"
     # "amdgpu.dcdebugmask=0x200"
-    "amdgpu.dcdebugmask=0x212"
+    # "amdgpu.dcdebugmask=0x212"
+    "amdgpu.dcdebugmask=0x210"
 
     # Can help solve flickering/glitching display issues since Scatter/Gather code was reenabled
-    "amdgpu.sg_display=0"
+    # "amdgpu.sg_display=0"
   ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [];
@@ -99,6 +100,11 @@
     "/persist/data" = {
       device = "/dev/disk/by-label/data";
       fsType = "ntfs";
+      options = [
+        "rw"
+        "uid=1000"
+        "gid=100"
+      ];
     };
   };
   swapDevices = [

@@ -15,6 +15,7 @@
       Option "OffTime" "0"
     '';
   };
+  systemd.sleep.extraConfig = ''HibernateDelaySec=30min''; # time after when pc will hibernate when using systemctl suspend-then-hibernate
   hardware.sensor.iio.enable = true;
   hidpi = {
     enable = true;
@@ -23,25 +24,14 @@
   hardware.bluetooth.powerOnBoot = false;
   programs.dconf.enable = true;
 
-  services.supergfxd = {
-    enable = true;
-    settings = {
-      supergfxctl-mode = "Integrated";
-      gfx-vfio-enable = true;
-    };
-  };
+  # services.supergfxd = {
+  #   enable = true;
+  #   settings = {
+  #     supergfxctl-mode = "Integrated";
+  #   };
+  # };
   services.asusd = {
     enable = true;
     enableUserService = true;
   };
-  #systemd.services.power-profiles-daemon = {
-  #  enable = true;
-  #  wantedBy = ["multi-user.target"];
-  #};
-  hardware.nvidia.powerManagement = {
-    # This is unreliable on the 4060;  works a few times, then hangs:
-    # enable = true;
-    # finegrained = true;
-  };
-  # $ asusctl led-mode sleep-enable false
 }
