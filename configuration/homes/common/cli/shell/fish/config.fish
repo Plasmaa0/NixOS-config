@@ -99,6 +99,15 @@ function take --argument dir
     cd $dir
 end
 
+# wwc: Work with config (creates normal file instead of nix symlink) ONLY FOR DEBUGGING AND TESTING PURPOSES
+function wwc -a f
+    cat $f >$f.backup
+    unlink $f
+    cp $f.backup $f
+    chmod 777 $f
+    chown $(whoami) $f
+end
+
 # Copy DIR1 DIR2
 function copy
     set count (count $argv | tr -d \n)
