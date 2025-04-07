@@ -16,14 +16,6 @@ in {
       enable = true;
     };
   };
-  # home.activation.i3_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  #   run ${pkgs.i3}/bin/i3-msg reload || true
-  #   run ${pkgs.i3}/bin/i3-msg restart || true
-  # '';
-  xdg.configFile."i3/config".onChange = ''
-    i3-msg reload || true
-    i3-msg restart || true
-  '';
   home.packages = with pkgs; [
     (writeShellApplication {
       name = "i3-mouse-to-center";
