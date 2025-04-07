@@ -5,8 +5,8 @@
   ...
 }: {
   services.xidlehook = let
-    lockTimeout = 15;
-    sleepTimeout = 30;
+    lockTimeout = 10;
+    sleepTimeout = 20;
   in {
     enable = true;
     not-when-audio = true;
