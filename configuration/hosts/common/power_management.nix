@@ -11,9 +11,6 @@
     settings = {
       # USB
       USB_AUTOSUSPEND = 1;
-      USB_EXCLUDE_BTUSB = 1;
-      USB_EXCLUDE_PHONE = 1;
-      USB_EXCLUDE_WWAN = 1;
 
       # BATTERY
       START_CHARGE_THRESH_BAT0 = 30;
@@ -27,7 +24,7 @@
       PLATFORM_PROFILE_ON_BAT = "low-power";
 
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "conservative";
+      CPU_SCALING_GOVERNOR_ON_BAT = "conservative"; #"powersave";
 
       CPU_SCALING_MIN_FREQ_ON_AC = 599000;
       CPU_SCALING_MAX_FREQ_ON_AC = 5156000;
