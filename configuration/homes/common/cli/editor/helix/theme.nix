@@ -58,7 +58,7 @@
           bg = "base2";
         };
         "ui.bufferline.active" = {
-          fg = "base8";
+          fg = "green";
           bg = "base3";
         };
         "ui.virtual.inlay-hint" = {fg = "base4";};
