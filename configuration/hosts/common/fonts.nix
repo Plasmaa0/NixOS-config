@@ -23,7 +23,7 @@
   fonts.fontconfig = {
     defaultFonts = {
       emoji = ["OpenMoji Color"];
-      monospace = ["Iosevka"];
+      monospace = ["VictorMono NF"];
       serif = ["IosevkaTermSlab"];
       sansSerif = ["Arimo"];
     };

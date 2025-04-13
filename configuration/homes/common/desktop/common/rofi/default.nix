@@ -35,7 +35,7 @@ in {
       active: #${c.base0D};
       urgent: #${c.base08};
       powermenu-font: "JetBrains Mono Nerd Font ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
-      launcher-font: "Iosevka Nerd Font ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
+      launcher-font: "VictorMono NF ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
     }
   '';
 }

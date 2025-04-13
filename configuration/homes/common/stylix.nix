@@ -36,8 +36,8 @@ in {
         name = "Arimo";
       };
       monospace = {
-        package = pkgs.nerd-fonts.iosevka;
-        name = "Iosevka";
+        package = pkgs.nerd-fonts.victor-mono;
+        name = "VictorMono NF";
       };
       emoji = {
         package = pkgs.openmoji-color;
@@ -62,7 +62,7 @@ in {
     defaultFonts = {
       serif = ["IosevkaTermSlab"];
       sansSerif = ["Arimo"];
-      monospace = ["Iosevka"];
+      monospace = ["VictorMono NF"];
       emoji = ["OpenMoji Color"];
     };
   };

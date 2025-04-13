@@ -211,7 +211,7 @@ in {
       idle_threshold = 120;
 
       # Font and typography settings
-      font = lib.mkForce config.stylix.fonts.serif.name;
+      font = lib.mkForce config.stylix.fonts.monospace.name;
       alignment = "left";
       word_wrap = "yes";
 
