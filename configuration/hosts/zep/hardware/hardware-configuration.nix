@@ -9,6 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.supportedFilesystems = ["ntfs"];
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "sdhci_pci"];
   boot.initrd.kernelModules = ["amdgpu"];
   boot.initrd.systemd.enable = true;
@@ -99,7 +100,7 @@
 
     "/persist/data" = {
       device = "/dev/disk/by-label/data";
-      fsType = "ntfs";
+      fsType = "ntfs-3g";
       options = [
         "rw"
         "uid=1000"
