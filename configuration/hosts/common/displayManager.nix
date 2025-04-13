@@ -2,7 +2,7 @@
   fonts.fontDir.enable = true;
   fonts.fontconfig.enable = true;
   fonts.packages = with pkgs; [
-    nerd-fonts.iosevka-term-slab
+    nerd-fonts.victor-mono
   ];
   environment.systemPackages = with pkgs; [
     (where-is-my-sddm-theme.override {
@@ -11,8 +11,8 @@
         blurRadius = 20;
         passwordInputWidth = 0.75;
         passwordFontSize = 64;
-        font = "IosevkaTermSlab";
-        helpFont = "IosevkaTermSlab";
+        font = "VictorMono NF";
+        helpFont = "VictorMono NF";
         backgroundMode = "fill";
       };
       variants = ["qt5"];
@@ -34,19 +34,5 @@
         '';
       }
     ];
-    displayManager.lightdm = {
-      enable = false;
-      greeters.slick = {
-        enable = true;
-        font = {
-          package = pkgs.nerd-fonts.iosevka-term-slab;
-          name = "IosevkaTermSlab";
-        };
-        iconTheme = {
-          package = pkgs.papirus-icon-theme;
-          name = "Papirus-Dark";
-        };
-      };
-    };
   };
 }
