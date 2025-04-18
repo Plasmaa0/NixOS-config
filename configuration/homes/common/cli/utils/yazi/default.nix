@@ -67,24 +67,24 @@
         image_bound = [0 0];
       };
 
-      plugin = {
-        prepend_fetchers = let
-          common = {
-            id = "git";
-            run = "git";
-            prio = "normal";
-          };
-        in
-          map (elem: elem // common) [
-            {
-              name = "*";
-            }
+      # plugin = {
+      #   prepend_fetchers = let
+      #     common = {
+      #       id = "git";
+      #       run = "git";
+      #       prio = "normal";
+      #     };
+      #   in
+      #     map (elem: elem // common) [
+      #       {
+      #         name = "*";
+      #       }
 
-            {
-              name = "*/";
-            }
-          ];
-      };
+      #       {
+      #         name = "*/";
+      #       }
+      #     ];
+      # };
     };
 
     plugins = let
@@ -159,8 +159,8 @@
         }
       ];
     };
-    initLua = ''
-      require("git"):setup()
-    '';
+    # initLua = ''
+    #   require("git"):setup()
+    # '';
   };
 }
