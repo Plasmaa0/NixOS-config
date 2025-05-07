@@ -3,11 +3,13 @@
     extraPackages = with pkgs; [
       texlab
       zathura
+      ltex-ls-plus
     ];
     languages = {
       language = [
         {
           name = "latex";
+          language-servers = ["texlab" "ltex-ls-plus"];
           formatter = {
             command = "prettier";
             args = ["--parser" "latex-parser"];
@@ -21,7 +23,6 @@
       ];
       language-server = {
         texlab.config.texlab = {
-          auxDirectory = "build";
           chktex = {
             onOpenAndSave = true;
             onEdit = true;
@@ -31,10 +32,20 @@
             args = ["--synctex-forward" "%l:%c:%f" "%p"];
           };
           build = {
+            auxDirectory = "build";
+            logDirectory = "build";
+            pdfDirectory = "build";
             forwardSearchAfter = true;
             onSave = true;
             executable = "latexmk";
-            args = ["-pdf" "-interaction=nonstopmode" "-synctex=1" "-shell-escape" "-output-directory=build" "%f"];
+            args = [
+              "-pdf"
+              "-interaction=nonstopmode"
+              "-synctex=1"
+              "-shell-escape"
+              "-output-directory=build"
+              "%f"
+            ];
           };
         };
       };
