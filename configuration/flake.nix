@@ -47,10 +47,12 @@
   in {
     nixosConfigurations = {
       nb = mkSystem {
+        system = "x86_64-linux";
         host = "nb";
         homes = ["plasmaa0"];
       };
       zep = mkSystem {
+        system = "x86_64-linux";
         host = "zep";
         homes = ["plasmaa0"];
       };
