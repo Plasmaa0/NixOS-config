@@ -4,10 +4,12 @@
   outputs,
   home-manager,
 }: {
+  system,
   host,
   homes,
 }:
 nixpkgs.lib.nixosSystem {
+  inherit system;
   modules = [
     ./hosts/${host}
     {
