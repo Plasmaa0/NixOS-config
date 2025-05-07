@@ -20,6 +20,7 @@
       display-inlay-hints = true;
       goto-reference-include-declaration = false;
       display-color-swatches = true;
+      auto-signature-help = false;
     };
     jump-label-alphabet = "asdfqwerzxcvjklmiuopghtybn";
     cursor-shape = {
