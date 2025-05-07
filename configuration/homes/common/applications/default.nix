@@ -4,7 +4,7 @@
     ./browser/qutebrowser.nix
     ./social/telegram.nix
     ./social/cassette.nix
-    # ./social/yandex-music.nix
+    ./social/yandex-music.nix
     ./editor/vscode.nix
     ./editor/texstudio.nix
     ./media/zathura.nix
