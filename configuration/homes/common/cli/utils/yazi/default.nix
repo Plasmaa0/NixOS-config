@@ -1,6 +1,6 @@
 {
   pkgs,
-  lib,
+  inputs,
   config,
   hidpiScalingFactor,
   ...
@@ -25,6 +25,7 @@
   home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash"];
   programs.yazi = {
     enable = true;
+    package = inputs.yazi.packages.${pkgs.system}.default;
     settings = {
       manager = {
         layout = [1 4 3];
@@ -67,33 +68,50 @@
         image_bound = [0 0];
       };
 
-      # plugin = {
-      #   prepend_fetchers = let
-      #     common = {
-      #       id = "git";
-      #       run = "git";
-      #       prio = "normal";
-      #     };
-      #   in
-      #     map (elem: elem // common) [
-      #       {
-      #         name = "*";
-      #       }
-
-      #       {
-      #         name = "*/";
-      #       }
-      #     ];
-      # };
+      plugin = {
+        prepend_previewers = [
+          {
+            mime = "application/{,g}zip";
+            run = "lsar";
+          }
+          {
+            mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}";
+            run = "lsar";
+          }
+        ];
+        prepend_fetchers = [
+          {
+            name = "*";
+            id = "git";
+            run = "git";
+            prio = "normal";
+          }
+          {
+            name = "*/";
+            id = "git";
+            run = "git";
+            prio = "normal";
+          }
+        ];
+      };
     };
 
     plugins = let
-      plugin-list = builtins.attrNames (builtins.readDir ./plugins);
-      remove-yazi-extension = filename: lib.elemAt (builtins.split ".yazi" filename) 0;
-      sanitized-plugin-list = map remove-yazi-extension plugin-list;
-      plugins-result = lib.genAttrs sanitized-plugin-list (name: ./plugins/${name}.yazi);
-    in
-      plugins-result;
+      yazi-plugins = pkgs.fetchFromGitHub {
+        owner = "yazi-rs";
+        repo = "plugins";
+        rev = "864a0210d9ba1e8eb925160c2e2a25342031d8d3";
+        sha256 = "sha256-m3709h7/AHJAtoJ3ebDA40c77D+5dCycpecprjVqj/k=";
+      };
+    in {
+      lsar = "${yazi-plugins}/lsar.yazi"; # preview archive contents
+      git = "${yazi-plugins}/git.yazi";
+      smart-enter = "${yazi-plugins}/smart-enter.yazi";
+      smart-filter = "${yazi-plugins}/smart-filter.yazi";
+      compress = ./plugins/compress.yazi;
+      max-preview = ./plugins/max-preview.yazi;
+      restore = ./plugins/restore.yazi;
+    };
     keymap = {
       manager.prepend_keymap = let
         echo = "${pkgs.coreutils}/bin/echo";
@@ -102,7 +120,7 @@
         cp = "${pkgs.coreutils}/bin/cp";
         xargs = "${pkgs.findutils}/bin/xargs";
         xclip = "${pkgs.xclip}/bin/xclip";
-        dragon = "${pkgs.xdragon}/bin/dragon";
+        dragon = "${pkgs.xdragon}/bin/xdragon";
       in [
         {
           on = "u";
@@ -159,8 +177,8 @@
         }
       ];
     };
-    # initLua = ''
-    #   require("git"):setup()
-    # '';
+    initLua = ''
+      require("git"):setup()
+    '';
   };
 }
