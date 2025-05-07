@@ -15,8 +15,8 @@
         C-r = ":reload";
         C-s = ":w";
         backspace = ":w";
-        "C-." = "goto_next_buffer";
-        "C-," = "goto_previous_buffer";
+        "C-k" = "goto_next_buffer";
+        "C-j" = "goto_previous_buffer";
         # "C->" = "rotate_selection_contents_forward";
         # "C-<" = "rotate_selection_contents_backward";
         A-j = ["search_selection" "extend_search_next"];
@@ -32,7 +32,13 @@
         ret = "goto_word";
         "C-=" = "increment";
         C-minus = "decrement";
+        C-space = "signature_help";
+        V = ["goto_first_nonwhitespace" "extend_to_line_end"];
+        D = ["ensure_selections_forward" "extend_to_line_end"];
       }
       // cyrillicToEnglishKeymap;
+    insert = {
+      C-space = "signature_help";
+    };
   };
 }
