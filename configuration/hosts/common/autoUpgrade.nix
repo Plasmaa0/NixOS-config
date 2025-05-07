@@ -1,6 +1,6 @@
 {...}: {
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     flake = "/etc/nixos";
     flags = [
       "--update-input"
