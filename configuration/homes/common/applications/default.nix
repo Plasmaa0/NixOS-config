@@ -3,8 +3,9 @@
     ./mime.nix
     ./browser/qutebrowser.nix
     ./social/telegram.nix
-    ./social/cassette.nix
-    ./social/yandex-music.nix
+    ./music/cassette.nix
+    ./music/yandex-music.nix
+    ./music/mpd.nix
     ./editor/vscode.nix
     ./editor/texstudio.nix
     ./media/zathura.nix
