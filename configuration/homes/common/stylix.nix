@@ -52,7 +52,12 @@ in {
     };
     cursor = {
       package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
+      name = let
+        suffix =
+          if theme.polarity == "dark"
+          then "Ice"
+          else "Classic";
+      in "Bibata-Modern-${suffix}";
       size = 34;
     };
   };
@@ -68,6 +73,11 @@ in {
   };
   gtk.iconTheme = {
     package = pkgs.papirus-icon-theme;
-    name = "Papirus-Dark";
+    name = let
+      suffix =
+        if theme.polarity == "dark"
+        then "Dark"
+        else "Light";
+    in "Papirus-${suffix}";
   };
 }
