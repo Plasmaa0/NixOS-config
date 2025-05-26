@@ -48,7 +48,7 @@
         };
 
         # active line, highlighting
-        "ui.selection" = {bg = "base2";};
+        "ui.selection" = {bg = "base3";};
         "ui.cursor.match" = {bg = "base4";};
         "ui.cursorline" = {bg = "base1";};
 
@@ -59,7 +59,7 @@
         };
         "ui.bufferline.active" = {
           fg = "green";
-          bg = "base3";
+          bg = "base5";
         };
         "ui.virtual.inlay-hint" = {fg = "base4";};
 
@@ -121,10 +121,10 @@
         "constant.character.escape" = {fg = "base8";};
 
         # strings
-        "string" = "yellow";
+        "string" = "purple";
 
         # integer, floating point
-        "constant.numeric" = "purple";
+        "constant.numeric" = "#${c.base0F}"; #brown
 
         # vcs
         "diff.plus" = "green";
