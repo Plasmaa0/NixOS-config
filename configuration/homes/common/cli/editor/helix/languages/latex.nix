@@ -22,6 +22,12 @@
         }
       ];
       language-server = {
+        ltex-ls-plus = {
+          command = "ltex-ls-plus";
+          config = {
+            ltex.language = "ru-RU";
+          };
+        };
         texlab.config.texlab = {
           chktex = {
             onOpenAndSave = true;
