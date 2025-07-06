@@ -53,10 +53,7 @@
         directory = ".steam";
         method = "symlink";
       }
-      {
-        directory = ".factorio";
-        method = "symlink";
-      }
+      ".factorio"
     ];
     files = [
       ".steampath"

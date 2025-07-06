@@ -55,6 +55,8 @@
       "games"
       "home-manager"
       ".local/share/Mindustry"
+      ".config/darktable"
+      ".cache/darktable"
     ];
   };
 }
