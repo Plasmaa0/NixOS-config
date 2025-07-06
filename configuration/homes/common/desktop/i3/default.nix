@@ -164,7 +164,7 @@ in {
           "${mod}+Shift+c" = "reload";
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+e" = "exec ~/.config/rofi/powermenu/type-2/powermenu.sh";
-          "${mod}+t" = "exec telegram-desktop";
+          "${mod}+t" = "exec ${lib.getExe pkgs.telegram-desktop}";
           "Print" = "exec pkill picom; exec flameshot gui";
           "${mod}+r" = ''mode "resize"'';
           "${mod}+e" = ''mode "launch"'';
@@ -190,7 +190,7 @@ in {
         "${config.xsession.windowManager.i3.config.modifier}+r" = ''mode "default"'';
       };
       launch = {
-        "t" = "exec telegram-desktop";
+        "t" = "exec ${lib.getExe pkgs.telegram-desktop}";
         "q" = "exec qutebrowser";
         "m" = "exec yandex-music";
 
