@@ -6,6 +6,7 @@
     ../common/modules/vial.nix
     ../common/modules/bluetooth.nix
   ];
+  security.polkit.enable = true;
   services.xserver = {
     # Set DPMS timeouts to zero (any timeouts managed by xidlehook)
     serverFlagsSection = ''

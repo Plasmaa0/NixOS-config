@@ -8,7 +8,7 @@
   theme = import ./themes/dark/graphite.nix;
 in {
   imports = [
-    inputs.stylix.homeManagerModules.stylix
+    inputs.stylix.homeModules.stylix
     ./themes/generate-preview.nix
   ];
   stylix = {

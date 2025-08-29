@@ -38,7 +38,7 @@ nixpkgs.lib.nixosSystem {
               home.homeDirectory = "/home/${user}";
             }
             ./homes/${user}
-            inputs.nix-index-database.hmModules.nix-index
+            inputs.nix-index-database.homeModules.nix-index
           ];
         });
       };
