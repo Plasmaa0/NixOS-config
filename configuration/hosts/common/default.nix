@@ -29,6 +29,7 @@
     ./firewall.nix
     inputs.home-manager.nixosModules.home-manager
   ];
+  programs.i3lock.enable = true;
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;

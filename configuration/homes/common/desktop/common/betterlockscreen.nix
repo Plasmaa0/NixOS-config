@@ -4,6 +4,9 @@
   pkgs,
   ...
 }: {
+  home.packages = with pkgs; [
+    betterlockscreen
+  ];
   services.xidlehook = let
     lockTimeout = 10;
     sleepTimeout = 20;
@@ -24,6 +27,7 @@
       {
         delay = min 1;
         command = "${pkgs.xorg.xset}/bin/xset dpms force off"; # screen off + lock
+        # command = "${pkgs.xorg.xset}/bin/xset dpms force off && ${pkgs.slock}/bin/slock"; # screen off + lock
       }
       {
         delay = min (sleepTimeout - 1);
@@ -32,12 +36,14 @@
       }
       {
         delay = min 1;
-        command = "${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
+        command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
   };
   systemd.user.services.xss-lock = let
-    locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l --show-layout"; # just lock
+    # locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l --show-layout"; # just lock
+    locker = "betterlockscreen -l --show-layout"; # just lock
+    # locker = "${pkgs.slock}/bin/slock"; # just lock
   in {
     Unit = {
       Description = "xss-lock, session locker service";
@@ -51,6 +57,25 @@
       ExecStart =
         lib.concatStringsSep " "
         ["${pkgs.xss-lock}/bin/xss-lock" "-s \${XDG_SESSION_ID}" "-- ${locker}"];
+    };
+  };
+
+  systemd.user.services.betterlockscreen = {
+    Unit = {
+      Description = "Lock screen when going to sleep/suspend";
+      Before = ["sleep.target" "suspend.target"];
+    };
+
+    Service = {
+      Type = "simple";
+      Environment = "DISPLAY=:0";
+      ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen --lock --show-layout";
+      TimeoutSec = "infinity";
+      ExecStartPost = "${pkgs.coreutils}/bin/sleep 1";
+    };
+
+    Install = {
+      WantedBy = ["sleep.target" "suspend.target"];
     };
   };
 
