@@ -24,7 +24,7 @@ in {
         "x-scheme-handler/unknown"
         "application/xhtml+xml"
       ];
-      handler = pkgs.qutebrowser;
+      handler = "org.qutebrowser.qutebrowser.desktop";
     }
   ];
 

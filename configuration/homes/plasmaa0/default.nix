@@ -55,6 +55,8 @@
       "games"
       "home-manager"
       ".local/share/Mindustry"
+      ".local/share/qBittorrent"
+      ".config/qBittorrent"
       ".config/darktable"
       ".cache/darktable"
     ];
