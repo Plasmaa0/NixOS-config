@@ -7,7 +7,7 @@
   environment.systemPackages = with pkgs; [
     (where-is-my-sddm-theme.override {
       themeConfig.General = {
-        background = "${../../homes/common/wallpapers/a_rocky_shore_with_waves_crashing_on_rocks.jpg}";
+        background = "${../../homes/common/wallpapers/abstract_waves.jpg}";
         blurRadius = 20;
         passwordInputWidth = 0.75;
         passwordFontSize = 64;
