@@ -5,7 +5,7 @@
   hidpiScalingFactor,
   ...
 }: let
-  theme = import ./themes/dark/graphite.nix;
+  theme = import ./themes/dark/abstract_waves.nix;
 in {
   imports = [
     inputs.stylix.homeModules.stylix
