@@ -279,9 +279,9 @@ in {
       timeout = 5;
     };
     urgency_normal = lib.mkForce {
-      background = c.base0B;
+      background = c.base05;
       foreground = c.base01;
-      frame_color = c.base0B;
+      frame_color = c.base00;
       timeout = 10;
     };
     urgency_critical = lib.mkForce {
