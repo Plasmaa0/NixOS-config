@@ -43,45 +43,47 @@ in {
   '';
   xsession.windowManager.i3.config = {
     modifier = "Mod4";
-    colors = {
-      background = "#${c.base05}";
+    colors = let
+      c = config.lib.stylix.colors.withHashtag;
+    in {
+      background = c.base05;
       # currently focused window
       focused = {
-        border = "#${c.base0B}";
-        background = "#${c.base0B}";
-        text = "#${c.base01}";
-        indicator = "#${c.base0E}";
-        childBorder = "#${c.base0B}";
+        border = c.base03;
+        background = c.base03;
+        text = c.base00;
+        indicator = c.base06;
+        childBorder = c.base03;
       };
       # window that is focused but in other container (i.e. other monitor or split)
       focusedInactive = {
-        border = "#${c.base04}";
-        background = "#${c.base04}";
-        text = "#${c.base00}";
-        indicator = "#${c.base0A}";
-        childBorder = "#${c.base04}";
+        border = c.base02;
+        background = c.base02;
+        text = c.base05;
+        indicator = c.base00;
+        childBorder = c.base02;
       };
       # not focused in any container
       unfocused = {
-        border = "#${c.base01}";
-        background = "#${c.base01}";
-        text = "#${c.base05}";
-        indicator = "#${c.base03}";
-        childBorder = "#${c.base01}";
+        border = c.base00;
+        background = c.base00;
+        text = c.base04;
+        indicator = c.base00;
+        childBorder = c.base00;
       };
       urgent = {
-        border = "#${c.base0F}";
-        background = "#${c.base0F}";
-        text = "#${c.base07}";
-        indicator = "#${c.base0F}";
-        childBorder = "#${c.base0F}";
+        border = c.base0F;
+        background = c.base0F;
+        text = c.base07;
+        indicator = c.base08;
+        childBorder = c.base0F;
       };
       placeholder = {
-        border = "#${c.base00}aa";
-        background = "#${c.base00}aa";
-        text = "#${c.base04}";
-        indicator = "#${c.base04}aa";
-        childBorder = "#${c.base00}aa";
+        border = c.base00;
+        background = c.base00;
+        text = c.base04;
+        indicator = c.base04;
+        childBorder = c.base00;
       };
     };
     fonts = {
@@ -217,7 +219,43 @@ in {
         always = true;
       }
       {
-        command = "asusctl aura static -c ${c.base0C} && asusctl -k low";
+        command = let
+          # all of this below is because how rgb keyboard lights work.
+          # without this trick colors look generic white with light tint of some color; but with this i remove "white" component to saturate final result.
+          # EXAMPLE:
+          # first step:
+          #          50 150 200 -> 0 100 150
+          #          white-ish  -> blue-ish
+          # second step:
+          # ampamplification-factor = 255.0 / 150; # 1.7
+          #         0 100 150 -> 0 170 255
+          #         blue-ish  -> juicy blue-ish
+          #
+          # REAL EXAMPLE WITH HEX: 202746 -> 002EFF
+          # 202746: dark pale white without even light blue touch
+          # 002EFF: nice saturated blue
+          r = builtins.fromJSON c.base03-rgb-r;
+          g = builtins.fromJSON c.base03-rgb-g;
+          b = builtins.fromJSON c.base03-rgb-b;
+          min-channel = lib.min (lib.min r g) b;
+          saturated-r = r - min-channel;
+          saturated-g = g - min-channel;
+          saturated-b = b - min-channel;
+          max-channel = lib.max (lib.max saturated-r saturated-g) saturated-b;
+          amplification-factor = 255.0 / max-channel;
+          amplified-r = saturated-r * amplification-factor;
+          amplified-g = saturated-g * amplification-factor;
+          amplified-b = saturated-b * amplification-factor;
+          # converts single digit numbers like "0" to two-digit "00" for valid hex format
+          padToTwo = s:
+            if builtins.stringLength s == 1
+            then "0${s}"
+            else s;
+          hex-r = padToTwo (lib.toHexString (builtins.floor amplified-r));
+          hex-g = padToTwo (lib.toHexString (builtins.floor amplified-g));
+          hex-b = padToTwo (lib.toHexString (builtins.floor amplified-b));
+          result-color = hex-r + hex-g + hex-b;
+        in "asusctl aura static -c ${result-color} && asusctl -k low";
         always = true;
       }
       {
