@@ -3,46 +3,34 @@
   config,
   pkgs,
   ...
-}: let
-  nixos-hardware = builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/f6581f1c3b137086e42a08a906bdada63045f991.tar.gz";
-    sha256 = "sha256:1qjivy929fpjf736f78v6hdhv64jgx2m1aff85w1d3cw7c4ppmag";
-  };
-in {
+}: {
   imports = [
     ./hardware-configuration.nix
-
-    # "${nixos-hardware}/common/cpu/amd" # sets hardware.cpu.amd.updateMicrocode which is already done in ./hardware-configuration.nix
-    # "${nixos-hardware}/common/cpu/amd/pstate.nix" # sets kernelParams = [ "amd_pstate=active" ];
-
-    "${nixos-hardware}/common/gpu/nvidia/prime.nix"
-    "${nixos-hardware}/common/gpu/nvidia/ada-lovelace"
-
-    "${nixos-hardware}/common/pc/laptop"
-    "${nixos-hardware}/common/pc/ssd"
   ];
+  services.fstrim.enable = lib.mkDefault true;
 
-  environment.systemPackages = with pkgs; [
-    cudaPackages.cudatoolkit
-    cudaPackages.cudnn
-    cudaPackages.cuda_cudart
-  ];
-  systemd.services.nvidia-control-devices = {
-    wantedBy = ["multi-user.target"];
-    serviceConfig.ExecStart = "${pkgs.linuxPackages.nvidia_x11.bin}/bin/nvidia-smi";
-  };
-  environment.sessionVariables = {
-    CUDA_HOME = "${pkgs.cudaPackages.cudatoolkit}";
-    LD_LIBRARY_PATH = lib.makeLibraryPath [
-      "${pkgs.cudaPackages.cudatoolkit}"
-      "${pkgs.cudaPackages.cudatoolkit}/lib64"
-      pkgs.cudaPackages.cudnn
-      pkgs.cudaPackages.cuda_cudart
-      pkgs.stdenv.cc.cc.lib
-    ];
-    CUDA_MODULE_LOADING = "LAZY";
-  };
+  # environment.systemPackages = with pkgs; [
+  #   cudaPackages.cudatoolkit
+  #   cudaPackages.cudnn
+  #   cudaPackages.cuda_cudart
+  # ];
+  # systemd.services.nvidia-control-devices = {
+  #   wantedBy = ["multi-user.target"];
+  #   serviceConfig.ExecStart = "${pkgs.linuxPackages.nvidia_x11.bin}/bin/nvidia-smi";
+  # };
+  # environment.sessionVariables = {
+  #   CUDA_HOME = "${pkgs.cudaPackages.cudatoolkit}";
+  #   LD_LIBRARY_PATH = lib.makeLibraryPath [
+  #     "${pkgs.cudaPackages.cudatoolkit}"
+  #     "${pkgs.cudaPackages.cudatoolkit}/lib64"
+  #     pkgs.cudaPackages.cudnn
+  #     pkgs.cudaPackages.cuda_cudart
+  #     pkgs.stdenv.cc.cc.lib
+  #   ];
+  #   CUDA_MODULE_LOADING = "LAZY";
+  # };
 
+  hardware.amdgpu.opencl.enable = true;
   hardware.nvidia = {
     prime = {
       offload = {
@@ -61,10 +49,14 @@ in {
       finegrained = true;
     };
 
-    modesetting.enable = true;
-    open = false;
+    modesetting.enable = false;
+    # open = true;
+    open = let
+      nvidiaPackage = config.hardware.nvidia.package;
+    in
+      lib.mkOverride 990 (nvidiaPackage ? open && nvidiaPackage ? firmware);
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   services.xserver.videoDrivers = ["nvidia"];
   hardware.graphics.enable = true;
