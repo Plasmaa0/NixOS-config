@@ -97,6 +97,7 @@ in {
       outer = builtins.ceil (2 * hidpiScalingFactor); # space along the screen edges
     };
     defaultWorkspace = "workspace number 1";
+    workspaceAutoBackAndForth = true;
     keybindings = let
       mod = config.xsession.windowManager.i3.config.modifier;
       send_volume_notification = ''notify-send -a volume -u low -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -1) Volume --hint=string:x-dunst-stack-tag:volume'';
