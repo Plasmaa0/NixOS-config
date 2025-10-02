@@ -108,6 +108,37 @@
         };
         hooks.postswitch = postHook;
       };
+      "zep_home2" = {
+        fingerprint = {
+          eDP = zepMonitorFingerprint;
+          HDMI-1-0 = aocMonitorFingerprint;
+          DP-1-0 = huaweiMonitorFingerprint; # type-c on the left side (near HDMI)
+        };
+        config = {
+          eDP = {
+            enable = true;
+            primary = false;
+            position = "2560x2560";
+            mode = "2560x1600";
+            rate = "60.00";
+          };
+          HDMI-1-0 = {
+            enable = true;
+            primary = false;
+            position = "0x1440";
+            mode = "2560x1440";
+            rate = "59.95";
+          };
+          DP-1-0 = {
+            enable = true;
+            primary = true;
+            position = "2560x0";
+            mode = "3840x2560";
+            rate = "59.98";
+          };
+        };
+        hooks.postswitch = postHook;
+      };
     };
   };
 }
