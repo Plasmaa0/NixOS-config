@@ -17,7 +17,7 @@ default:
     echo -e "{{ CYAN }}\t- formatting justfile{{ NORMAL }}"
     just --fmt --unstable
     echo -e "{{ CYAN }}\t- formatting {{ BLUE + UNDERLINE }}*.nix{{ NORMAL }}{{ CYAN }} with {{ BLUE + ITALIC }}alejandra{{ NORMAL }}"
-    alejandra --quiet $(fd .nix)
+    alejandra --quiet $(fd --extension nix)
 
 # statix linter
 [group('checks')]
