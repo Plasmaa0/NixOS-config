@@ -35,6 +35,7 @@
         C-space = "signature_help";
         V = ["goto_first_nonwhitespace" "extend_to_line_end"];
         D = ["ensure_selections_forward" "extend_to_line_end"];
+        g = {b = ":sh echo %sh{git show --no-patch --format='%%h \\(%%an: %%ar\\): %%s' $(git blame -p %{buffer_name} -L%{cursor_line},+1 | head -1 | cut -d' ' -f1)}";};
       }
       // cyrillicToEnglishKeymap;
     insert = {
