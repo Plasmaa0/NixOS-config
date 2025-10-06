@@ -8,7 +8,7 @@ default:
 @check_dead:
     echo "{{ GREEN + INVERT }}Check:{{ NORMAL }}"
     echo -e "{{ CYAN }}\t- checking with {{ BLUE + ITALIC }}deadnix{{ NORMAL }}"
-    deadnix
+    deadnix --exclude configuration/homes/common/shell_templates/template_*
 
 # alejandra format .nix files
 [group('checks')]
