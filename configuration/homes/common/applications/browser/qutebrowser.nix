@@ -74,6 +74,7 @@ in {
       g = "https://www.google.com/search?hl=en&q={}";
       w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
       hm = "https://home-manager-options.extranix.com/?query={}&release=master";
+      t = "https://translate.yandex.ru/?text={}"; # translate
 
       # nix (w)iki, (p)ackages, (o)ptions
       nw = "https://nixos.wiki/index.php?search={}&fulltext=1";
@@ -110,6 +111,11 @@ in {
       qt = {
         highdpi = true;
       };
+      editor.command = let
+        terminal = lib.getExe pkgs.kitty;
+        editor = lib.getExe pkgs.helix;
+      in [terminal "--class" "QuteTextEdit" "-e" editor "{file}" "+{line}"];
+      input.insert_mode.auto_load = true;
       tabs.show = "multiple";
       auto_save.session = true;
       session = {
@@ -127,7 +133,7 @@ in {
         };
       };
       url = {
-        start_pages = "about:blank"; # "https://ya.ru";
+        start_pages = "file:///home/${config.home.username}/theme-preview.html";
         default_page = "https://ya.ru";
       };
       completion = {
