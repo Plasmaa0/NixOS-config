@@ -27,6 +27,7 @@
     ./gamemode.nix
     ./modules/HighDPI.nix
     ./firewall.nix
+    ./global-stylix.nix
     inputs.home-manager.nixosModules.home-manager
   ];
   programs.i3lock.enable = true;
