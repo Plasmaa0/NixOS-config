@@ -13,7 +13,7 @@
     ./secrets/secrets.nix
     ./shell_templates
 
-    ./stylix.nix
+    ./user-stylix.nix
     inputs.impermanence.homeManagerModules.impermanence
   ];
 

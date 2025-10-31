@@ -1,23 +1,19 @@
 {
+  config,
   inputs,
   pkgs,
   lib,
-  hidpiScalingFactor,
   ...
 }: let
-  theme = import ./themes/dark/abstract_waves.nix;
+  theme = import ./../../themes/dark/monokai.nix;
 in {
-  imports = [
-    inputs.stylix.homeModules.stylix
-    ./themes/generate-preview.nix
-  ];
+  imports = [inputs.stylix.nixosModules.stylix];
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ./wallpapers/${theme.wallpaper};
+    image = ./../../wallpapers/${theme.wallpaper};
     targets = {
-      i3.enable = false;
-      helix.enable = false;
+      plymouth.enable = false;
     };
     imageScalingMode = "fill";
     inherit (theme) polarity;
@@ -44,10 +40,10 @@ in {
         name = "OpenMoji Color";
       };
       sizes = {
-        applications = 12 * hidpiScalingFactor;
-        desktop = 10 * hidpiScalingFactor;
-        popups = 10 * hidpiScalingFactor;
-        terminal = 10 * hidpiScalingFactor;
+        applications = 12 * config.hidpi.scalingFactor;
+        desktop = 10 * config.hidpi.scalingFactor;
+        popups = 10 * config.hidpi.scalingFactor;
+        terminal = 10 * config.hidpi.scalingFactor;
       };
     };
     cursor = {
@@ -60,24 +56,5 @@ in {
       in "Bibata-Modern-${suffix}";
       size = 34;
     };
-  };
-  # home manager font config
-  fonts.fontconfig = {
-    enable = true;
-    defaultFonts = {
-      serif = ["IosevkaTermSlab"];
-      sansSerif = ["Arimo"];
-      monospace = ["VictorMono NF"];
-      emoji = ["OpenMoji Color"];
-    };
-  };
-  gtk.iconTheme = {
-    package = pkgs.papirus-icon-theme;
-    name = let
-      suffix =
-        if theme.polarity == "dark"
-        then "Dark"
-        else "Light";
-    in "Papirus-${suffix}";
   };
 }
