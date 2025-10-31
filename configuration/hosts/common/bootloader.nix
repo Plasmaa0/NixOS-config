@@ -53,7 +53,7 @@
     };
     # plymouth settings
     plymouth = let
-      theme_name = "splash";
+      theme_name = "connect";
     in {
       enable = true;
       theme = theme_name;

@@ -35,6 +35,7 @@
     mindustry
     nvtopPackages.full
     aria2
+    heroic
     # cider
     # i3wsr # i3 workspace names
   ];
@@ -59,6 +60,7 @@
       ".config/qBittorrent"
       ".config/darktable"
       ".cache/darktable"
+      ".config/libreoffice"
     ];
   };
 }
