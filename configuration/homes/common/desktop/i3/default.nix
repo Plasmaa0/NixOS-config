@@ -148,6 +148,7 @@ in {
           "${mod}+b" = "exec eww open --toggle bar";
           "${mod}+q" = "kill; exec --no-startup-id ${mouse_to_focused}";
           "${mod}+Shift+Return" = "exec ~/.config/rofi/launchers/type-2/launcher.sh";
+          "${mod}+Shift+XF86Assistant" = "exec ~/Documents/todo/run.sh";
           "${mod}+a" = "focus left; exec --no-startup-id ${mouse_to_focused}";
           "${mod}+s" = "focus down; exec --no-startup-id ${mouse_to_focused}";
           "${mod}+w" = "focus up; exec --no-startup-id ${mouse_to_focused}";
@@ -279,6 +280,57 @@ in {
           command = "floating enable border pixel 3";
           criteria = {class = "Yad";};
         }
+        # todo rofi popup helix+zathura preview
+        {
+          command = "floating enable";
+          criteria = {class = "TODO";};
+        }
+        {
+          command = "resize set width 40ppt";
+          criteria = {class = "TODO";};
+        }
+        {
+          command = "resize set height 80ppt";
+          criteria = {class = "TODO";};
+        }
+        {
+          command = "move position center";
+          criteria = {class = "TODO";};
+        }
+        {
+          command = "floating enable";
+          criteria = {title = "/home/${config.home.username}/Documents/todo/todo.pdf";};
+        }
+        {
+          command = "resize set width 40ppt";
+          criteria = {title = "/home/${config.home.username}/Documents/todo/todo.pdf";};
+        }
+        {
+          command = "resize set height 90ppt";
+          criteria = {title = "/home/${config.home.username}/Documents/todo/todo.pdf";};
+        }
+        {
+          command = "move position center";
+          criteria = {title = "/home/${config.home.username}/Documents/todo/todo.pdf";};
+        }
+        # Qutebrowser edit text in helix popup
+        {
+          command = "floating enable";
+          criteria = {class = "QuteTextEdit";};
+        }
+        {
+          command = "resize set width 30ppt";
+          criteria = {class = "QuteTextEdit";};
+        }
+        {
+          command = "resize set height 25ppt";
+          criteria = {class = "QuteTextEdit";};
+        }
+        {
+          command = "move position center";
+          criteria = {class = "QuteTextEdit";};
+        }
+        # other
         {
           command = "floating enable border pixel 3";
           criteria = {class = "feh";};

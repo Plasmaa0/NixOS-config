@@ -38,4 +38,8 @@ in {
       launcher-font: "VictorMono NF ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
     }
   '';
+  home.file."Documents/todo" = {
+    source = ./rofi/todo;
+    recursive = true;
+  };
 }
