@@ -4,7 +4,6 @@
   ...
 }: {
   home.packages = [
-    pkgs.cantata
     pkgs.clementine
   ];
   services.mpd = {

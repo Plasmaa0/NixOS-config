@@ -8,5 +8,5 @@
 	path = configuration/homes/common/cli/utils/yazi/plugins/compress.yazi
 	url = git@github.com:KKV9/compress.yazi.git
 [submodule "configuration/homes/common/walls"]
-	path = configuration/homes/common/wallpapers
+	path = configuration/wallpapers
 	url = git@github.com:Plasmaa0/walls.git
