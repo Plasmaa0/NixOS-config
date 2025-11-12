@@ -32,23 +32,21 @@
 
 <h1 align="center"> Preview </h1>
 
-![few windows opened](./assets_readme/animation.gif)
+![preview](./assets_readme/new_screens/result.gif)
 
-![app launcher](./assets_readme/2.png)
+![wallpapers](./assets_readme/wall_screens/result.gif)
 
-![notifications and status bar](./assets_readme/3.png)
+![coding](./assets_readme/code_screens/result.gif)
 
-![powermenu](./assets_readme/4.png)
+![launcher](./assets_readme/launcher_screens/result.gif)
+
+![powermenu](./assets_readme/powermenu_screens/result.gif)
 
 lockscreen
 ![lockscreen](./assets_readme/5.png)
 
 displayManager (sddm)
 ![lockscreen](./assets_readme/displayManager.png)
-
-![notification center](./assets_readme/6.png)
-
-![empty notification center](./assets_readme/7.png)
 
 # Installation steps
 
