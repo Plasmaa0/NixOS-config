@@ -190,7 +190,7 @@ Stylix color schemes are now centrally managed through predefined theme files. E
 To switch themes:
 1. Edit `configuration/hosts/common/global-stylix.nix` to import your desired theme file
 2. Set `scheme` explicitly in the theme file for consistent, high-quality color palettes
-3. Run `nixos-rebuild switch` to apply changes system-wide
+3. Run `just rebuild-switch` to apply changes system-wide (or `just rebuild-test` just to preview)
 
 All handcrafted themes in `configuration/themes/` guarantee proper contrast ratios and semantic color grouping for both light and dark modes. The wallpaper submodule (`configuration/wallpapers/`) contains all referenced assets.
 
