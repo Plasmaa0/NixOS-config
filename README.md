@@ -129,10 +129,10 @@ Applications:
 - `qutebrowser` minimalist, keyboard-driven web browser with Vim-like keybindings and Qt backend [link](https://qutebrowser.org)
 - `zathura` ultra-lightweight PDF/PostScript viewer with minimal UI and powerful keyboard navigation [link](https://pwmt.org/projects/zathura)
 - `mime.nix` my custom Nix module for declaratively defining file type handlers (e.g., `pdf → zathura`, `epub → calibre`) - no manual `~/.config/mimeapps.list` editing needed
-- `rmpc` lightweight, fast Rust-based MPD client with real-time lyrics fetching and album art display [link](https://github.com/hrkfdn/rmpc)
+- `rmpc` lightweight, fast Rust-based MPD client with real-time lyrics fetching and album art display [link](https://github.com/mierak/rmpc)
 - `helix` ~vim killer~ modern, fast, modal terminal text editor with built-in LSP, tree-sitter, and ergonomic defaults - my daily driver for code and config. configured essential for me language servers (latex, python, c/c++, etc...). theme is somewhat tweaked from what default stylix gave me.  [link](https://helix-editor.com)
 - `fish` + `starship` fish shell with custom completions and functions, paired with starship for a visually rich, dynamic prompt - config ported from my old Garuda Linux setup [link](https://fishshell.com) | [link](https://starship.rs)
-- `kitty`/`wezterm` two terminal emulators both configured with matching colors and keybindings [link](https://sw.kovidgoyal.net/kitty) | [link](https://wezfurlong.org/wezterm)
+- `kitty`/`wezterm` two terminal emulators both configured with matching colors and keybindings [link](https://sw.kovidgoyal.net/kitty) | [link](https://wezterm.org/)
 - `betterlockscreen` customizable lockscreen using i3lock + blur effects and dynamic wallpaper switching - visually polished and scriptable [link](https://github.com/betterlockscreen/betterlockscreen)
 - `xidlehook` X11 idle hook daemon for screen locking and power management [link](https://github.com/jD91mZM2/xidlehook)
 - `fastfetch` system info fetcher with custom NixOS logo [link](https://github.com/fastfetch-cli/fastfetch)
