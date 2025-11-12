@@ -14,7 +14,6 @@ end
 set -U __done_min_cmd_duration 10000
 set -U __done_notification_urgency_level low
 
-
 ## Environment setup
 # Apply .profile: use this to put fish compatible .profile stuff in
 if test -f ~/.fish_profile
@@ -35,7 +34,6 @@ if test -d ~/Applications/depot_tools
     end
 end
 
-
 ## Starship prompt
 if status --is-interactive
     source ("starship" init fish --print-full-init | psub)
@@ -45,10 +43,8 @@ if status --is-interactive
     enable_transience
 end
 
-
 ## Advanced command-not-found hook
 # source /usr/share/doc/find-the-command/ftc.fish
-
 
 ## Functions
 # Functions needed for !! and !$ https://github.com/oh-my-fish/plugin-bang-bang
@@ -136,6 +132,7 @@ alias lt='exa -aT --color=always --group-directories-first --icons' # tree listi
 alias ltg='exa -aT --color=always --group-directories-first --icons --git' # tree listing
 alias l.="exa -a | egrep '^\.'" # show only dotfiles
 alias ip="ip -color"
+alias hexdup="hexd"
 abbr nixrepl "nix repl --expr \"{pkgs = import <nixpkgs> {};}\""
 
 # custom
@@ -167,7 +164,6 @@ abbr icat wezterm imgcat
 abbr gd "git diff --color | diff-so-fancy"
 abbr gD "git diff --color | diffnav"
 abbr glg git log --graph --decorate --oneline
-
 
 # Replace some more things with better alternatives
 alias cat='bat --style header --style snip --style changes --style header'

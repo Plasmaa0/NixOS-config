@@ -41,5 +41,6 @@
     just
     glow
     mdcat
+    hexd
   ];
 }
