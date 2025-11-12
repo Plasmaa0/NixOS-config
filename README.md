@@ -27,10 +27,7 @@
    </div>
 </h1>
 
-> [!CAUTION]
-> This `README.md` is highly out of date
-
-<h1 align="center"> Themes Preview </h1>
+<h1 align="center"> Preview </h1>
 
 ![preview](./assets_readme/new_screens/result.gif)
 
