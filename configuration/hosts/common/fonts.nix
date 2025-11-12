@@ -18,13 +18,14 @@
       fira-code
       droid-sans-mono
       jetbrains-mono
+      fantasque-sans-mono
     ]);
   # see also nix_modules/stylix.nix
   fonts.fontconfig = {
     defaultFonts = {
       emoji = ["OpenMoji Color"];
-      monospace = ["VictorMono NF"];
-      serif = ["IosevkaTermSlab"];
+      monospace = ["IosevkaTerm Nerd Font"];
+      serif = ["FantasqueSansM Nerd Font"];
       sansSerif = ["Arimo"];
     };
   };
