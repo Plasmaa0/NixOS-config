@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   c = config.lib.stylix.colors;
@@ -9,14 +10,7 @@ in {
     directories = [".local/share/rofi"];
     files = [".cache/rofi-2.sshcache" ".cache/rofi3.druncache" ".cache/rofi3.filebrowsercache"];
   };
-  home.packages = with pkgs;
-    [
-      openmoji-color
-    ]
-    ++ (with pkgs.nerd-fonts; [
-      iosevka
-      jetbrains-mono
-    ]);
+  home.packages = [pkgs.nerd-fonts.jetbrains-mono];
   programs.rofi.enable = true;
   home.file."${config.xdg.configHome}/rofi/launchers" = {
     source = ./rofi/launchers;
@@ -35,7 +29,7 @@ in {
       active: #${c.base0D};
       urgent: #${c.base08};
       powermenu-font: "JetBrains Mono Nerd Font ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
-      launcher-font: "VictorMono NF ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
+      launcher-font: "${lib.elemAt config.fonts.fontconfig.defaultFonts.monospace 0} ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
     }
   '';
   home.file."Documents/todo" = {

@@ -5,7 +5,7 @@
   lib,
   ...
 }: let
-  theme = import ./../../themes/dark/monokai.nix;
+  theme = import ./../../themes/dark/kyoto.nix;
 in {
   imports = [inputs.stylix.nixosModules.stylix];
   stylix = {
@@ -24,16 +24,16 @@ in {
     # see also common/fonts.nix
     fonts = {
       serif = {
-        package = pkgs.nerd-fonts.iosevka-term-slab;
-        name = "IosevkaTermSlab";
+        package = pkgs.nerd-fonts.fantasque-sans-mono;
+        name = "FantasqueSansM Nerd Font";
       };
       sansSerif = {
         package = pkgs.nerd-fonts.arimo;
         name = "Arimo";
       };
       monospace = {
-        package = pkgs.nerd-fonts.victor-mono;
-        name = "VictorMono NF";
+        package = pkgs.nerd-fonts.iosevka-term;
+        name = "IosevkaTerm Nerd Font";
       };
       emoji = {
         package = pkgs.openmoji-color;

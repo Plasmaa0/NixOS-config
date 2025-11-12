@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
   obscure-sddm-theme-package = {
@@ -64,10 +65,10 @@
       backgroundGlassEnabled = true; # blurring
       backgroundGlassIntensity = 48; # blurring strength 0-64
       backgroundTintColor = c.base02;
-      backgroundTintIntensity = 0.75; # 0-1
+      backgroundTintIntensity = 0.25; # 0-1
 
       # Typography
-      fontFamily = "VictorMono NF";
+      fontFamily = lib.elemAt config.fonts.fontconfig.defaultFonts.monospace 0;
       baseFontSize = 44;
 
       # Controls
@@ -85,11 +86,7 @@
     };
   };
 in {
-  fonts.fontDir.enable = true;
-  fonts.fontconfig.enable = true;
-  fonts.packages = with pkgs; [
-    nerd-fonts.victor-mono
-  ];
+  services.xserver.displayManager.startx.enable = true;
   services.displayManager.sddm = {
     enable = true;
     theme = "${obscure-sddm-theme}/share/sddm/themes/obscure";
