@@ -123,6 +123,7 @@ in {
         lazy_restore = true;
       };
       tabs.last_close = "blank";
+      tabs.title.format = "{audio}{index}|{current_title}"; # original was ": " -> "|"
       input.spatial_navigation = true;
       fonts = {
         default_size = mkForce "${toString (builtins.ceil config.stylix.fonts.sizes.applications)}pt";
