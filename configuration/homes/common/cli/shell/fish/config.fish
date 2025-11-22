@@ -95,6 +95,12 @@ function take --argument dir
     cd $dir
 end
 
+function unwrap --argument dir
+    mv dir/.* .
+    mv dir/* .
+    rmdir $dir
+end
+
 # wwc: Work with config (creates normal file instead of nix symlink) ONLY FOR DEBUGGING AND TESTING PURPOSES
 function wwc -a f
     cat $f >$f.backup
@@ -133,6 +139,7 @@ alias ltg='exa -aT --color=always --group-directories-first --icons --git' # tre
 alias l.="exa -a | egrep '^\.'" # show only dotfiles
 alias ip="ip -color"
 alias hexdup="hexd"
+alias ol="ollama"
 abbr nixrepl "nix repl --expr \"{pkgs = import <nixpkgs> {};}\""
 
 # custom
@@ -149,6 +156,10 @@ abbr pacs sudo pacman -S
 abbr pacr sudo pacman -R
 abbr gumer sshpass -p bmstu ssh -p 3002 student@virtual.fn11.bmstu.ru
 abbr venv source venv/bin/activate.fish
+abbr olr ollama run
+abbr olp ollama ps
+abbr olP ollama pull
+abbr ols ollama stop
 
 # trash-cli
 # set cmds (trash-empty trash-list trash-restore trash-put trash)
