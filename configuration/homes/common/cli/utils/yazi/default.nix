@@ -12,7 +12,7 @@
     file
     ueberzugpp
     ffmpeg
-    poppler_utils
+    poppler-utils
     imagemagick
     fzf
     fd
@@ -25,7 +25,7 @@
   home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash"];
   programs.yazi = {
     enable = true;
-    package = inputs.yazi.packages.${pkgs.system}.default;
+    package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;
     settings = {
       manager = {
         layout = [1 4 3];
@@ -120,7 +120,7 @@
         cp = "${pkgs.coreutils}/bin/cp";
         xargs = "${pkgs.findutils}/bin/xargs";
         xclip = "${pkgs.xclip}/bin/xclip";
-        dragon = "${pkgs.xdragon}/bin/xdragon";
+        dragon = "${pkgs.dragon-drop}/bin/dragon-drop";
       in [
         {
           on = "u";
