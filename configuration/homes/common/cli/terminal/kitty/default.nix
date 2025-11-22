@@ -61,6 +61,9 @@
       single_window_padding_width = 10;
       confirm_os_window_close = -1;
       window_border_width = "3pt";
+      cursor_trail = 5;
+      cursor_trail_decay = "0.05 0.2";
+      cursor_trail_color = config.lib.stylix.colors.withHashtag.base04;
     };
     shellIntegration.enableFishIntegration = true;
   };
