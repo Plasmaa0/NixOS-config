@@ -5,6 +5,7 @@
     ../common/modules/steam.nix
     ../common/modules/vial.nix
     ../common/modules/bluetooth.nix
+    ../common/modules/ollama.nix
   ];
   security.polkit.enable = true;
   services.xserver = {
