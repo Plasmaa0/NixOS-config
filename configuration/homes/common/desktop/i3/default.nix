@@ -243,7 +243,7 @@ in {
           saturated-r = r - min-channel;
           saturated-g = g - min-channel;
           saturated-b = b - min-channel;
-          max-channel = lib.max (lib.max saturated-r saturated-g) saturated-b;
+          max-channel = lib.max (lib.max (lib.max saturated-r saturated-g) saturated-b) 1;
           amplification-factor = 255.0 / max-channel;
           amplified-r = saturated-r * amplification-factor;
           amplified-g = saturated-g * amplification-factor;
