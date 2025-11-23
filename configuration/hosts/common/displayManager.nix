@@ -86,7 +86,6 @@
     };
   };
 in {
-  services.xserver.displayManager.startx.enable = true;
   services.displayManager.sddm = {
     enable = true;
     theme = "${obscure-sddm-theme}/share/sddm/themes/obscure";
