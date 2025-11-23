@@ -108,6 +108,7 @@
       ];
     };
   };
+  powerManagement.enable = true;
   swapDevices = [
     {device = "/dev/disk/by-label/swap";}
     {
