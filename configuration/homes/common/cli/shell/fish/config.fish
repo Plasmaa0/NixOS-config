@@ -96,8 +96,8 @@ function take --argument dir
 end
 
 function unwrap --argument dir
-    mv dir/.* .
-    mv dir/* .
+    mv $dir/.* .
+    mv $dir/* .
     rmdir $dir
 end
 
