@@ -26,12 +26,6 @@
   hardware.bluetooth.powerOnBoot = false;
   programs.dconf.enable = true;
 
-  # services.supergfxd = {
-  #   enable = true;
-  #   settings = {
-  #     supergfxctl-mode = "Integrated";
-  #   };
-  # };
   services.asusd = {
     enable = true;
     enableUserService = true;

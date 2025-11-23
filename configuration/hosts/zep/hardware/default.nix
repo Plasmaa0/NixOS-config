@@ -44,8 +44,8 @@
 
     powerManagement = {
       # This is unreliable on the 4060;  works a few times, then hangs:
-      enable = true;
-      finegrained = true;
+      enable = false;
+      finegrained = false;
     };
 
     modesetting.enable = false;
@@ -55,8 +55,9 @@
     in
       lib.mkOverride 990 (nvidiaPackage ? open && nvidiaPackage ? firmware);
     nvidiaSettings = true;
-    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  services.acpid.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
   hardware.graphics.enable = true;
 
