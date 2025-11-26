@@ -15,7 +15,7 @@
       detect-rounded-corners = true;
       detect-client-opacity = true;
       detect-transient = true;
-      glx-no-stencil = true;
+      # glx-no-stencil = true;
       use-damage = true;
       transparent-clipping = false;
       log-level = "warn";
@@ -81,9 +81,9 @@
       else if types.str.check v
       then ''"${escape [''"''] v}"''
       else if (builtins.isList v && top) # new option that can make top level nix list to be converted to libconfig list (not default which is libconfig array)
-      then "( ${concatMapStringsSep " ,\n" (mkValueString false) v} )" # it's LIST according to libconfig settings (ARRAY!=LIST)
+      then "( ${concatMapStringsSep ",\n" (mkValueString false) v} )" # it's LIST according to libconfig settings (ARRAY!=LIST)
       else if (builtins.isList v && (!top))
-      then "[ ${concatMapStringsSep " , " (mkValueString false) v} ]" # it's ARRAY according to libconfig settings (ARRAY!=LIST)
+      then "[ ${concatMapStringsSep ", " (mkValueString false) v} ]" # it's ARRAY according to libconfig settings (ARRAY!=LIST)
       else if types.attrs.check v
       then "{ ${concatStringsSep "\n" (mkAttrsString false false v)} }"
       else
