@@ -23,6 +23,7 @@
     enable = true;
     dpi = 180;
   };
+  services.autorandr.defaultTarget = "zep_240";
   hardware.bluetooth.powerOnBoot = false;
   programs.dconf.enable = true;
 

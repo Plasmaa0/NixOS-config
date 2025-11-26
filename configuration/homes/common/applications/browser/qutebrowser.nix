@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  hidpiScalingFactor,
   ...
 }: let
   inherit (lib) mkForce;
@@ -104,10 +103,6 @@ in {
       };
     };
     settings = {
-      zoom.default =
-        if hidpiScalingFactor > 1
-        then "150%"
-        else "100%";
       qt = {
         highdpi = true;
       };
@@ -125,14 +120,7 @@ in {
       tabs.last_close = "blank";
       tabs.title.format = "{audio}{index}|{current_title}"; # original was ": " -> "|"
       input.spatial_navigation = true;
-      fonts = {
-        default_size = mkForce "${toString (builtins.ceil config.stylix.fonts.sizes.applications)}pt";
-        default_family = mkForce config.stylix.fonts.serif.name;
-        web.size = {
-          default = mkForce (builtins.ceil config.stylix.fonts.sizes.applications);
-          default_fixed = mkForce (builtins.ceil config.stylix.fonts.sizes.terminal);
-        };
-      };
+      fonts.default_family = mkForce config.stylix.fonts.serif.name;
       url = {
         start_pages = "file:///home/${config.home.username}/theme-preview.html";
         default_page = "https://ya.ru";

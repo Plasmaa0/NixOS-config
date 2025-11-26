@@ -2,15 +2,17 @@
   config,
   lib,
   pkgs,
+  hidpiScalingFactor,
   ...
-}: {
+}: let
+  locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l --show-layout"; # just lock
+  lockTimeout = 10;
+  sleepTimeout = 20;
+in {
   home.packages = with pkgs; [
     betterlockscreen
   ];
-  services.xidlehook = let
-    lockTimeout = 10;
-    sleepTimeout = 20;
-  in {
+  services.xidlehook = {
     enable = true;
     not-when-audio = true;
     not-when-fullscreen = true;
@@ -26,8 +28,7 @@
       }
       {
         delay = min 1;
-        command = "${pkgs.xorg.xset}/bin/xset dpms force off"; # screen off + lock
-        # command = "${pkgs.xorg.xset}/bin/xset dpms force off && ${pkgs.slock}/bin/slock"; # screen off + lock
+        command = "${pkgs.xorg.xset}/bin/xset dpms force off && ${locker}"; # screen off + lock
       }
       {
         delay = min (sleepTimeout - 1);
@@ -36,15 +37,11 @@
       }
       {
         delay = min 1;
-        command = "${pkgs.systemd}/bin/systemctl suspend";
+        command = "${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
       }
     ];
   };
-  systemd.user.services.xss-lock = let
-    # locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l --show-layout"; # just lock
-    locker = "betterlockscreen -l --show-layout"; # just lock
-    # locker = "${pkgs.slock}/bin/slock"; # just lock
-  in {
+  systemd.user.services.xss-lock = {
     Unit = {
       Description = "xss-lock, session locker service";
       After = ["graphical-session-pre.target"];
@@ -57,6 +54,7 @@
       ExecStart =
         lib.concatStringsSep " "
         ["${pkgs.xss-lock}/bin/xss-lock" "-s \${XDG_SESSION_ID}" "-- ${locker}"];
+      Restart = "always";
     };
   };
 
@@ -116,10 +114,10 @@
     loginshadow=000000ff
     locktext="Hello $(whoami)!"
     font="${config.stylix.fonts.monospace.name}"
-    fontXL=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * 3))}
-    fontlg=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * 2))}
-    fontmd=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * 1.5))}
-    fontsm=${toString (builtins.ceil config.stylix.fonts.sizes.applications)}
+    fontXL=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor * 3))}
+    fontlg=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor * 2))}
+    fontmd=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor * 1.5))}
+    fontsm=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor))}
     ringcolor=$base0E
     insidecolor="''${base01}aa"
     separatorcolor=00000000

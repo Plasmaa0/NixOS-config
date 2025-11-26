@@ -29,7 +29,14 @@ in {
     dpiScale = defaultDpi * 1.0 / cfg.dpi;
   in {
     hidpi.scalingFactor = scale; # for personal use
-    home-manager.extraSpecialArgs = {hidpiScalingFactor = scale;}; # for personal use
+    home-manager.extraSpecialArgs = {
+      # for personal use for configuring apps which refuse to account for xserver dpi set / envenvironment variables for scaling
+      # e.g. rofi, dunst
+      hidpiScalingFactor = scale;
+
+      # to insert Xft.dpi into .Xresources in user-stylix.nix
+      inherit (cfg) dpi;
+    };
     services.xserver.dpi = cfg.dpi;
     # Scale programs
     environment.variables = {

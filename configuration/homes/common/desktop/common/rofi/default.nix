@@ -2,10 +2,9 @@
   config,
   pkgs,
   lib,
+  hidpiScalingFactor,
   ...
-}: let
-  c = config.lib.stylix.colors;
-in {
+}: {
   home.persistence."/persist/home/${config.home.username}" = {
     directories = [".local/share/rofi"];
     files = [".cache/rofi-2.sshcache" ".cache/rofi3.druncache" ".cache/rofi3.filebrowsercache"];
@@ -20,16 +19,18 @@ in {
     source = ./rofi/powermenu;
     recursive = true;
   };
-  home.file."${config.xdg.configHome}/rofi/colors/stylix_theme.rasi".text = ''
+  home.file."${config.xdg.configHome}/rofi/colors/stylix_theme.rasi".text = let
+    c = config.lib.stylix.colors.withHashtag;
+  in ''
     * {
-      background: #${c.base00};
-      background-alt: #${c.base01};
-      foreground: #${c.base05};
-      selected: #${c.base06};
-      active: #${c.base0D};
-      urgent: #${c.base08};
-      powermenu-font: "JetBrains Mono Nerd Font ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
-      launcher-font: "${lib.elemAt config.fonts.fontconfig.defaultFonts.monospace 0} ${toString (builtins.ceil config.stylix.fonts.sizes.applications)}";
+      background: ${c.base00};
+      background-alt: ${c.base01};
+      foreground: ${c.base05};
+      selected: ${c.base06};
+      active: ${c.base0D};
+      urgent: ${c.base08};
+      powermenu-font: "JetBrains Mono Nerd Font ${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor))}";
+      launcher-font: "${lib.elemAt config.fonts.fontconfig.defaultFonts.monospace 0} ${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor))}";
     }
   '';
   home.file."Documents/todo" = {

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  dpi,
   ...
 }: {
   imports = [./generate-theme-preview.nix];
@@ -19,4 +20,5 @@
         else "Light";
     in "Papirus-${suffix}";
   };
+  xresources.properties."Xft.dpi" = dpi;
 }

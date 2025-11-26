@@ -5,6 +5,7 @@
   ...
 }: {
   imports = [
+    ./autorandr.nix
     ./bootloader.nix
     ./fonts.nix
     ./power_management.nix

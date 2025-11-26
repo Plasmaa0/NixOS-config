@@ -11,7 +11,6 @@
     ../common/applications
     ../common/services
     ../common/services/poweralertd.nix
-    ../common/services/autorandr.nix
   ];
 
   home.packages = with pkgs; [

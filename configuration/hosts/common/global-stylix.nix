@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   pkgs,
   lib,
@@ -38,12 +37,6 @@ in {
       emoji = {
         package = pkgs.openmoji-color;
         name = "OpenMoji Color";
-      };
-      sizes = {
-        applications = 12 * config.hidpi.scalingFactor;
-        desktop = 10 * config.hidpi.scalingFactor;
-        popups = 10 * config.hidpi.scalingFactor;
-        terminal = 10 * config.hidpi.scalingFactor;
       };
     };
     cursor = {
