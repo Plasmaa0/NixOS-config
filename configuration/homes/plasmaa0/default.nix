@@ -35,6 +35,7 @@
     nvtopPackages.full
     aria2
     heroic
+    kdePackages.dolphin
     # cider
     # i3wsr # i3 workspace names
   ];
