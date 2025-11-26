@@ -154,7 +154,11 @@ backupFile := "flake_$(date '+%d-%m-%Y_%H-%M-%S').lock"
 # Visualize memory used by nix derivations
 [group('util')]
 @memory:
-    nix-shell -p nix-du graphviz --command "nix-du -s=100MB | dot -Tpng > store.png"
-    feh store.png
-    rm store.png
-    rm feh*.png
+    nix-shell -p nix-du graphviz --command "nix-du -n 40 | dot -Tsvg > store.svg"
+    feh store.svg
+    rm store.svg || true
+    rm feh*.png || true
+    nix-shell -p nix-du graphviz --command "nix-du --root /run/current-system/sw/ -n 40 | dot -Tsvg > store.svg"
+    feh store.svg
+    rm store.svg || true
+    rm feh*.png || true
