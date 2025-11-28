@@ -1,17 +1,16 @@
 {
   config,
-  lib,
   pkgs,
   hidpiScalingFactor,
   ...
 }: let
-  locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l --show-layout"; # just lock
-  lockTimeout = 10;
-  sleepTimeout = 20;
+  betterlockscreen = "${pkgs.betterlockscreen}/bin/betterlockscreen";
+  lock = "${betterlockscreen} --lock --show-layout"; # just lock
+  lock-screen-off = "${betterlockscreen} --lock --off 10 --show-layout"; # lock + turn off screen after small timeout
+  lockTimeout = 10; # minutes of inactivity
+  sleepTimeout = 20; # minutes of inactivity
 in {
-  home.packages = with pkgs; [
-    betterlockscreen
-  ];
+  home.packages = [pkgs.betterlockscreen];
   services.xidlehook = {
     enable = true;
     not-when-audio = true;
@@ -28,10 +27,10 @@ in {
       }
       {
         delay = min 1;
-        command = "${pkgs.xorg.xset}/bin/xset dpms force off && ${locker}"; # screen off + lock
+        command = "${pkgs.xorg.xset}/bin/xset dpms force off"; # screen off
       }
       {
-        delay = min (sleepTimeout - 1);
+        delay = min (sleepTimeout - lockTimeout - 1);
         command = ''${pkgs.notify-desktop}/bin/notify-desktop --app-name=systemctl --urgency=critical "Sleeping in 1 min"'';
         canceller = ''${pkgs.notify-desktop}/bin/notify-desktop --app-name=systemctl "Sleep cancelled"'';
       }
@@ -51,9 +50,7 @@ in {
     Install = {WantedBy = ["graphical-session.target"];};
 
     Service = {
-      ExecStart =
-        lib.concatStringsSep " "
-        ["${pkgs.xss-lock}/bin/xss-lock" "-s \${XDG_SESSION_ID}" "-- ${locker}"];
+      ExecStart = "${pkgs.xss-lock}/bin/xss-lock -s \${XDG_SESSION_ID} -- ${lock-screen-off}";
       Restart = "always";
     };
   };
@@ -61,19 +58,19 @@ in {
   systemd.user.services.betterlockscreen = {
     Unit = {
       Description = "Lock screen when going to sleep/suspend";
-      Before = ["sleep.target" "suspend.target"];
+      Before = ["sleep.target" "suspend.target" "suspend-then-hibernate.target"];
     };
 
     Service = {
       Type = "simple";
       Environment = "DISPLAY=:0";
-      ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen --lock --show-layout";
       TimeoutSec = "infinity";
+      ExecStart = lock;
       ExecStartPost = "${pkgs.coreutils}/bin/sleep 1";
     };
 
     Install = {
-      WantedBy = ["sleep.target" "suspend.target"];
+      WantedBy = ["sleep.target" "suspend.target" "suspend-then-hibernate.target"];
     };
   };
 

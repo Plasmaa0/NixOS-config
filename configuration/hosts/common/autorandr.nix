@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   services.autorandr = {
     enable = true;
     profiles = let
@@ -114,7 +119,7 @@
         fingerprint = {
           eDP = zepMonitorFingerprint;
           HDMI-1-0 = aocMonitorFingerprint;
-          DP-1-0 = huaweiMonitorFingerprint; # type-c on the left side (near HDMI)
+          DP-1-0 = huaweiMonitorFingerprint; # type-c on the right side (near HDMI)
         };
         config = {
           eDP = {
@@ -142,6 +147,49 @@
         };
         hooks.postswitch = postHook;
       };
+      "zep_home3" = {
+        fingerprint = {
+          eDP = zepMonitorFingerprint;
+          DP-1-0 = huaweiMonitorFingerprint; # type-c on the right side
+        };
+        config = {
+          eDP = {
+            enable = true;
+            primary = false;
+            position = "2560x2560";
+            mode = "2560x1600";
+            rate = "60.00";
+            dpi = 180;
+          };
+          DP-1-0 = {
+            enable = true;
+            primary = true;
+            position = "2560x0";
+            mode = "3840x2560";
+            rate = "59.98";
+          };
+        };
+        hooks.postswitch = postHook;
+      };
     };
   };
+  # disable autorandr systemd service which is created by services.autorandr.enable=true;
+  # because it triggers after every resume from sleep with default configuration by home-manager
+  # and i think it's rare edge case that monitor configuration has changed during sleep
+  # but it breaks lockscreen (putting it beneath all windows) with the i3-reset postswitch hook.
+  # this fix will still create autorandr.service but it will be empty and throw errors when trying
+  # to do something with it:
+  #      Loaded: bad-setting (Reason: Unit autorandr.service has a bad unit file setting.)
+  #      Active: inactive (dead)
+
+  # ... systemd[1]: autorandr.service: Service has no ExecStart=, ExecStop=, or SuccessAction=. Refusing.
+  systemd.services.autorandr = lib.mkForce {};
+  # but the fix above breaks udev rule /etc/udev/rules.d/40-monitor-hotplug.rules which uses systemd:
+  # ACTION=="change", SUBSYSTEM=="drm", RUN+="/run/current-system/systemd/bin/systemctl start --no-block autorandr.service"
+  #
+  # Create our own udev rules that call autorandr directly
+  services.udev.extraRules = ''
+    # Monitor hotplug - direct autorandr call
+    ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr --batch --change --default ${config.services.autorandr.defaultTarget}"
+  '';
 }

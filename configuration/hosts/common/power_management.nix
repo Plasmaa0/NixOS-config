@@ -5,6 +5,21 @@
     percentageCritical = 3;
     criticalPowerAction = "Hibernate";
   };
+  services.xserver = {
+    # Set DPMS timeouts to zero (any timeouts managed by xidlehook)
+    serverFlagsSection = ''
+      Option "BlankTime" "0"
+      Option "StandbyTime" "0"
+      Option "SuspendTime" "0"
+      Option "OffTime" "0"
+    '';
+  };
+  systemd.sleep.extraConfig = ''HibernateDelaySec=30min''; # time after when pc will hibernate when using systemctl suspend-then-hibernate
+  services.logind.settings.Login = {
+    HandlePowerKey = "suspend-then-hibernate";
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleLidSwitchExternalPower = "suspend-then-hibernate";
+  };
   powerManagement.powertop.enable = true;
   services.tlp = {
     enable = true;

@@ -72,7 +72,7 @@ run_cmd() {
 		elif [[ $1 == '--suspend' ]]; then
 			mpc -q pause
 			amixer set Master mute
-			systemctl suspend
+			systemctl suspend-then-hibernate
 		elif [[ $1 == '--logout' ]]; then
 			if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
 				openbox --exit
@@ -104,7 +104,7 @@ case ${chosen} in
 		run_cmd --reboot
         ;;
     $lock)
-		betterlockscreen -l --show-layout
+		betterlockscreen -l --off 10 --show-layout
         ;;
     $suspend)
 		run_cmd --suspend

@@ -198,6 +198,7 @@ in {
         "q" = "exec qutebrowser";
         "m" = "exec yandex-music";
         "e" = "exec dolphin";
+        "F9" = "exec autorandr --batch --change --default default";
 
         "Return" = ''mode "default"'';
         "Escape" = ''mode "default"'';
