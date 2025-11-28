@@ -138,7 +138,7 @@ alias lt='exa -aT --color=always --group-directories-first --icons' # tree listi
 alias ltg='exa -aT --color=always --group-directories-first --icons --git' # tree listing
 alias l.="exa -a | egrep '^\.'" # show only dotfiles
 alias ip="ip -color"
-alias hexdup="hexd"
+alias hexdump="hexd"
 alias ol="ollama"
 abbr nixrepl "nix repl --expr \"{pkgs = import <nixpkgs> {};}\""
 
