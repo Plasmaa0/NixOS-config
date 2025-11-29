@@ -13,7 +13,7 @@
                 display: flex;
                 flex-wrap: wrap;
                 height: 100vh;
-                font-family: '${config.stylix.fonts.monospace.name}', monospace;
+                font-family: '${config.stylix.fonts.serif.name}', monospace;
             }
             .color-box {
                 flex: 1 0 12.5%;

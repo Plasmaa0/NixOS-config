@@ -10,7 +10,6 @@
       openmoji-color
     ]
     ++ (with pkgs.nerd-fonts; [
-      arimo
       iosevka
       iosevka-term
       iosevka-term-slab
@@ -21,12 +20,15 @@
       fantasque-sans-mono
     ]);
   # see also nix_modules/stylix.nix
-  fonts.fontconfig = {
-    defaultFonts = {
-      emoji = ["OpenMoji Color"];
-      monospace = ["IosevkaTerm Nerd Font"];
-      serif = ["FantasqueSansM Nerd Font"];
-      sansSerif = ["Arimo"];
+  fonts = {
+    enableGhostscriptFonts = true;
+    fontconfig = {
+      defaultFonts = {
+        emoji = ["Noto Color Emoji" "OpenMoji Color"];
+        serif = ["IosevkaTermSlab Nerd Font"];
+        sansSerif = ["Iosevka Nerd Font"];
+        monospace = ["IosevkaTerm Nerd Font"];
+      };
     };
   };
 }

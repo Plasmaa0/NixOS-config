@@ -15,6 +15,15 @@ in {
     recursive = true;
     onChange = "${polybar}/bin/polybar-msg cmd restart || true";
   };
+  home.file."${config.xdg.configHome}/polybar/fonts.ini".text =
+    # ini
+    ''
+      font-0 = "${config.stylix.fonts.serif.name}:size=8;4"
+      font-1 = "Font Awesome 6 Free:size=8;6"
+      font-2 = "Font Awesome 6 Brands:size=8;6"
+      font-3 = "${config.stylix.fonts.emoji.name}:scale=12;2"
+      font-4 = "${config.stylix.fonts.serif.name}:size=10;6"
+    '';
   home.file."${config.xdg.configHome}/polybar/colors.ini".text = let
     c = config.lib.stylix.colors.withHashtag;
   in

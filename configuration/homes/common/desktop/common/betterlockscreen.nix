@@ -110,7 +110,7 @@ in {
     loginbox=00000000
     loginshadow=000000ff
     locktext="Hello $(whoami)!"
-    font="${config.stylix.fonts.monospace.name}"
+    font="${config.stylix.fonts.serif.name}"
     fontXL=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor * 3))}
     fontlg=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor * 2))}
     fontmd=${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor * 1.5))}

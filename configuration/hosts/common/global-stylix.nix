@@ -23,20 +23,20 @@ in {
     # see also common/fonts.nix
     fonts = {
       serif = {
-        package = pkgs.nerd-fonts.fantasque-sans-mono;
-        name = "FantasqueSansM Nerd Font";
+        package = pkgs.nerd-fonts.iosevka-term-slab;
+        name = "IosevkaTermSlab Nerd Font";
       };
       sansSerif = {
-        package = pkgs.nerd-fonts.arimo;
-        name = "Arimo";
+        package = pkgs.nerd-fonts.iosevka;
+        name = "Iosevka Nerd Font";
       };
       monospace = {
         package = pkgs.nerd-fonts.iosevka-term;
         name = "IosevkaTerm Nerd Font";
       };
       emoji = {
-        package = pkgs.openmoji-color;
-        name = "OpenMoji Color";
+        package = pkgs.noto-fonts-color-emoji;
+        name = "Noto Color Emoji";
       };
     };
     cursor = {

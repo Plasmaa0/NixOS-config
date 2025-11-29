@@ -86,7 +86,7 @@
       #
       ''${voffset -30}
       ''${font mono bold:size=16}''${color ${ch.base07}}BAT ''${color ${ch.base0E}}''${voffset 4}''${battery_bar 16,0 BAT1}
-      ''${voffset -40}
+      ''${voffset -30}
       ''${offset 10}$font''${color ${ch.base06}} Status: ''${color ${ch.base04}}''${battery_status BAT1}''${alignr}''${offset -10}$font''${color ${ch.base06}}Percent: ''${color ${ch.base04}}''${battery_percent BAT1}%
       ''${offset 10}$font''${color ${ch.base06}} Left: ''${color ${ch.base04}}''${battery_time BAT1}''${alignr}''${offset -10}$font''${color ${ch.base06}}Power: ''${color ${ch.base04}}''${battery_power_draw BAT1}W
       ''${offset 10}$font''${color ${ch.base06}} Health: ''${color ${ch.base04}}''${execi 300 ${battery-health}}''${color ${ch.base0D}}
@@ -96,7 +96,7 @@
       #
       # CPU
       #
-      ''${voffset -40}
+      ''${voffset -50}
       ''${font mono bold:size=16}''${color ${ch.base07}}CPU ''${color ${ch.base0E}}''${cpugraph ${c.base0E} ${c.base06}}
       ''${voffset -30}
       ''${offset 10}''${color ${ch.base06}}$font Freq: ''${color ${ch.base04}}''${freq 1}Mhz ''${alignr}''${offset -10}''${color ${ch.base06}}Temp:''${color ${ch.base04}}''${hwmon 2 temp 1}°C''${color white}
@@ -106,7 +106,6 @@
       ''${offset 0}$font   - ''${color ${ch.base09}}''${top name 1} ''${alignr} ''${color ${ch.base09}}''${top cpu 1}  ''${color ${ch.base0D}}
       ''${offset 0}$font   - ''${color ${ch.base0B}}''${top name 2} ''${alignr}''${color ${ch.base0A}}''${top cpu 2}  ''${color ${ch.base0D}}
       ''${offset 0}$font   - ''${color ${ch.base0B}}''${top name 3} ''${alignr}''${color ${ch.base0A}}''${top cpu 3}  ''${color ${ch.base0D}}
-      # ''${offset 0}$font   - ''${color ${ch.base0B}}''${top name 4} ''${alignr}''${color ${ch.base0A}}''${top cpu 4}  ''${color ${ch.base0D}}
       ''${hr 1}
 
       #
@@ -121,17 +120,15 @@
       ''${offset 0}$font   - ''${color ${ch.base09}}''${top_mem name 1} ''${alignr} ''${color ${ch.base09}}''${top_mem mem_res 1}  ''${color ${ch.base0D}}
       ''${offset 0}$font   - ''${color ${ch.base0B}}''${top_mem name 2} ''${alignr} ''${color ${ch.base0A}}''${top_mem mem_res 2}  ''${color ${ch.base0D}}
       ''${offset 0}$font   - ''${color ${ch.base0B}}''${top_mem name 3} ''${alignr} ''${color ${ch.base0A}}''${top_mem mem_res 3}  ''${color ${ch.base0D}}
-      # ''${offset 0}$font   - ''${color ${ch.base0B}}''${top_mem name 4} ''${alignr} ''${color ${ch.base0A}}''${top_mem mem_res 4}  ''${color ${ch.base0D}}
-      # ''${offset 0}$font   - ''${color ${ch.base0B}}''${top_mem name 5} ''${alignr} ''${color ${ch.base0A}}''${top_mem mem_res 5}  ''${color ${ch.base06}}
-      $if_mpd_playing''${hr 1}$else''${voffset -50}$endif
+      $if_mpd_playing''${hr 1}$else''${voffset -60}$endif
 
       #
       # MPD
       #
       $if_mpd_playing
-        ''${voffset -55}
+        ''${voffset -65}
         ''${execi 5 ${pkgs.mpc}/bin/mpc albumart "$(${pkgs.mpc}/bin/mpc current -f "%file%")" > /tmp/cover}
-        ''${image /tmp/cover -p 0, 500 -s 64x64 -f 5}
+        ''${image /tmp/cover -p 0, 480 -s 64x64 -f 5}
         ''${voffset -30}''${offset 55}''${color ${c.base04}}$alignr''${color ${c.base06}}''${scroll wait 20 ''${mpd_title 30}}
         ''${offset 55}''${color ${c.base04}}$alignr''${color ${c.base06}}''${scroll wait 20 ''${mpd_albumartist}}
         ''${offset 55}''${color ${c.base04}}󱍙$alignr''${color ${c.base06}}''${scroll wait 20 ''${mpd_album}}

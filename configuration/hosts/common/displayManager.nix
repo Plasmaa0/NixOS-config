@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  lib,
   ...
 }: let
   obscure-sddm-theme-package = {
@@ -68,7 +67,7 @@
       backgroundTintIntensity = 0.25; # 0-1
 
       # Typography
-      fontFamily = lib.elemAt config.fonts.fontconfig.defaultFonts.monospace 0;
+      fontFamily = config.stylix.fonts.serif.name;
       baseFontSize = 44;
 
       # Controls
