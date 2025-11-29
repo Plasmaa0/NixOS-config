@@ -50,7 +50,7 @@
     };
     settings = {
       shell = "fish";
-      enabled_layouts = "splits";
+      enabled_layouts = "splits,stack";
       visual_window_select_characters = "SADFGQWERZXCV";
       disable_ligatures = "never";
       font_features = "${config.stylix.fonts.monospace.name} +calt +clig +liga";

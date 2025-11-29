@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   hidpiScalingFactor,
   ...
 }: {
@@ -29,8 +28,8 @@
       selected: ${c.base06};
       active: ${c.base0D};
       urgent: ${c.base08};
-      powermenu-font: "JetBrains Mono Nerd Font ${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor))}";
-      launcher-font: "${lib.elemAt config.fonts.fontconfig.defaultFonts.monospace 0} ${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor))}";
+      powermenu-font: "${config.stylix.fonts.serif.name} ${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor))}";
+      launcher-font: "${config.stylix.fonts.serif.name} ${toString (builtins.ceil (config.stylix.fonts.sizes.applications * hidpiScalingFactor))}";
     }
   '';
   home.file."Documents/todo" = {

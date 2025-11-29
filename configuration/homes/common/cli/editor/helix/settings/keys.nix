@@ -8,7 +8,7 @@
       english = ["q" "w" "e" "r" "t" "y" "u" "i" "o" "p" "[" "]" "a" "s" "d" "f" "g" "h" "j" "k" "l" ";" "'" "z" "x" "c" "v" "b" "n" "m" "," "."];
       makeBind = cyr: eng: {"${cyr}" = "@${eng}";};
       cyrillicToEnglishKeysList = lib.zipListsWith makeBind cyrillic english;
-      cyrillicToEnglishKeymap = lib.fold (a: b: a // b) {} cyrillicToEnglishKeysList;
+      cyrillicToEnglishKeymap = lib.foldr (a: b: a // b) {} cyrillicToEnglishKeysList;
     in
       {
         C-e = "page_cursor_half_up";
