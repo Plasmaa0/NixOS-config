@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -95,7 +94,7 @@
             primary = false;
             position = "2560x2560";
             mode = "2560x1600";
-            rate = "60.00";
+            rate = "240.00";
             dpi = 180;
           };
           HDMI-1-0 = {
@@ -127,7 +126,7 @@
             primary = false;
             position = "2560x2560";
             mode = "2560x1600";
-            rate = "60.00";
+            rate = "240.00";
             dpi = 180;
           };
           HDMI-1-0 = {
@@ -188,8 +187,8 @@
   # ACTION=="change", SUBSYSTEM=="drm", RUN+="/run/current-system/systemd/bin/systemctl start --no-block autorandr.service"
   #
   # Create our own udev rules that call autorandr directly
-  services.udev.extraRules = ''
-    # Monitor hotplug - direct autorandr call
-    ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr --batch --change --default ${config.services.autorandr.defaultTarget}"
-  '';
+  # services.udev.extraRules = ''
+  #   # Monitor hotplug - direct autorandr call
+  #   ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr --batch --change --default ${config.services.autorandr.defaultTarget}"
+  # '';
 }
