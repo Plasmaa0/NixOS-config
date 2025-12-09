@@ -3,135 +3,72 @@
     settings.theme = "stylix";
     themes = {
       stylix = let
-        c = config.lib.stylix.colors;
+        c = config.lib.stylix.colors.withHashtag;
       in {
-        "ui.linenr.selected" = {bg = "base2";};
-        "ui.text.focus" = {
-          fg = "yellow";
-          modifiers = ["bold"];
-        };
-        "ui.menu" = {
-          fg = "base8";
-          bg = "base3";
-        };
-        "ui.menu.selected" = {
-          fg = "base2";
-          bg = "yellow";
-        };
-        "ui.virtual.whitespace" = "base4";
-        "ui.virtual.ruler" = {bg = "base1";};
-        "ui.virtual.jump-label" = {
-          fg = "red";
-          modifiers = ["bold"];
-        };
-
-        "info" = "base8";
-        "hint" = "base8";
-
-        # background color
-        "ui.background" = {bg = "base0";};
-
-        # status bars, panels, modals, autocompletion
-        "ui.statusline" = {
-          fg = "base8";
-          bg = "base2";
-        };
-        "ui.statusline.inactive" = {
-          fg = "base8";
-          bg = "base1";
-        };
-        "ui.popup" = {bg = "base3";};
-        "ui.window" = {bg = "base3";};
-        "ui.help" = {
-          fg = "base8";
-          bg = "base3";
-        };
-
-        # active line, highlighting
-        "ui.selection" = {bg = "base3";};
-        "ui.cursor.match" = {bg = "base4";};
-        "ui.cursorline" = {bg = "base1";};
-
-        # bufferline, inlay hints
-        "ui.bufferline" = {
-          fg = "base6";
-          bg = "base2";
-        };
-        "ui.bufferline.active" = {
-          fg = "base0";
-          bg = "base5";
-        };
-        "ui.virtual.inlay-hint" = {fg = "base4";};
-
-        # comments, nord3 based lighter color
+        "attributes" = "base09";
+        "attribute" = "base0D";
         "comment" = {
-          fg = "base4";
+          fg = "base03";
           modifiers = ["italic"];
         };
-        "ui.linenr" = {fg = "base4";};
-
-        # cursor, variables, constants, attributes, fields
-        "ui.cursor.primary" = {
-          fg = "base7";
-          modifiers = ["reversed"];
-        };
-        "attribute" = "blue";
-        "variable" = "base8";
-        "constant" = "orange";
-        "variable.builtin" = "red";
-        "constant.builtin" = "red";
-        "namespace" = "base8";
-
-        # base text, punctuation
-        "ui.text" = {fg = "base8";};
-        "punctuation" = "base4";
-
-        # classes, types, primitives
-        "type" = "green";
-        "type.builtin" = {fg = "red";};
-        "label" = "base8";
-
-        # declaration, methods, routines
-        "constructor" = "blue";
-        "function" = "green";
-        "function.macro" = {fg = "blue";};
-        "function.builtin" = {fg = "blue";};
-
-        # operator, tags, units, punctuations
-        "operator" = "red";
-        "variable.other.member" = "base8";
-
-        # keywords, special
-        "keyword" = {fg = "red";};
-        "keyword.directive" = "blue";
-        "variable.parameter" = "#f59762";
-
-        # error
+        "constant" = "base09";
+        "constant.builtin" = "base08";
+        "constant.character.escape" = "base0C";
+        "constant.numeric" = "base0D";
+        "constructor" = "base0D";
+        "debug" = "base03";
+        "diff.plus" = "base0B";
+        "diff.delta" = "base09";
+        "diff.minus" = "base08";
         "error" = {
-          fg = "red";
+          fg = "base08";
           modifiers = ["bold"];
         };
+        "function" = "base0B";
+        "function.macro" = {fg = "base0D";};
+        "function.builtin" = {fg = "base0E";};
+        "hint" = "base03";
+        "info" = "base0D";
+        "keyword" = {fg = "base08";};
+        "keyword.directive" = "base0D";
+        "label" = "base08";
+        "namespace" = "base05";
+        "operator" = "base08";
+        "special" = "base09"; # matching characters in pickers when fuzzy searching something
+        "module" = "base0D";
+        "string" = "base0E";
+        "type" = "base0B";
+        "type.builtin" = {fg = "base08";};
+        "variable" = "base07";
+        "variable.other.member" = "base06";
+        "variable.builtin" = "base08";
+        "variable.parameter" = "base09";
+        "warning" = "base09";
+        "punctuation" = "base04";
+        "rainbow" = ["base08" "base09" "base0A" "base0B" "base0C"];
 
-        # annotations, decorators
-        "special" = "#f59762";
-        "module" = "#f59762";
+        "markup.bold" = {
+          fg = "base09";
+          modifiers = ["bold"];
+        };
+        "markup.heading" = "base0B";
+        "markup.italic" = {
+          fg = "base0A";
+          modifiers = ["italic"];
+        };
+        "markup.link.text" = "base08";
+        "markup.link.url" = {
+          fg = "base09";
+          modifiers = ["underlined"];
+        };
+        "markup.list" = "base08";
+        "markup.quote" = "base0C";
+        "markup.raw" = "base0B";
+        "markup.strikethrough" = {modifiers = ["crossed_out"];};
 
-        # warnings, escape characters, regex
-        "warning" = "orange";
-        "constant.character.escape" = {fg = "base8";};
-
-        # strings
-        "string" = "purple";
-
-        # integer, floating point
-        "constant.numeric" = "#${c.base0F}"; #brown
-
-        # vcs
-        "diff.plus" = "green";
-        "diff.delta" = "orange";
-        "diff.minus" = "red";
-
-        # make diagnostic underlined, to distinguish with selection text.
+        "diagnostic" = {modifiers = ["underlined"];};
+        "diagnostic.unnecessary" = {modifiers = ["dim"];};
+        "diagnostic.deprecated" = {modifiers = ["crossed_out"];};
         "diagnostic.warning" = {
           underline = {
             color = "orange";
@@ -152,51 +89,134 @@
         };
         "diagnostic.hint" = {
           underline = {
-            color = "base8";
+            color = "base6";
             style = "curl";
           };
         };
-        "diagnostic.unnecessary" = {modifiers = ["dim"];};
-        "diagnostic.deprecated" = {modifiers = ["crossed_out"];};
 
-        # markup highlight, no need for `markup.raw` and `markup.list`, make them to be defaul
-        "markup.heading" = "green";
-        "markup.bold" = {
-          fg = "orange";
+        "ui.background" = {bg = "base00";};
+        "ui.bufferline.active" = {
+          fg = "base00";
+          bg = "base03";
           modifiers = ["bold"];
         };
-        "markup.italic" = {
-          fg = "orange";
-          modifiers = ["italic"];
+        "ui.bufferline" = {
+          fg = "base04";
+          bg = "base00";
         };
-        "markup.strikethrough" = {modifiers = ["crossed_out"];};
-        "markup.link.url" = {
-          fg = "orange";
-          modifiers = ["underlined"];
+        "ui.cursor" = {
+          fg = "base05";
+          modifiers = ["reversed"];
         };
-        "markup.link.text" = "yellow";
-        "markup.quote" = "green";
+        "ui.cursor.primary" = {
+          fg = "base07";
+          modifiers = ["reversed"];
+        };
+        "ui.cursor.insert" = {
+          fg = "base0A";
+          modifiers = ["reversed"];
+        };
+        "ui.cursor.match" = {
+          fg = "base0A";
+          modifiers = ["reversed"];
+        };
+        "ui.cursor.select" = {
+          fg = "base0A";
+          modifiers = ["reversed"];
+        };
+        "ui.cursorline.primary" = {
+          fg = "base05";
+          bg = "base01";
+        };
+        "ui.gutter" = {bg = "base00";};
+        "ui.help" = {
+          fg = "base06";
+          bg = "base01";
+        };
+        "ui.linenr" = {
+          fg = "base03";
+          bg = "base00";
+        };
+        "ui.linenr.selected" = {
+          fg = "base04";
+          bg = "base01";
+          modifiers = ["bold"];
+        };
+        "ui.menu" = {
+          fg = "base05";
+          bg = "base01";
+        };
+        "ui.menu.scroll" = {
+          fg = "base03";
+          bg = "base01";
+        };
+        "ui.menu.selected" = {
+          fg = "base01";
+          bg = "base04";
+        };
+        "ui.popup" = {bg = "base01";};
+        "ui.selection" = {bg = "base02";};
+        "ui.selection.primary" = {bg = "base02";};
+        "ui.statusline" = {
+          fg = "base04";
+          bg = "base01";
+        };
+        "ui.statusline.inactive" = {
+          bg = "base01";
+          fg = "base03";
+        };
+        "ui.statusline.insert" = {
+          fg = "base00";
+          bg = "base0B";
+        };
+        "ui.statusline.normal" = {
+          fg = "base00";
+          bg = "base03";
+        };
+        "ui.statusline.select" = {
+          fg = "base00";
+          bg = "base0F";
+        };
+        "ui.text" = "base05";
+        "ui.text.focus" = {
+          fg = "base0A";
+          modifiers = ["bold"];
+        };
+        "ui.text.inactive" = {
+          fg = "base09";
+          modifiers = ["bold"];
+        };
+        "ui.text.directory" = {
+          fg = "base0F";
+          modifiers = ["dim"];
+        };
+        "ui.virtual.indent-guide" = {fg = "base03";};
+        "ui.virtual.inlay-hint" = {fg = "base03";};
+        "ui.virtual.ruler" = {bg = "base01";};
+        "ui.virtual.whitespace" = "base4";
+        "ui.virtual.jump-label" = {
+          fg = "base08";
+          modifiers = ["bold"];
+        };
+        "ui.window" = {bg = "base01";};
 
         palette = {
-          # primary colors
-          "red" = "#${c.base08}";
-          "orange" = "#${c.base09}";
-          "yellow" = "#${c.base0A}";
-          "green" = "#${c.base0B}";
-          "blue" = "#${c.base0D}";
-          "purple" = "#${c.base0E}";
-          # base colors
-          "base0" = "#${c.base00}";
-          "base1" = "#${c.base01}";
-          "base2" = "#${c.base02}";
-          "base3" = "#${c.base03}";
-          "base4" = "#${c.base04}";
-          "base5" = "#${c.base05}";
-          "base6" = "#${c.base06}";
-          "base7" = "#${c.base07}";
-          "base8" = "#${c.base07}";
-          # variants
-          "base8x0c" = "#${c.base07}";
+          inherit (c) base00; # Default Background
+          inherit (c) base01; # Lighter Background (Used for status bars, line number and folding marks)
+          inherit (c) base02; # Selection Background
+          inherit (c) base03; # Comments, Invisibles, Line Highlighting
+          inherit (c) base04; # Dark Foreground (Used for status bars)
+          inherit (c) base05; # Default Foreground, Caret, Delimiters, Operators
+          inherit (c) base06; # Light Foreground (Not often used)
+          inherit (c) base07; # Light Background (Not often used)
+          inherit (c) base08; # Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+          inherit (c) base09; # Integers, Boolean, Constants, XML Attributes, Markup Link Url
+          inherit (c) base0A; # Classes, Markup Bold, Search Text Background
+          inherit (c) base0B; # Strings, Inherited Class, Markup Code, Diff Inserted
+          inherit (c) base0C; # Support, Regular Expressions, Escape Characters, Markup Quotes
+          inherit (c) base0D; # Functions, Methods, Attribute IDs, Headings
+          inherit (c) base0E; # Keywords, Storage, Selector, Markup Italic, Diff Changed
+          inherit (c) base0F; # Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
         };
       };
     };

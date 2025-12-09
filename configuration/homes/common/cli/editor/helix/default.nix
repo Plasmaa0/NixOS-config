@@ -16,7 +16,7 @@
     package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
     defaultEditor = true;
   };
-  home.activation.helix_reload = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.helix_reload = lib.hm.dag.entryAfter ["linkGeneration"] ''
     run ${pkgs.procps}/bin/pkill -USR1 hx || true
   '';
   xdg.configFile = let

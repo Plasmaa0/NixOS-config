@@ -10,6 +10,7 @@
     bufferline = "multiple";
     gutters = ["diagnostics" "spacer" "line-numbers" "spacer" "diff"];
     end-of-line-diagnostics = "hint";
+    rainbow-brackets = true;
     inline-diagnostics = {
       cursor-line = "info";
       other-lines = "error";
