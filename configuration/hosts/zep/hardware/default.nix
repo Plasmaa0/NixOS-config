@@ -49,13 +49,13 @@
     };
 
     modesetting.enable = false;
-    # open = true;
-    open = let
-      nvidiaPackage = config.hardware.nvidia.package;
-    in
-      lib.mkOverride 990 (nvidiaPackage ? open && nvidiaPackage ? firmware);
+    open = false; # change back to open when https://github.com/NixOS/nixpkgs/issues/467814 is closed
+    # open = let
+    #   nvidiaPackage = config.hardware.nvidia.package;
+    # in
+    #   lib.mkOverride 990 (nvidiaPackage ? open && nvidiaPackage ? firmware);
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   services.acpid.enable = true;
   services.xserver.videoDrivers = ["nvidia"];

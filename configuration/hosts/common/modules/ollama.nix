@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   # https://opencode.ai/
   # https://github.com/ggozad/oterm
   # https://github.com/NPC-Worldwide/npcsh
@@ -6,7 +6,7 @@
   # https://github.com/SilasMarvin/lsp-ai https://www.reddit.com/r/HelixEditor/comments/1icazgu/how_did_you_configure_it_for_ai/
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     # Optional: preload models, see https://ollama.com/library
     loadModels = [
       # big boys
