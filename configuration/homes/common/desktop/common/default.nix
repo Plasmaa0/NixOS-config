@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./albert
     ./betterlockscreen.nix
     # ./eww
     ./polybar
