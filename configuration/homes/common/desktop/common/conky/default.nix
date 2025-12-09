@@ -113,8 +113,8 @@
       #
       ''${voffset -30}
       ''${font :size=16}''${color ${ch.base07}}MEMORY ''${color ${ch.base0E}}''${memgraph ${c.base0E} ${c.base06}} ''${color ${ch.base0D}}
-      ''${offset 10}''${color ${ch.base06}}$font Mem:  ''${color ${ch.base04}}$mem/$memmax ''${color #6E8B3D}''${alignr}''${offset -10}''${membar 10,60}
-      ''${offset 10}''${color ${ch.base06}}$font Swap: ''${color ${ch.base04}}$swap/$swapmax ''${color #6E8B3D}''${alignr}''${offset -10}''${swapbar 10,60}
+      ''${offset 10}''${color ${ch.base06}}$font Mem:  ''${color ${ch.base04}}$mem/$memmax ''${color ${ch.base0B}}''${alignr}''${offset -10}''${membar 10,60}
+      ''${offset 10}''${color ${ch.base06}}$font Swap: ''${color ${ch.base04}}$swap/$swapmax ''${color ${ch.base0B}}''${alignr}''${offset -10}''${swapbar 10,60}
       ''${color ${ch.base0D}}
       ''${voffset -35}
       ''${offset 0}$font   - ''${color ${ch.base09}}''${top_mem name 1} ''${alignr} ''${color ${ch.base09}}''${top_mem mem_res 1}  ''${color ${ch.base0D}}

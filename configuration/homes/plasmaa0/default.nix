@@ -36,6 +36,7 @@
     aria2
     heroic
     kdePackages.dolphin
+    pandoc
     # cider
     # i3wsr # i3 workspace names
   ];

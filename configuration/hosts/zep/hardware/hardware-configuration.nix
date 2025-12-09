@@ -30,7 +30,6 @@
     "amdgpu.gpu_recovery=1"
 
     # Can help solve flickering/glitching display issues since Scatter/Gather code was reenabled
-    # One of this two disables PSR
     # enum DC_DEBUG_MASK {
     # 	DC_DISABLE_PIPE_SPLIT = 0x1,
     # 	DC_DISABLE_STUTTER = 0x2,
@@ -45,10 +44,6 @@
     # 	DC_DISABLE_REPLAY = 0x400,
     # 	DC_DISABLE_IPS = 0x800,
     # };
-    # "amdgpu.dcdebugmask=0x12"
-    # "amdgpu.dcdebugmask=0x10"
-    # "amdgpu.dcdebugmask=0x200"
-    # "amdgpu.dcdebugmask=0x212"
     "amdgpu.dcdebugmask=0x210"
 
     # Can help solve flickering/glitching display issues since Scatter/Gather code was reenabled

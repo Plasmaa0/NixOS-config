@@ -26,6 +26,7 @@
       # specific
       #    maths
       "mathstral"
+      "falcon3:7b-instruct-q8_0"
       #    code
       "codellama"
       "codegemma:7b"

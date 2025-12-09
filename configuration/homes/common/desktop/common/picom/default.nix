@@ -42,8 +42,8 @@
       #     Background-Blurring       #
       #################################
       blur-method = "dual_kawase";
-      blur-size = 3;
-      blur-strength = 15;
+      blur-size = 4;
+      blur-strength = 4;
     };
   };
   xdg.configFile."picom/picom.conf".text = let
@@ -133,9 +133,9 @@
       #################################
       rules = let
         opFULL = 1;
-        opMAX = 0.9;
-        opNORM = 0.9;
-        opLOW = 0.8;
+        opMAX = 0.98;
+        opNORM = 0.95;
+        opLOW = 0.85;
       in [
         {
           match = "_GTK_FRAME_EXTENTS@";
