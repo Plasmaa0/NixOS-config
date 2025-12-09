@@ -16,9 +16,9 @@
   };
   systemd.sleep.extraConfig = ''HibernateDelaySec=30min''; # time after when pc will hibernate when using systemctl suspend-then-hibernate
   services.logind.settings.Login = {
-    HandlePowerKey = "suspend-then-hibernate";
-    HandleLidSwitch = "suspend-then-hibernate";
-    HandleLidSwitchExternalPower = "suspend-then-hibernate";
+    HandlePowerKey = "suspend";
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "suspend";
   };
   powerManagement.powertop.enable = true;
   services.tlp = {
@@ -42,9 +42,9 @@
       CPU_SCALING_GOVERNOR_ON_BAT = "conservative"; #"powersave";
 
       CPU_SCALING_MIN_FREQ_ON_AC = 599000;
-      CPU_SCALING_MAX_FREQ_ON_AC = 5156000;
+      CPU_SCALING_MAX_FREQ_ON_AC = 5157895;
       CPU_SCALING_MIN_FREQ_ON_BAT = 599000;
-      CPU_SCALING_MAX_FREQ_ON_BAT = 2000000;
+      CPU_SCALING_MAX_FREQ_ON_BAT = 3000000;
 
       CPU_DRIVER_OPMODE_ON_AC = "active";
       CPU_DRIVER_OPMODE_ON_BAT = "passive";

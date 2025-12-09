@@ -36,7 +36,7 @@ in {
       }
       {
         delay = min 1;
-        command = "${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
+        command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
   };
