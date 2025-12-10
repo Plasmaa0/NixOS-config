@@ -60,11 +60,11 @@
       # Background
       backgroundImage = config.stylix.image;
       backgroundFillMode = "aspectCrop"; #aspectCrop, aspectFit, stretch, tile, center
-      backgroundOpacity = 1;
+      backgroundOpacity = 100; # 0-100
       backgroundGlassEnabled = true; # blurring
-      backgroundGlassIntensity = 75; # blurring strength 0-100
+      backgroundGlassIntensity = 60; # blurring strength 0-100
       backgroundTintColor = c.base02;
-      backgroundTintIntensity = 25; # 0-100
+      backgroundTintIntensity = 35; # 0-100
 
       # Typography
       fontFamily = config.stylix.fonts.serif.name;
@@ -74,7 +74,7 @@
       controlCornerRadius = 30; # Corner radius for inputs, selectors, and power buttons
       controlOpacity = 0.75; # Single accent color driving button fills/borders
       controlBlurEnabled = true;
-      controlBlurIntensity = 75;
+      controlBlurIntensity = 90; # 0-100
       controlAccentColor = c.base03; # Base opacity controlling control fill/border strength
       allowEmptyPassword = false; # Permit logging in without a password
       showUserSelector = false; # Show user selection carousel by default
