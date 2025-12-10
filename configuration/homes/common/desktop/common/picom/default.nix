@@ -170,7 +170,7 @@
         {
           match = "!(focused || group_focused) && (!fullscreen)"; #inactive
           opacity = opLOW;
-          dim = 0.1;
+          dim = 0.2;
         }
         {
           match = "class_g = 'Darktable'";

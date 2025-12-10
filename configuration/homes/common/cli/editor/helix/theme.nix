@@ -187,7 +187,7 @@
           modifiers = ["bold"];
         };
         "ui.text.directory" = {
-          fg = "base0F";
+          fg = "base04";
           modifiers = ["dim"];
         };
         "ui.virtual.indent-guide" = {fg = "base03";};
