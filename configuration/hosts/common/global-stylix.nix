@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  theme = import ./../../themes/dark/kyoto.nix;
+  theme = import ./../../themes/dark/simplex.nix;
 in {
   imports = [inputs.stylix.nixosModules.stylix];
   stylix = {
@@ -48,6 +48,12 @@ in {
           else "Classic";
       in "Bibata-Modern-${suffix}";
       size = 34;
+    };
+    icons = {
+      enable = true;
+      package = pkgs.papirus-icon-theme;
+      dark = "Papirus-Dark";
+      light = "Papirus-Light";
     };
   };
 }
