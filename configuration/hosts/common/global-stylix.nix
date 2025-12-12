@@ -2,15 +2,25 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: let
-  theme = import ./../../themes/dark/simplex.nix;
+  theme = import ./../../themes/dark/monokai.nix;
+  recolor = false;
+  gowall-recolored-wallpaper = pkgs.callPackage ./modules/gowall-recolor-wallpaper.nix {
+    colorsList = config.lib.stylix.colors.withHashtag.toList;
+    inputImage = ./../../wallpapers/${theme.wallpaper};
+  };
+  wallpaper-path =
+    if recolor
+    then "${gowall-recolored-wallpaper}/default"
+    else ./../../wallpapers/${theme.wallpaper};
 in {
   imports = [inputs.stylix.nixosModules.stylix];
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ./../../wallpapers/${theme.wallpaper};
+    image = wallpaper-path;
     targets = {
       plymouth.enable = false;
     };

@@ -25,8 +25,8 @@
           modifiers = ["bold"];
         };
         "function" = "base0B";
-        "function.macro" = {fg = "base0D";};
-        "function.builtin" = {fg = "base0E";};
+        "function.macro" = {fg = "base0C";};
+        "function.builtin" = {fg = "base0D";};
         "hint" = "base03";
         "info" = "base0D";
         "keyword" = {fg = "base08";};
