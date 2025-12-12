@@ -7,6 +7,13 @@
         uiColor = "#${config.lib.stylix.colors.base02}";
         contrastUiColor = "#${config.lib.stylix.colors.base07}";
         contrastOpacity = 180;
+        showStartupLaunchMessage = false;
+        predefinedColorPaletteLarge = true;
+        copyPathAfterSave = true;
+        showQuitPrompt = true;
+        autoCloseIdleDaemon = true;
+        showMagnifier = true;
+        squareMagnifier = true;
       };
     };
   };
