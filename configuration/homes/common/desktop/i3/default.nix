@@ -105,8 +105,8 @@ in {
       send_brightness_notification = ''notify-send -a bright -u low -h int:value:$(brightnessctl -d amdgpu_bl1  | grep -o '[0-9]\+%') Brightness --hint=string:x-dunst-stack-tag:brightness'';
       # move mouse to center of currently focused window (FIXME moves mouse to top left if no window in focus)
       # mouse_to_focused = ''"${pkgs.bash}/bin/sh -c 'eval `${pkgs.xdotool}/bin/xdotool getactivewindow getwindowgeometry --shell`; ${pkgs.xdotool}/bin/xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"'';
-      send_kb_brightness_notification = ''notify-send -i keyboard -u low "Keyboard brightness" $(asusctl -k | tr ' ' '\n' | tail -1) --hint=string:x-dunst-stack-tag:kbbrightness'';
-      send_fan_profile_notification = ''notify-send -i sensors-fan-symbolic -u low "Fan profile" $(asusctl profile -p | tr ' ' '\n' | tail -1) --hint=string:x-dunst-stack-tag:fans'';
+      send_kb_brightness_notification = ''notify-send -i keyboard -u low "Keyboard brightness" $(asusctl -k | grep "Current" | cut -c 34-) --hint=string:x-dunst-stack-tag:kbbrightness'';
+      send_fan_profile_notification = ''notify-send -i sensors-fan-symbolic -u low "Fan profile" $(asusctl profile -p | grep "Active profile is" | cut -c 19-) --hint=string:x-dunst-stack-tag:fans'';
       send_aura_notification = ''notify-send -i keyboard-brightness-symbolic -u low "Aura" "Next mode"'';
       send_touchpad_notification = ''xinput | grep floating && notify-send -i touchpad-disabled-symbolic -u low "Touchpad" "Off" --hint=string:x-dunst-stack-tag:volume || notify-send -i touchpad-enabled-symbolic -u low "Touchpad" "On" --hint=string:x-dunst-stack-tag:volume'';
       mouse_to_focused = "i3-mouse-to-center";
@@ -281,6 +281,10 @@ in {
         {
           command = "floating enable border pixel 3";
           criteria = {class = "Yad";};
+        }
+        {
+          command = "floating enable border pixel 3";
+          criteria = {class = "copyq";};
         }
         # todo rofi popup helix+zathura preview
         {
