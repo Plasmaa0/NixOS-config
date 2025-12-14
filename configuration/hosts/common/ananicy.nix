@@ -1,12 +1,7 @@
 {pkgs, ...}: {
-  services.ananicy = let
-    acpp = pkgs.ananicy-cpp;
-  in {
+  services.ananicy = {
     enable = true;
-    package = acpp;
-    rulesProvider = acpp;
-    # settings = {
-    #   apply_nice = false;
-    # };
+    package = pkgs.ananicy-cpp;
+    rulesProvider = pkgs.ananicy-rules-cachyos;
   };
 }
