@@ -17,10 +17,8 @@
     command-not-found.enable = lib.mkForce false;
   };
 
-  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/fish" ".jump"];
-  home.packages = with pkgs; [
-    jump
-  ];
+  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/fish" ".local/share/zoxide"];
+  home.packages = with pkgs; [zoxide];
   programs.fish = {
     enable = true;
     shellInit =
@@ -36,7 +34,7 @@
     interactiveShellInit =
       # fish
       ''
-        jump shell fish | source
+        zoxide init --cmd j fish | source
         direnv hook fish | source
         just --completions fish | source
         if status --is-interactive

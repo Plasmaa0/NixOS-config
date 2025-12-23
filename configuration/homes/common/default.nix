@@ -33,7 +33,6 @@
 
       ".gnupg"
       ".ssh"
-      ".jump"
       ".password-store"
       ".cache/dconf"
       {
