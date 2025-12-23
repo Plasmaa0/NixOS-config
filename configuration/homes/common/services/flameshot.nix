@@ -10,10 +10,6 @@
         showStartupLaunchMessage = false;
         predefinedColorPaletteLarge = true;
         copyPathAfterSave = true;
-        showQuitPrompt = true;
-        autoCloseIdleDaemon = true;
-        showMagnifier = true;
-        squareMagnifier = true;
       };
     };
   };
