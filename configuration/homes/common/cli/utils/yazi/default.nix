@@ -17,6 +17,7 @@
     fzf
     fd
     ripgrep
+    ripgrep-all
     chafa
     p7zip
     _7zz

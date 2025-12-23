@@ -21,6 +21,7 @@
     bat
     starship
     ripgrep
+    ripgrep-all
     fzf
     skim
     fastfetch
