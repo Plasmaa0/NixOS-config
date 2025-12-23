@@ -65,7 +65,7 @@
           show_graph_range = false,
           show_graph_scale = false,
           stippled_borders = 0,
-          update_interval = 1.0,
+          update_interval = 5,
           uppercase = false,
           use_spacer = 'none',
           use_xft = true,
