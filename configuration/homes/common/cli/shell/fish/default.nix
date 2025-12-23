@@ -37,17 +37,14 @@
         zoxide init --cmd j fish | source
         direnv hook fish | source
         just --completions fish | source
-        if status --is-interactive
-            source ("starship" init fish --print-full-init | psub)
-            function starship_transient_rprompt_func
-                starship module time
-            end
-            enable_transience
-        end
-        if status --is-interactive && type -q fastfetch
-            pokeget random --hide-name | fastfetch --file-raw -
-        end
 
+        source ("starship" init fish --print-full-init | psub)
+        function starship_transient_rprompt_func
+            starship module time
+        end
+        enable_transience
+
+        pokeget random --hide-name | fastfetch --file-raw -
       '';
   };
 }
