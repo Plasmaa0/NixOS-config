@@ -117,13 +117,13 @@ in {
         default_name = "${config.home.username}_session";
         lazy_restore = true;
       };
-      tabs.last_close = "blank";
+      tabs.last_close = "default-page";
       tabs.title.format = "{audio}{index}|{current_title}"; # original was ": " -> "|"
       input.spatial_navigation = true;
       fonts.default_family = mkForce config.stylix.fonts.serif.name;
       url = {
         start_pages = "file:///home/${config.home.username}/theme-preview.html";
-        default_page = "https://ya.ru";
+        default_page = "qute://bookmarks/";
       };
       completion = {
         open_categories = [
