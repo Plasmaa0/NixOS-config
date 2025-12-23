@@ -37,6 +37,7 @@
     heroic
     kdePackages.dolphin
     pandoc
+    tealdeer # a very fast version of tldr
     # cider
     # i3wsr # i3 workspace names
   ];
@@ -55,12 +56,13 @@
       "infa"
       "uni"
       "games"
-      "home-manager"
+      "home-manager" # i put this flake here, dont look that i call it home-manager
       ".local/share/Mindustry"
       ".local/share/qBittorrent"
       ".config/qBittorrent"
       ".config/darktable"
       ".cache/darktable"
+      ".cache/tealdeer"
       ".config/libreoffice"
     ];
   };
