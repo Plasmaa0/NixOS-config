@@ -325,11 +325,11 @@ in {
           criteria = {class = "QuteTextEdit";};
         }
         {
-          command = "resize set width 30ppt";
+          command = "resize set width 50ppt";
           criteria = {class = "QuteTextEdit";};
         }
         {
-          command = "resize set height 25ppt";
+          command = "resize set height 45ppt";
           criteria = {class = "QuteTextEdit";};
         }
         {
