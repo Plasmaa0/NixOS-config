@@ -103,14 +103,11 @@ in {
       };
     };
     settings = {
-      qt = {
-        highdpi = true;
-      };
+      # qt.highdpi = true;
       editor.command = let
         terminal = lib.getExe pkgs.kitty;
-        editor = lib.getExe pkgs.helix;
+        editor = lib.getExe config.programs.helix.package;
       in [terminal "--class" "QuteTextEdit" "-e" editor "{file}" "+{line}"];
-      input.insert_mode.auto_load = true;
       tabs.show = "multiple";
       auto_save.session = true;
       session = {
