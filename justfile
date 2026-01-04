@@ -162,3 +162,9 @@ backupFile := "flake_$(date '+%d-%m-%Y_%H-%M-%S').lock"
     feh store.svg
     rm store.svg || true
     rm feh*.png || true
+
+# Diff between 2 latest generations (useful after updates to see what updated)
+[group('util')]
+[working-directory("/nix/var/nix/profiles")]
+@diff:
+    nix-shell -p nvd --run 'nvd diff $(ls /nix/var/nix/profiles/ | grep "system-[0-9]*-link" | sort -r)'
