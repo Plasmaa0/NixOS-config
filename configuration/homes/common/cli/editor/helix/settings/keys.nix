@@ -20,6 +20,7 @@
         # "C->" = "rotate_selection_contents_forward";
         # "C-<" = "rotate_selection_contents_backward";
         A-j = ["search_selection" "extend_search_next"];
+        A-w = ":toggle soft-wrap.enable";
         C-q = ":bc";
         C-A-l = ":format";
         Y = ":clipboard-yank";

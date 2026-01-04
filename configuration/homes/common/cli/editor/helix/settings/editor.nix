@@ -18,6 +18,7 @@
     };
     lsp = {
       display-messages = true;
+      display-progress-messages = true;
       display-inlay-hints = true;
       goto-reference-include-declaration = false;
       display-color-swatches = true;
@@ -40,8 +41,10 @@
     soft-wrap = {
       enable = true;
       max-wrap = 25;
-      max-indent-retain = 0;
+      max-indent-retain = 40;
+      wrap-at-text-width = true;
     };
+    trim-trailing-whitespace = true;
     statusline = let
       sep = "separator";
       sp = "spacer";
