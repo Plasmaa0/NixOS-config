@@ -79,7 +79,7 @@
       allowEmptyPassword = false; # Permit logging in without a password
       showUserSelector = false; # Show user selection carousel by default
       showSessionSelector = false; # Show session selection carousel by default
-      randomizePasswordMask = false; # Shuffle IPA mask characters each keystroke
+      randomizePasswordMask = true; # Shuffle IPA mask characters each keystroke
       autoFocusPassword = true;
       animationDuration = 320; # Base animation length in milliseconds
       passwordFlashLoops = 3; # How many times the password field flashes on error
