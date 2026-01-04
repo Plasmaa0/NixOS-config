@@ -7,6 +7,15 @@
       body = "cp $filename $filename.bak";
       description = "Create a backup of a file";
     };
+    tw = {
+      argumentNames = ["filename"];
+      body =
+        # fish
+        ''
+          typst watch $filename.typ --jobs "$(nproc --all)" --open zathura
+        '';
+      description = "Typst watch + open zathura";
+    };
     take = {
       argumentNames = ["dir"];
       body =

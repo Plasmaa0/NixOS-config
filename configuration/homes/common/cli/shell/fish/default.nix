@@ -7,6 +7,7 @@
 }: {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
+    ./binds.nix
     ./abbrs.nix
     ./aliases.nix
     ./functions.nix
