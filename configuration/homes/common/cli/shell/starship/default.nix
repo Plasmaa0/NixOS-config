@@ -122,13 +122,34 @@
       };
       directory = {
         style = "purple";
-        truncate_to_repo = true;
+        truncate_to_repo = true; # will not work if fish_style_pwd_dir_length is set
+        repo_root_style = "bold bright-purple";
+        before_repo_root_style = "bold dimmed purple"; # will only apply to truncation symbol if truncate_to_repo is enabled and truncation is set up
+
+        # writing this while using starship 1.24.2, maybe this will get fixed
+        # fish_style_pwd_dir_length has more prioriry
+        # than truncation_length/symbol.
+        # anyways this option fucks everything up:
+        # - (before)repo_root_style will not work
+        # - truncate_to_repo will not work
+        # - truncation_length/symbol will not work
+        # so not using it, but leaving this comment here not to forget why
+        # fish_style_pwd_dir_length = 2;
+
         truncation_length = 3;
-        truncation_symbol = "󰊢 ";
+        truncation_symbol = " ";
       };
-      sudo = {
+      direnv = {
         disabled = false;
+        symbol = " ";
+        format = "[$symbol:$allowed|$loaded]($style) ";
+        allowed_msg = " ";
+        not_allowed_msg = " ";
+        denied_msg = "󰻌 ";
+        loaded_msg = "󰈖 ";
+        unloaded_msg = "󰮘 ";
       };
+      sudo.disabled = false;
       git_metrics = {
         disabled = false;
         added_style = "bold blue";
