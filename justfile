@@ -167,4 +167,4 @@ backupFile := "flake_$(date '+%d-%m-%Y_%H-%M-%S').lock"
 [group('util')]
 [working-directory("/nix/var/nix/profiles")]
 @diff:
-    nix-shell -p nvd --run 'nvd diff $(ls /nix/var/nix/profiles/ | grep "system-[0-9]*-link" | sort -r)'
+    nix-shell -p nvd --run 'nvd diff $(ls /nix/var/nix/profiles/ | grep "system-[0-9]*-link" | sort -r | head -2)'
