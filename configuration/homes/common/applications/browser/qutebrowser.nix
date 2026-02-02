@@ -8,7 +8,7 @@
 in {
   home.sessionVariables.BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
   home.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
-  home.persistence."/persist/home/${config.home.username}".directories = [
+  home.persistence."/persist".directories = [
     ".local/share/qutebrowser"
     ".cache/qutebrowser"
     ".config/qutebrowser/bookmarks"

@@ -3,8 +3,8 @@
   config,
   ...
 }: {
-  home.persistence."/persist/home/${config.home.username}" = {
-    directories = ["~/.cache/albert" "~/.local/share/albert"];
+  home.persistence."/persist" = {
+    directories = [".cache/albert" ".local/share/albert"];
   };
   systemd.user.services.albert = {
     Unit = {

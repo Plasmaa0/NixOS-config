@@ -1,10 +1,6 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [texstudio];
-  home.persistence."/persist/home/${config.home.username}".directories = [
+  home.persistence."/persist".directories = [
     ".config/texstudio"
   ];
   mime.list = [

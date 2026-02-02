@@ -1,8 +1,4 @@
-{
-  inputs,
-  config,
-  ...
-}: {
+{lib, ...}: {
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
@@ -14,16 +10,14 @@
     ./shell_templates
 
     ./user-stylix.nix
-    inputs.impermanence.homeManagerModules.impermanence
   ];
 
   home.persistence."/persist" = {
-    allowOther = true;
-    directories = ["data"];
-  };
-  home.persistence."/persist/home/${config.home.username}" = {
-    allowOther = true;
     directories = [
+      {
+        directory = "data";
+        home = lib.mkForce null;
+      }
       "Desktop"
       "Documents"
       "Downloads"
@@ -35,28 +29,18 @@
       ".ssh"
       ".password-store"
       ".cache/dconf"
-      {
-        directory = ".config/pulse";
-        # mode = "0766";
-        method = "symlink";
-      }
+      ".config/pulse"
       ".cache/AmneziaVPN.ORG"
       ".config/AmneziaVPN.ORG"
       ".local/share/applications"
-      {
-        directory = ".local/share/Steam";
-        method = "symlink";
-      }
+      ".local/share/Steam"
       ".local/share/CKAN"
-      {
-        directory = ".steam";
-        method = "symlink";
-      }
+      ".steam"
       ".factorio"
     ];
     files = [
       ".steampath"
-      ".steampid"
+      # ".steampid"
     ];
   };
 

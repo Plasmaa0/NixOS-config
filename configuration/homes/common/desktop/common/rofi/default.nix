@@ -4,7 +4,7 @@
   hidpiScalingFactor,
   ...
 }: {
-  home.persistence."/persist/home/${config.home.username}" = {
+  home.persistence."/persist" = {
     directories = [".local/share/rofi"];
     files = [".cache/rofi-2.sshcache" ".cache/rofi3.druncache" ".cache/rofi3.filebrowsercache"];
   };

@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
-  home.persistence."/persist/home/${config.home.username}" = {
+{pkgs, ...}: {
+  home.persistence."/persist" = {
     directories = [".cache/cassette" ".local/share/cassette"];
   };
   home.packages = with pkgs; [

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [vscode];
-  home.persistence."/persist/home/${config.home.username}".directories = [".vscode"];
+  home.persistence."/persist".directories = [".vscode"];
 }

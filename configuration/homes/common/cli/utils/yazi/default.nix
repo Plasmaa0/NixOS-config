@@ -1,7 +1,6 @@
 {
   pkgs,
   inputs,
-  config,
   hidpiScalingFactor,
   ...
 }: {
@@ -23,7 +22,7 @@
     _7zz
     jq
   ];
-  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/Trash"];
+  home.persistence."/persist".directories = [".local/share/Trash"];
   programs.yazi = {
     enable = true;
     package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;

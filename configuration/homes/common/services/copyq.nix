@@ -1,10 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   services.copyq.enable = true;
-  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/copyq"];
+  home.persistence."/persist".directories = [".local/share/copyq"];
   # FIXME this script now works only with images
   home.packages = [
     (pkgs.writeShellApplication {

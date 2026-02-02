@@ -1,12 +1,8 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     vlc
   ];
-  home.persistence."/persist/home/${config.home.username}" = {
+  home.persistence."/persist" = {
     directories = [".local/share/vlc" ".cache/vlc" ".config/vlc"];
   };
 }

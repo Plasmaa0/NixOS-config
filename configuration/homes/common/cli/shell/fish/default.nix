@@ -1,6 +1,5 @@
 {
   inputs,
-  config,
   pkgs,
   lib,
   ...
@@ -18,7 +17,7 @@
     command-not-found.enable = lib.mkForce false;
   };
 
-  home.persistence."/persist/home/${config.home.username}".directories = [".local/share/fish" ".local/share/zoxide"];
+  home.persistence."/persist".directories = [".local/share/fish" ".local/share/zoxide"];
   home.packages = with pkgs; [zoxide];
   programs.fish = {
     enable = true;

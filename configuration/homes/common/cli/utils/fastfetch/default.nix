@@ -1,5 +1,5 @@
 {config, ...}: {
-  home.persistence."/persist/home/${config.home.username}".directories = [".cache/fastfetch"];
+  home.persistence."/persist".directories = [".cache/fastfetch"];
   home.file."${config.xdg.configHome}/fastfetch/config.jsonc".text = ''
     {
         "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",

@@ -1,6 +1,5 @@
 {
   inputs,
-  config,
   lib,
   pkgs,
   ...
@@ -10,7 +9,7 @@
     ./settings
     ./languages
   ];
-  home.persistence."/persist/home/${config.home.username}".directories = [".cache/helix"];
+  home.persistence."/persist".directories = [".cache/helix"];
   programs.helix = {
     enable = true;
     package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../common
     ../common/desktop/i3
@@ -50,8 +46,7 @@
     }
   ];
 
-  home.persistence."/persist/home/${config.home.username}" = {
-    allowOther = true;
+  home.persistence."/persist" = {
     directories = [
       "infa"
       "uni"
