@@ -42,7 +42,7 @@
       enable = true;
       max-wrap = 25;
       max-indent-retain = 40;
-      wrap-at-text-width = true;
+      wrap-at-text-width = false;
     };
     trim-trailing-whitespace = true;
     statusline = let
