@@ -23,6 +23,7 @@
   powerManagement.powertop.enable = true;
   services.tlp = {
     enable = true;
+    pd.enable = true;
     settings = {
       # USB
       USB_AUTOSUSPEND = 1;
@@ -81,7 +82,10 @@
       DISK_APM_LEVEL_ON_BAT = "128 128";
 
       # PCIe
-      RUNTIME_PM_ON_AC = "auto"; # default in "on"
+      RUNTIME_PM_ON_AC = "on"; # may also be "auto"
+      RUNTIME_PM_DRIVER_DENYLIST = "";
+      PCIE_ASPM_ON_AC = "performance";
+      PCIE_ASPM_ON_BAT = "powersupersave";
     };
   };
 }
