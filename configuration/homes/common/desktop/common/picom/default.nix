@@ -231,11 +231,13 @@
             appear = {
               triggers = ["open" "show"];
               preset = "fly-in";
+              direction = "right";
               duration = d;
             };
             disappear = {
               triggers = ["close" "hide"];
               preset = "fly-out";
+              direction = "right";
               duration = d;
             };
           };

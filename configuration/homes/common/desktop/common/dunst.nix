@@ -165,8 +165,11 @@ in {
       # Geometery reference --> [{width}]x{height}[+/-{x}+/-{y}]
       width = builtins.ceil (150 * hidpiScalingFactor);
       height = builtins.ceil (80 * hidpiScalingFactor);
-      origin = "top-center";
-      offset = "0x${toString (builtins.ceil (30 * hidpiScalingFactor))}";
+      origin = "top-right";
+      offset = let
+        single = toString (builtins.ceil (15 * hidpiScalingFactor));
+        double = toString (builtins.ceil (30 * hidpiScalingFactor));
+      in "${single}x${double}";
 
       # Radius of the four corners of the notification
       corner_radius = 10;
