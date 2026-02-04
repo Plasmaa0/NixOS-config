@@ -105,8 +105,8 @@ in {
       send_brightness_notification = ''notify-send -a bright -u low -h int:value:$(brightnessctl -d amdgpu_bl1  | grep -o '[0-9]\+%') Brightness --hint=string:x-dunst-stack-tag:brightness'';
       # move mouse to center of currently focused window (FIXME moves mouse to top left if no window in focus)
       # mouse_to_focused = ''"${pkgs.bash}/bin/sh -c 'eval `${pkgs.xdotool}/bin/xdotool getactivewindow getwindowgeometry --shell`; ${pkgs.xdotool}/bin/xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"'';
-      send_kb_brightness_notification = ''notify-send -i keyboard -u low "Keyboard brightness" $(asusctl -k | grep "Current" | cut -c 34-) --hint=string:x-dunst-stack-tag:kbbrightness'';
-      send_fan_profile_notification = ''notify-send -i sensors-fan-symbolic -u low "Fan profile" $(asusctl profile -p | grep "Active profile is" | cut -c 19-) --hint=string:x-dunst-stack-tag:fans'';
+      send_kb_brightness_notification = ''notify-send -i keyboard -u low "Keyboard brightness" $(asusctl leds get | grep "Current" | cut -c 34-) --hint=string:x-dunst-stack-tag:kbbrightness'';
+      send_fan_profile_notification = ''notify-send -i sensors-fan-symbolic -u low "Fan profile" $(asusctl profile get | grep "Active profile: " | cut -c 17-) --hint=string:x-dunst-stack-tag:fans'';
       send_aura_notification = ''notify-send -i keyboard-brightness-symbolic -u low "Aura" "Next mode"'';
       send_touchpad_notification = ''xinput | grep floating && notify-send -i touchpad-disabled-symbolic -u low "Touchpad" "Off" --hint=string:x-dunst-stack-tag:volume || notify-send -i touchpad-enabled-symbolic -u low "Touchpad" "On" --hint=string:x-dunst-stack-tag:volume'';
       mouse_to_focused = "i3-mouse-to-center";
@@ -135,11 +135,11 @@ in {
           "${mod}+l" = "scratchpad show; exec --no-startup-id ${mouse_to_focused}";
           "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl -d amdgpu_bl1  set ${step}+ && ${send_brightness_notification} # increase screen brightness";
           "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl -d amdgpu_bl1  set ${step}- && ${send_brightness_notification} # decrease screen brightness";
-          "XF86KbdBrightnessUp" = "exec --no-startup-id asusctl -n && ${send_kb_brightness_notification}"; # keyboard backlight +
-          "XF86KbdBrightnessDown" = "exec --no-startup-id asusctl -p && ${send_kb_brightness_notification}"; # keyboard backlight -
+          "XF86KbdBrightnessUp" = "exec --no-startup-id asusctl leds next && ${send_kb_brightness_notification}"; # keyboard backlight +
+          "XF86KbdBrightnessDown" = "exec --no-startup-id asusctl leds prev && ${send_kb_brightness_notification}"; # keyboard backlight -
           "XF86Launch1" = "exec pkill picom; exec flameshot gui"; # m4 macro key above keyboard
-          "XF86Launch3" = "exec --no-startup-id asusctl aura -n && ${send_aura_notification}"; # aura button
-          "XF86Launch4" = "exec --no-startup-id asusctl profile -n && ${send_fan_profile_notification}"; # fan profile
+          "XF86Launch3" = "exec --no-startup-id asusctl aura effect --next-mode && ${send_aura_notification}"; # aura button
+          "XF86Launch4" = "exec --no-startup-id asusctl profile next && ${send_fan_profile_notification}"; # fan profile
           "XF86TouchpadToggle" = let
             touchpadId = ''"$(xinput | grep Touchpad | tr '\t' '\n' | grep "id=[0-9]*" | tr '=' '\n' | tail -1)"'';
           in "exec --no-startup-id xinput | grep floating && xinput enable ${touchpadId} || xinput disable ${touchpadId} && ${send_touchpad_notification}";
@@ -219,7 +219,7 @@ in {
         command = "xhost +";
       }
       {
-        command = "asusctl slash -l 128 -m Flux -B true -S true -s false -b false -w true";
+        command = "asusctl slash -l 128 --mode Flux -B true -S true -s false -b false -w true";
         always = true;
       }
       {
@@ -259,7 +259,7 @@ in {
           hex-g = padToTwo (lib.toHexString (builtins.floor amplified-g));
           hex-b = padToTwo (lib.toHexString (builtins.floor amplified-b));
           result-color = hex-r + hex-g + hex-b;
-        in "asusctl aura static -c ${result-color} && asusctl -k low";
+        in "asusctl aura effect static -c ${result-color} && asusctl leds set low";
         always = true;
       }
       {
