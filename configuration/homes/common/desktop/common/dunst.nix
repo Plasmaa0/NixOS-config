@@ -154,6 +154,7 @@ in {
   xdg.configFile."dunst/dunstrc".onChange = lib.mkForce reloadScript;
   services.dunst.settings = let
     c = config.lib.stylix.colors.withHashtag;
+    alignment = "right";
   in {
     global = {
       monitor = 0;
@@ -165,7 +166,7 @@ in {
       # Geometery reference --> [{width}]x{height}[+/-{x}+/-{y}]
       width = builtins.ceil (150 * hidpiScalingFactor);
       height = builtins.ceil (80 * hidpiScalingFactor);
-      origin = "top-right";
+      origin = "top-${alignment}";
       offset = let
         single = toString (builtins.ceil (15 * hidpiScalingFactor));
         double = toString (builtins.ceil (30 * hidpiScalingFactor));
@@ -298,7 +299,7 @@ in {
       background = c.base01;
       foreground = c.base0D;
       highlight = c.base0D;
-      alignment = "center";
+      inherit alignment;
       max_icon_size = 128;
       # hide_text = true;
       icon_position = "off";
@@ -311,7 +312,7 @@ in {
       background = c.base01;
       foreground = c.base0A;
       highlight = c.base0A;
-      alignment = "center";
+      inherit alignment;
       max_icon_size = 128;
       # hide_text = true;
       icon_position = "off";
