@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  theme = import ./../../themes/dark/monokai.nix;
+  theme = import ./../../themes/dark/gruvbox.nix;
   recolor = false;
   gowall-recolored-wallpaper = pkgs.callPackage ./modules/gowall-recolor-wallpaper.nix {
     colorsList = config.lib.stylix.colors.withHashtag.toList;
