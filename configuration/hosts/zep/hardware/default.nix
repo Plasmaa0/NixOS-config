@@ -48,8 +48,8 @@
       finegrained = false;
     };
 
-    modesetting.enable = false;
-    open = false; # change back to open when https://github.com/NixOS/nixpkgs/issues/467814 is closed
+    modesetting.enable = true;
+    open = true;
     # open = let
     #   nvidiaPackage = config.hardware.nvidia.package;
     # in

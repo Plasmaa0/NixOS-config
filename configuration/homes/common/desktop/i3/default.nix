@@ -241,23 +241,48 @@ in {
           r = builtins.fromJSON c.base03-rgb-r;
           g = builtins.fromJSON c.base03-rgb-g;
           b = builtins.fromJSON c.base03-rgb-b;
+          # STEP 1: Remove white component to enhance color saturation
+          # Find the minimum RGB value (represents the "white" component)
           min-channel = lib.min (lib.min r g) b;
+          # Subtract the white component from all channels
+          # This preserves only the color differences (chromatic component)
           saturated-r = r - min-channel;
           saturated-g = g - min-channel;
           saturated-b = b - min-channel;
+          # STEP 2: Amplify to full brightness range
+          # Find the maximum of the saturated channels (ensuring at least 1 to avoid division by zero)
           max-channel = lib.max (lib.max (lib.max saturated-r saturated-g) saturated-b) 1;
           amplification-factor = 255.0 / max-channel;
-          amplified-r = saturated-r * amplification-factor;
-          amplified-g = saturated-g * amplification-factor;
-          amplified-b = saturated-b * amplification-factor;
+          amplified-r = builtins.floor (lib.max (saturated-r * amplification-factor) 1);
+          amplified-g = builtins.floor (lib.max (saturated-g * amplification-factor) 1);
+          amplified-b = builtins.floor (lib.max (saturated-b * amplification-factor) 1);
+          # Calculate perceived brightness of ORIGINAL color (not saturated)
+          perceivedBrightness = r: g: b: let
+            brightness = (0.299 * r) + (0.587 * g) + (0.114 * b);
+          in
+            lib.min (builtins.floor brightness) 255;
+
+          original-brightness = perceivedBrightness r g b;
+
+          brightness-scale = 255.0 / original-brightness;
+          # STEP 3: Apply custom polynomial scaling for fine-tuning
+          final-scale-pre = 255.0 / (lib.max (lib.max (lib.max saturated-r saturated-g) saturated-b) 1);
+          final-scale = let
+            x = final-scale-pre;
+            base-scale = 0.5 + (0.005 * x) + (0.0003 * x * x);
+          in
+            base-scale * brightness-scale;
+          final-amplified-r = lib.max (lib.min (builtins.floor (amplified-r * final-scale)) 255) 1;
+          final-amplified-g = lib.max (lib.min (builtins.floor (amplified-g * final-scale)) 255) 1;
+          final-amplified-b = lib.max (lib.min (builtins.floor (amplified-b * final-scale)) 255) 1;
           # converts single digit numbers like "0" to two-digit "00" for valid hex format
           padToTwo = s:
             if builtins.stringLength s == 1
             then "0${s}"
             else s;
-          hex-r = padToTwo (lib.toHexString (builtins.floor amplified-r));
-          hex-g = padToTwo (lib.toHexString (builtins.floor amplified-g));
-          hex-b = padToTwo (lib.toHexString (builtins.floor amplified-b));
+          hex-r = padToTwo (lib.toHexString (builtins.floor final-amplified-r));
+          hex-g = padToTwo (lib.toHexString (builtins.floor final-amplified-g));
+          hex-b = padToTwo (lib.toHexString (builtins.floor final-amplified-b));
           result-color = hex-r + hex-g + hex-b;
         in "asusctl aura effect static -c ${result-color} && asusctl leds set low";
         always = true;

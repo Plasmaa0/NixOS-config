@@ -29,7 +29,7 @@
     # conf
     ''
       conky.config = {
-          alignment = 'top_right',
+          alignment = 'bottom_right',
           background = false,
           border_width = 1,
           cpu_avg_samples = 5,

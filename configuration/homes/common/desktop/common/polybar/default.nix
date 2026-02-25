@@ -50,19 +50,19 @@ in {
     {
       notification = false;
       always = true;
-      command = "${polybar}/bin/polybar-msg cmd restart || true";
+      command = "${polybar}/bin/polybar-msg cmd restart || ${polybar}/bin/polybar";
     }
   ];
-  services.polybar = {
-    enable = true;
-    script = "polybar &";
-    package = polybar;
-  };
-  systemd.user.services.polybar = {
-    # Install.WantedBy = ["graphical-session.target"];
-    Service = {
-      Restart = lib.mkForce "always";
-      RestartSec = 3;
-    };
-  };
+  # services.polybar = {
+  #   enable = false;
+  #   script = "polybar &";
+  #   package = polybar;
+  # };
+  # systemd.user.services.polybar = {
+  #   # Install.WantedBy = ["graphical-session.target"];
+  #   Service = {
+  #     Restart = lib.mkForce "always";
+  #     RestartSec = 3;
+  #   };
+  # };
 }
