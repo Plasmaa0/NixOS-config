@@ -12,7 +12,7 @@
   home.packages = with pkgs; [
     networkmanagerapplet
     upower
-    xorg.xbacklight
+    xbacklight
     brightnessctl
     feh
     arandr
@@ -33,6 +33,7 @@
     heroic
     kdePackages.dolphin
     pandoc
+    simple-scan
     tealdeer # a very fast version of tldr
     # cider
     # i3wsr # i3 workspace names
