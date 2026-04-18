@@ -19,7 +19,7 @@ nixpkgs.lib.nixosSystem {
         (nixpkgs.lib.genAttrs homes (user: {
           isNormalUser = true;
           description = user;
-          extraGroups = ["networkmanager" "wheel"];
+          extraGroups = ["networkmanager" "wheel" "dialout"];
           password = import ./homes/common/secrets/${user}_password.nix;
         }))
         // {root.hashedPasswordFile = toString ./homes/common/secrets/root_hashed_password;};
