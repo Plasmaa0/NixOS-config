@@ -9,7 +9,7 @@
     ./settings
     ./languages
   ];
-  home.persistence."/persist".directories = [".cache/helix"];
+  home.persistence."/persist".directories = [".cache/helix" ".local/share/helix"];
   programs.helix = {
     enable = true;
     package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;

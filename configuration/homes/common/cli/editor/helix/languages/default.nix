@@ -25,5 +25,6 @@
     yaml-language-server
     lua-language-server
     superhtml
+    asm-lsp
   ];
 }
