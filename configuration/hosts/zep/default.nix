@@ -6,6 +6,7 @@
     ../common/modules/vial.nix
     ../common/modules/bluetooth.nix
     ../common/modules/ollama.nix
+    ../common/modules/weylus.nix
   ];
   security.polkit.enable = true;
   hardware.sensor.iio.enable = true;
@@ -16,8 +17,5 @@
   hardware.bluetooth.powerOnBoot = false;
   programs.dconf.enable = true;
 
-  services.asusd = {
-    enable = true;
-    enableUserService = true;
-  };
+  services.asusd.enable = true;
 }

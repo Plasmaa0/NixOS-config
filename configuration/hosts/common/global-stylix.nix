@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  theme = import ./../../themes/dark/gruvbox.nix;
+  theme = import ./../../themes/light/bliss.nix;
   recolor = false;
   gowall-recolored-wallpaper = pkgs.callPackage ./modules/gowall-recolor-wallpaper.nix {
     colorsList = config.lib.stylix.colors.withHashtag.toList;
@@ -22,6 +22,7 @@ in {
     autoEnable = true;
     image = wallpaper-path;
     targets = {
+      qt.enable = false;
       plymouth.enable = false;
     };
     imageScalingMode = "fill";

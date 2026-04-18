@@ -27,7 +27,7 @@ in {
       }
       {
         delay = min 1;
-        command = "${pkgs.xorg.xset}/bin/xset dpms force off"; # screen off
+        command = "${pkgs.xset}/bin/xset dpms force off"; # screen off
       }
       {
         delay = min (sleepTimeout - lockTimeout - 1);

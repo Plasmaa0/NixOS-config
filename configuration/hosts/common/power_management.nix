@@ -14,7 +14,7 @@
       Option "OffTime" "0"
     '';
   };
-  systemd.sleep.extraConfig = ''HibernateDelaySec=30min''; # time after when pc will hibernate when using systemctl suspend-then-hibernate
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "1h"; # time after when pc will hibernate when using systemctl suspend-then-hibernate
   services.logind.settings.Login = {
     HandlePowerKey = "suspend";
     HandleLidSwitch = "suspend";
