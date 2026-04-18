@@ -148,7 +148,7 @@ in {
           "${mod}+b" = "exec eww open --toggle bar";
           "${mod}+q" = "kill; exec --no-startup-id ${mouse_to_focused}";
           "${mod}+Shift+Return" = "exec ~/.config/rofi/launchers/type-2/launcher.sh";
-          "${mod}+Shift+XF86Assistant" = "exec ~/Documents/todo/run.sh";
+          "${mod}+Shift+XF86Assistant" = "exec kitty -e ~/Documents/todo/run.sh";
           "${mod}+a" = "focus left; exec --no-startup-id ${mouse_to_focused}";
           "${mod}+s" = "focus down; exec --no-startup-id ${mouse_to_focused}";
           "${mod}+w" = "focus up; exec --no-startup-id ${mouse_to_focused}";

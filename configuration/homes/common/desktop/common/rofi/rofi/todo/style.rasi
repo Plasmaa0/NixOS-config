@@ -113,7 +113,7 @@ error-message {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       2;
+    lines:                       3;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -121,7 +121,7 @@ listview {
     reverse:                     false;
     fixed-height:                true;
     fixed-columns:               true;
-    
+
     spacing:                     0.3em;
     margin:                      0px;
     padding:                     0px;
