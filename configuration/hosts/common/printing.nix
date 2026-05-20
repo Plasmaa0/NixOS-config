@@ -17,6 +17,7 @@
     };
     printing = {
       enable = true;
+      openFirewall = true;
       drivers = [pkgs.hplip];
       startWhenNeeded = true;
       defaultShared = true;
