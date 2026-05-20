@@ -7,33 +7,11 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
+    environmentVariables = {
+      OLLAMA_CONTEXT_LENGTH = "262144";
+    };
     # Optional: preload models, see https://ollama.com/library
     loadModels = [
-      # big boys
-      "deepseek-coder:6.7b"
-      "deepseek-r1"
-      "qwen3-coder"
-
-      # small
-      "granite4:350m"
-      "granite4:3b"
-
-      # visual
-      "gemma3:12b"
-      "llama3.2-vision:11b"
-      "llava:latest"
-
-      # specific
-      #    maths
-      "mathstral"
-      "falcon3:7b-instruct-q8_0"
-      #    code
-      "codellama"
-      "codegemma:7b"
-      "codegemma:2b"
-      "codegemma:instruct"
-      "codegemma:code"
-      "stable-code"
     ];
     home = "/persist/data/ollama";
   };
