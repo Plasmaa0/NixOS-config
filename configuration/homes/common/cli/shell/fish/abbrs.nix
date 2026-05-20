@@ -10,7 +10,7 @@
     olp = "ollama ps";
     olP = "ollama pull";
     ols = "ollama stop";
-    icat = "wezterm imgcat";
+    icat = "kitten icat";
     gd = "git diff --color | diff-so-fancy";
     gD = "git diff --color | diffnav";
     glg = "git log --graph --decorate --oneline";
