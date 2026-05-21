@@ -15,6 +15,11 @@
   home.persistence."/persist" = {
     directories = [
       {
+        # intent was to make ALL users have ~/data, but its currently not possible
+        # wait for https://github.com/nix-community/impermanence/pull/309 to be merged
+        # until then it just mounts /persist/data to /data (not intended ~/data)
+        # currently solved via home.activation script that creates symlink from /data to $HOME/data
+        # see below
         directory = "data";
         home = lib.mkForce null;
       }
@@ -43,6 +48,9 @@
       # ".steampid"
     ];
   };
+  home.activation.symlink_persist_data = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    run ln -s /data $HOME/data
+  '';
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
