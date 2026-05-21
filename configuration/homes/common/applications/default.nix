@@ -2,6 +2,7 @@
   imports = [
     ./mime.nix
     ./browser/qutebrowser.nix
+    ./browser/helium.nix
     ./social/telegram.nix
     ./music/cassette.nix
     ./music/yandex-music.nix

@@ -18,4 +18,5 @@
   programs.dconf.enable = true;
 
   services.asusd.enable = true;
+  environment.persistence."/persist".directories = ["/etc/asusd"];
 }
