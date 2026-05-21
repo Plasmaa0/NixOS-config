@@ -1,6 +1,6 @@
 {lib, ...}: {
   services.picom = {
-    enable = true;
+    enable = false;
     # fully override default config (with lib.mkOptionDefault options that exist in default config, but not provided here will still remain defined)
     settings = lib.mkForce {
       #################################
