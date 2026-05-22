@@ -6,26 +6,26 @@
 }: let
   inherit (lib) mkForce;
 in {
-  home.sessionVariables.BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
-  home.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
+  # home.sessionVariables.BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
+  # home.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
   home.persistence."/persist".directories = [
     ".local/share/qutebrowser"
     ".cache/qutebrowser"
     ".config/qutebrowser/bookmarks"
   ];
-  mime.list = [
-    {
-      mimeTypes = [
-        "text/html"
-        "x-scheme-handler/http"
-        "x-scheme-handler/https"
-        "x-scheme-handler/about"
-        "x-scheme-handler/unknown"
-        "application/xhtml+xml"
-      ];
-      handler = "org.qutebrowser.qutebrowser.desktop";
-    }
-  ];
+  # mime.list = [
+  #   {
+  #     mimeTypes = [
+  #       "text/html"
+  #       "x-scheme-handler/http"
+  #       "x-scheme-handler/https"
+  #       "x-scheme-handler/about"
+  #       "x-scheme-handler/unknown"
+  #       "application/xhtml+xml"
+  #     ];
+  #     handler = "org.qutebrowser.qutebrowser.desktop";
+  #   }
+  # ];
 
   home.sessionVariables = {
     PASSWORD_STORE_DIR = "$HOME/.password-store";

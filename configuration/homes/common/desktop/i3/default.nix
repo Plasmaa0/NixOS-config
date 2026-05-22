@@ -195,7 +195,7 @@ in {
       };
       launch = {
         "t" = "exec ${lib.getExe pkgs.telegram-desktop}";
-        "q" = "exec qutebrowser";
+        "q" = "exec helium";
         "m" = "exec yandex-music";
         "e" = "exec dolphin";
         "F9" = "exec autorandr --batch --change --default default";
