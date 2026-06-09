@@ -31,6 +31,7 @@
     ./global-stylix.nix
     inputs.home-manager.nixosModules.home-manager
   ];
+  programs.fish.useBabelfish = true;
   programs.i3lock.enable = true;
   nixpkgs.config = {
     allowUnfree = true;
