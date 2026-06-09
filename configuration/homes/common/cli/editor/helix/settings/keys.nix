@@ -21,6 +21,10 @@
         # "C-<" = "rotate_selection_contents_backward";
         A-j = ["search_selection" "extend_search_next"];
         A-w = ":toggle soft-wrap.enable";
+        A-q = {
+          Q = "@\"%<space>/<ret><home>[^\\x00-\\x7F\\x{0400}-\\x{04FF}] %p "; # picker with all non-ASCII|Cyrillic charactes in current file = AI detector
+          q = "@%s[^\\x00-\\x7F\\x{0400}-\\x{04FF}]<ret>"; # select all non-ASCII|Cyrillic charactes in current file
+        };
         C-q = ":bc";
         C-A-l = ":format";
         Y = ":clipboard-yank";
