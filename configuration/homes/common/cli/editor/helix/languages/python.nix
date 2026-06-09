@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   programs.helix = {
     extraPackages = with pkgs; [
-      python312Packages.python-lsp-server
       black
       mypy
       ruff
@@ -12,7 +11,7 @@
         {
           name = "python";
           auto-format = true;
-          language-servers = ["ruff" "pylsp"];
+          language-servers = ["ruff"];
           indent = {
             tab-width = 4;
             unit = "    ";
