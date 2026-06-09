@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   imports = [
@@ -44,22 +45,26 @@
 
     powerManagement = {
       # This is unreliable on the 4060;  works a few times, then hangs:
-      enable = false;
-      finegrained = false;
+      enable = true;
+      finegrained = true;
     };
 
     modesetting.enable = true;
-    open = true;
-    # open = let
-    #   nvidiaPackage = config.hardware.nvidia.package;
-    # in
-    #   lib.mkOverride 990 (nvidiaPackage ? open && nvidiaPackage ? firmware);
+    # open = false;
+    open = let
+      nvidiaPackage = config.hardware.nvidia.package;
+    in
+      lib.mkOverride 990 (nvidiaPackage ? open && nvidiaPackage ? firmware);
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   services.acpid.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [mesa libglvnd libGL libGLX];
+  };
 
   specialisation = {
     powersave = {
