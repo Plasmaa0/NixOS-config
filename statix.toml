@@ -2,6 +2,6 @@ disabled = [
   "repeated_keys",
   "empty_pattern"
 ]
-nix_version = '2.4'
+nix_version = '2.34'
 ignore = ['.direnv']
 
