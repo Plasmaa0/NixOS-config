@@ -116,11 +116,7 @@
       manager.prepend_keymap = let
         echo = "${pkgs.coreutils}/bin/echo";
         realpath = "${pkgs.coreutils}/bin/realpath";
-        dirname = "${pkgs.coreutils}/bin/dirname";
-        cp = "${pkgs.coreutils}/bin/cp";
-        xargs = "${pkgs.findutils}/bin/xargs";
         xclip = "${pkgs.xclip}/bin/xclip";
-        dragon = "${pkgs.dragon-drop}/bin/dragon-drop";
       in [
         {
           on = "u";
@@ -146,22 +142,6 @@
           on = "T";
           run = "plugin max-preview";
           desc = "Maximize or restore preview";
-        }
-        {
-          desc = "drag&drop FROM yazi. Popup from current selection.";
-          on = ["<C-o>"];
-          run = ''shell '${dragon} -A -x -T "$@"' '';
-        }
-        {
-          desc = "drag&drop TO yazi current directory";
-          on = ["<C-i>"];
-          run = let
-            files = ''"$(${dragon} -t -p -k -T -x)"'';
-            destination = ''"$(${realpath} "$0" | ${xargs} ${dirname})"''; #yazi cursor is always hovering directory or file so dirname(realpath($0)) will be current directory
-            getfiles = ''${cp} ${files} ${destination}'';
-          in [
-            ''shell '${getfiles} 2> /dev/null' ''
-          ];
         }
         {
           desc = "yank current selection in system clipboard";
