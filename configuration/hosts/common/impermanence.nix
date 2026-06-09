@@ -36,6 +36,7 @@
           "/etc/ssh"
           "/root"
           "/nix"
+          "/etc/nix"
           {
             directory = /var/lib/alsa;
             user = "root";
