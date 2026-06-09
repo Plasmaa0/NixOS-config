@@ -6,7 +6,7 @@
   # https://github.com/SilasMarvin/lsp-ai https://www.reddit.com/r/HelixEditor/comments/1icazgu/how_did_you_configure_it_for_ai/
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;
+    package = pkgs.ollama-vulkan;
     environmentVariables = {
       OLLAMA_CONTEXT_LENGTH = "262144";
     };
