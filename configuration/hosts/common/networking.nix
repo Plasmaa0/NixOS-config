@@ -9,8 +9,8 @@
     ];
   };
   programs.openvpn3.enable = true;
-  services.v2raya.enable = true;
-  environment.persistence."/persist" = {
-    directories = ["/etc/v2raya"];
+  programs.throne = {
+    enable = true;
+    tunMode.enable = true;
   };
 }
