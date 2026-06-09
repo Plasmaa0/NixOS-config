@@ -7,7 +7,6 @@
 }: let
   themePkg = config.gtk.iconTheme.package;
   icons_path = "${builtins.unsafeDiscardStringContext themePkg}/share/icons/${builtins.unsafeDiscardStringContext config.gtk.iconTheme.name}/128x128";
-  symbolic_icons_path = "${builtins.unsafeDiscardStringContext themePkg}/share/icons/${builtins.unsafeDiscardStringContext config.gtk.iconTheme.name}/symbolic";
   reloadScript = ''
     ${pkgs.procps}/bin/pkill dunst || true
     ${pkgs.libnotify}/bin/notify-send -u low "Dunst" "Dunst reloaded" || true
@@ -253,8 +252,6 @@ in {
       # Scale larger icons down to this size, set to 0 to disable
       max_icon_size = 64;
       icon_corner_radius = 5;
-
-      icon_path = "${symbolic_icons_path}/status/:${icons_path}/devices/:${icons_path}/apps/";
 
       history_length = 20;
       sticky_history = "true";
