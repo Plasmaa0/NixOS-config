@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  lib,
+  # lib,
   ...
 }: let
   polybar = pkgs.polybar.override {
