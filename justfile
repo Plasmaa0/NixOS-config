@@ -117,8 +117,8 @@ backupFile := "flake_$(date '+%d-%m-%Y_%H-%M-%S').lock"
 [group('util')]
 @gc:
     echo "{{ BOLD + RED }}Cleaning garbage{{ NORMAL }}"
-    sudo nix-collect-garbage --delete-older-than 5d
-    nix-collect-garbage
+    sudo nix-collect-garbage -d -j $(nproc --all)
+    sudo /run/current-system/bin/switch-to-configuration boot
 
 # Count lines of code
 [group('util')]
