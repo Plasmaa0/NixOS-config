@@ -49,7 +49,7 @@
     ];
   };
   home.activation.symlink_persist_data = lib.hm.dag.entryAfter ["linkGeneration"] ''
-    run ln -s /data $HOME/data
+    run ln -s /data $HOME/data || true
   '';
 
   # This value determines the Home Manager release that your configuration is
