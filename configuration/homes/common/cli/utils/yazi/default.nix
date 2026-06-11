@@ -25,6 +25,7 @@
   home.persistence."/persist".directories = [".local/share/Trash"];
   programs.yazi = {
     enable = true;
+    shellWrapperName = "yy";
     package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;
     settings = {
       manager = {
