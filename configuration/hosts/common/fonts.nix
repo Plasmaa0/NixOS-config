@@ -18,16 +18,17 @@
       droid-sans-mono
       jetbrains-mono
       fantasque-sans-mono
+      lilex
     ]);
-  # see also nix_modules/stylix.nix
+  # see also configuration/hosts/common/global-stylix.nix
   fonts = {
     enableGhostscriptFonts = true;
     fontconfig = {
       defaultFonts = {
         emoji = ["Noto Color Emoji" "OpenMoji Color"];
         serif = ["IosevkaTermSlab Nerd Font"];
-        sansSerif = ["Iosevka Nerd Font"];
-        monospace = ["IosevkaTerm Nerd Font"];
+        sansSerif = ["Lilex Nerd Font Propo"];
+        monospace = ["Lilex Nerd Font Mono"];
       };
     };
   };

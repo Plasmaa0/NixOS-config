@@ -38,12 +38,12 @@ in {
         name = "IosevkaTermSlab Nerd Font";
       };
       sansSerif = {
-        package = pkgs.nerd-fonts.iosevka;
-        name = "Iosevka Nerd Font";
+        package = pkgs.nerd-fonts.lilex;
+        name = "Lilex Nerd Font Propo";
       };
       monospace = {
-        package = pkgs.nerd-fonts.iosevka-term;
-        name = "IosevkaTerm Nerd Font";
+        package = pkgs.nerd-fonts.lilex;
+        name = "Lilex Nerd Font Mono";
       };
       emoji = {
         package = pkgs.noto-fonts-color-emoji;
