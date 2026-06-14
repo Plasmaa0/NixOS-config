@@ -1,5 +1,12 @@
 {lib, ...}: {
-  programs.helix.settings.keys = {
+  programs.helix.settings.keys = let
+    disable_arrow_keys = {
+      up = "no_op";
+      down = "no_op";
+      left = "no_op";
+      right = "no_op";
+    };
+  in {
     normal = let
       # map cycyrillic keys to english using helix macro feature
       # example:
@@ -42,9 +49,12 @@
         D = ["ensure_selections_forward" "extend_to_line_end"];
         g = {b = ":sh echo %sh{git show --no-patch --format='%%h \\(%%an: %%ar\\): %%s' $(git blame -p %{buffer_name} -L%{cursor_line},+1 | head -1 | cut -d' ' -f1)}";};
       }
+      // disable_arrow_keys
       // cyrillicToEnglishKeymap;
-    insert = {
-      C-space = "signature_help";
-    };
+    insert =
+      {
+        C-space = "signature_help";
+      }
+      // disable_arrow_keys;
   };
 }

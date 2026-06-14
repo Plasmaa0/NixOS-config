@@ -6,6 +6,7 @@
     color-modes = true;
     rulers = [100];
     scrolloff = 15;
+    scroll-lines = 1;
     auto-info = true;
     bufferline = "multiple";
     gutters = ["diagnostics" "spacer" "line-numbers" "spacer" "diff"];
@@ -24,7 +25,10 @@
       display-color-swatches = true;
       auto-signature-help = false;
     };
-    jump-label-alphabet = "asdfqwerzxcvjklmiuopghtybn";
+    idle-timeout = 50;
+    completion-timeout = 10;
+    completion-trigger-len = 1;
+    jump-label-alphabet = "jfkdls;aurieowpqnvmcxz";
     cursor-shape = {
       insert = "bar";
       normal = "block";
@@ -54,18 +58,16 @@
         "mode"
         "file-modification-indicator"
         "read-only-indicator"
-      ];
-      center = [
-        "version-control"
-        sep
-        "file-name"
-      ];
-      right = [
         "diagnostics"
         sep
         "workspace-diagnostics"
-        sp
-
+      ];
+      center = [
+        "file-name"
+        sep
+        "version-control"
+      ];
+      right = [
         "selections"
         sp
 
@@ -78,7 +80,7 @@
         "file-line-ending"
         "file-type"
       ];
-      separator = " ";
+      separator = "  ";
       mode.normal = "N 󰅨";
       mode.insert = "I 󰏪";
       mode.select = "S 󰒉";
