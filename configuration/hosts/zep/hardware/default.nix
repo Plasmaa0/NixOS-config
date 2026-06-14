@@ -56,7 +56,7 @@
     in
       lib.mkOverride 990 (nvidiaPackage ? open && nvidiaPackage ? firmware);
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   services.acpid.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
