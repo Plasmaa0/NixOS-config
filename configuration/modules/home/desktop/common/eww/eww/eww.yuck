@@ -1,0 +1,699 @@
+;;---------- Widgets ----------;;
+
+;; Volume vars
+; (defpoll volume_icon :interval "1s" "scripts/Volume --icon")
+(deflisten volume_value :initial "0" "scripts/Volume --vol")
+
+;; Brightness
+(defpoll brightness_value :initial "0" :interval "1s"                        
+    `brightnessctl -d amdgpu_bl1 -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%' &`
+  )
+
+;; Time left to discharge
+(defpoll discharge_time :interval "10s"
+	`upower -i $(upower -e | grep battery) | grep "time to" | awk '{split($0,a,":"); print a[2]}' | xargs`
+)
+
+;; Music vars
+(defpoll SONG 	:interval "3s" "scripts/playerctl.sh --title")
+(defpoll ARTIST :interval "3s" "scripts/playerctl.sh --artist")
+(defpoll COVER 	:interval "3s" "scripts/playerctl.sh --cover")
+(defpoll STATUS :interval "3s" "scripts/playerctl.sh --status")
+
+;; Network
+; (defpoll WIFIICON :interval "15s" "scripts/Network --icon")
+; (defpoll NETSTAT  :interval "15s" "scripts/Network --stat")
+
+;; User
+; (defvar IMAGE "images/plasma-ball.png")
+; (defpoll USER :interval "10h" "whoami")
+
+;; Workspaces
+(deflisten active-workspace "scripts/getactivews")
+(deflisten urgent-workspace "scripts/geturgentws")
+(deflisten resize-mode "scripts/getresizemode")
+(deflisten focused-workspace "scripts/getfocusedws")
+
+;; Language
+; (defvar en_reveal true)
+; (defvar ru_reveal false)
+(deflisten lang_script :initial "en" "scripts/lang_check.sh")
+
+;; Notifications
+(deflisten notifications-cards "~/.config/dunst/logger.sh subscribe")
+; (defpoll notifications-cards :interval "1s" "~/.config/dunst/logger.sh get")
+(defpoll notifications-crits :interval "3s" "~/.config/dunst/logger.sh crits")
+(defpoll notifications-norms :interval "3s" "~/.config/dunst/logger.sh norms")
+(defpoll notifications-lows  :interval "3s" "~/.config/dunst/logger.sh lows")
+(defpoll notifications-total :interval "1s" :initial "0" "~/.config/dunst/logger.sh total")
+
+;;---------- Widgets ----------;;
+
+(defvar notification_count_show false)
+;; Launcher ;;
+(defwidget launcher []
+	(box :class "mainbars"
+			(box
+					:space-evenly false
+				(box :style "background-image: url('images/NixOS.png');"
+					    :class "icons"
+					    :valign "center"
+					)
+		 (
+			eventbox :cursor "pointer"
+					    :onclick "${EWW_CMD} open --toggle nc"
+							:onhover "${EWW_CMD} update notification_count_show=true"
+					    :onhoverlost "${EWW_CMD} update notification_count_show=false"
+					    :tooltip "Notifications"
+				(box :space-evenly false
+				(revealer :transition "slideleft" :duration "750ms" :reveal notification_count_show
+				(label :text "Total:" :class "notification-infotext"))
+				(label :text "🔔${notifications-total}" 
+						:halign "center"
+						:valign "center"
+				:class "infotext notification-badge")
+				(revealer :transition "slideright" :duration "550ms" :reveal notification_count_show
+				(label :text " Critical:" :class "notification-infotext"))
+				(revealer :transition "slideleft" :duration "550ms" :reveal notification_count_show
+				(label :text "🚨${notifications-crits}" 
+						:halign "center"
+						:valign "center"
+				:class "infotext notification-badge notification-crits" :tooltip "Notifications")
+				)
+				(revealer :transition "slideright" :duration "700ms" :reveal notification_count_show
+				(label :text " Normal:" :class "notification-infotext"))
+				(revealer :transition "slideleft" :duration "700ms" :reveal notification_count_show
+				(label :text "💡${notifications-norms}" 
+						:halign "center"
+						:valign "center"
+				:class "infotext notification-badge notification-norms" :tooltip "Notifications"))
+				(revealer :transition "slideright" :duration "800ms" :reveal notification_count_show
+				(label :text " Low:" :class "notification-infotext"))
+				(revealer :transition "slideleft" :duration "800ms" :reveal notification_count_show
+				(label :text "ⓘ${notifications-lows}" 
+						:halign "center"
+						:valign "center"
+				:class "infotext notification-badge notification-lows" :tooltip "Notifications"))
+				)
+			)
+		 )
+	)
+)
+
+(defwidget notification-card [?class summary body image ?SL ?M ?L ?R application]
+  (eventbox :onmiddleclick M
+    :onclick L
+    :onrightclick R
+    :class "notification-card-eventbox ${class}"
+    (box :space-evenly false :orientation "v" :class "notification-card-surround ${class}"
+      (box :space-evenly "true" :orientation "h" :class "notification-card-header-box"
+          (label :class "${class} notification-app-name" :text "${application}" :halign "start")
+          (button :onclick "~/.config/dunst/logger.sh rm_id ${SL}"
+          :class "notification-card-notify-close" :halign "end"
+          (label :text "󰅙 " :xalign "0.5" :tooltip "Remove this notification.")))
+      (box :space-evenly "false" :orientation "h"
+      ; (box :class "notification-image" :style "background-image: url(\"${image}\");")
+			(image
+				:path image
+				:image-width 50
+				:image-height 50
+				; :icon image
+				; :icon-size "dialog"
+			)
+      (box :orientation "vertical"
+        :class "${class}"
+        :space-evenly false
+        :class "notification-card-box"
+      
+        (box :space-evenly false
+          (label
+            :wrap true
+            :text summary
+            :class "notification-summary ${class}"
+            :halign "start"
+          :hexpand true))
+        (label
+          :wrap true
+          :text body
+          :halign "start"
+        :class "notification-body ${class}"))))))
+
+(defwidget notification-center []
+	(box :class "notifications-box" :space-evenly "false" :orientation "v"
+    (box :orientation "v"
+      :space-evenly "false"
+      :class "notification-layout-box"
+      (box :space-evenly "false"
+        :class "notification-headers"
+        (label :text "${notifications-total} Notifications"
+          :class "notification-headers-label"
+          :halign "center"
+				)
+			)
+      (literal :content notifications-cards :class "notification-literal")
+			; (scroll :height 600 :vscroll true (box :orientation "vertical" :class "notification-scroll-box" :spacing 20 :space-evenly false  
+			; (notification-card :class "notification-card notification-card-LOW notification-card-notify-send" :SL "82" :L "dunstctl history-pop 82" :body "low test 3" :summary "Test message" :image "/nix/store/is6p4kj6pnrns9k99gwkjbm3dbahm95b-papirus-icon-theme-20240501/share/icons/Papirus-Dark/128x128/apps/telegram.svg" :application "notify-send")  
+			; (notification-card :class "notification-card notification-card-NORMAL notification-card-notify-send" :SL "81" :L "dunstctl history-pop 81" :body "normal test 2" :summary "Test message" :image "/nix/store/is6p4kj6pnrns9k99gwkjbm3dbahm95b-papirus-icon-theme-20240501/share/icons/Papirus-Dark/128x128/apps/telegram.svg" :application "notify-send")  
+			; (notification-card :class "notification-card notification-card-CRITICAL notification-card-notify-send" :SL "80" :L "dunstctl history-pop 80" :body "critical test 1" :summary "Test message" :image "/nix/store/is6p4kj6pnrns9k99gwkjbm3dbahm95b-papirus-icon-theme-20240501/share/icons/Papirus-Dark/128x128/apps/telegram.svg" :application "notify-send") ))
+
+      (button :onclick "~/.config/dunst/logger.sh clear" :halign "end" :class "notification-headers-clear" "Clear All" )
+		)
+	)
+)
+
+;; Workspaces Widgets ;;
+(defwidget resize-indicator []
+	(revealer :transition "slideright" :duration "450ms" :reveal {resize-mode=="1"}
+	(box
+    :class "resize-indicator mainbars"
+    :orientation "h"
+		:space-evenly false
+    :halign "start"
+	  (label :class "resize-indicator infotext"
+	  :halign "start"
+	  :valign "center"
+	  :text "RESIZE 󰘖")
+		))
+)
+(defwidget workspaces [active-workspace focused-workspace urgent-workspace]
+	(box
+    :class "mainbars workspaces"
+    :orientation "h"
+		:space-evenly false
+    :halign "start"
+    
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "1\\b"))+arraylength(search(urgent-workspace, "1\\b"))+arraylength(search(active-workspace, "1\\b"))>0}
+		(button
+    :class {
+      arraylength(search(focused-workspace, "1\\b")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "1\\b")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "1\\b")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 1" 1))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "2"))+arraylength(search(urgent-workspace, "2"))+arraylength(search(active-workspace, "2"))>0}
+    (button  
+    :class {
+      arraylength(search(focused-workspace, "2")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "2")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "2")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 2" 2))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "3"))+arraylength(search(urgent-workspace, "3"))+arraylength(search(active-workspace, "3"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "3")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "3")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "3")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 3" 3))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "4"))+arraylength(search(urgent-workspace, "4"))+arraylength(search(active-workspace, "4"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "4")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "4")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "4")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 4" 4))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "5"))+arraylength(search(urgent-workspace, "5"))+arraylength(search(active-workspace, "5"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "5")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "5")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "5")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 5" 5))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "6"))+arraylength(search(urgent-workspace, "6"))+arraylength(search(active-workspace, "6"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "6")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "6")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "6")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 6" 6))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "7"))+arraylength(search(urgent-workspace, "7"))+arraylength(search(active-workspace, "7"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "7")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "7")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "7")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 7" 7))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "8"))+arraylength(search(urgent-workspace, "8"))+arraylength(search(active-workspace, "8"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "8")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "8")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "8")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 8" 8))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "9"))+arraylength(search(urgent-workspace, "9"))+arraylength(search(active-workspace, "9"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "9")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "9")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "9")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 9" 9))
+
+		(revealer :transition "slideleft" :duration "450ms"
+		:reveal {arraylength(search(focused-workspace, "10"))+arraylength(search(urgent-workspace, "10"))+arraylength(search(active-workspace, "10"))>0}
+    (button
+    :class {
+      arraylength(search(focused-workspace, "10")) > 0 ? "focused-workspace" : 
+      arraylength(search(urgent-workspace, "10")) > 0 ? "urgent-workspace" : 
+      arraylength(search(active-workspace, "10")) > 0 ? "active-workspace" : 
+      "regular"
+    }
+    :onclick "i3-msg workspace 10" "X"))
+  )
+)
+
+(defvar battery_status_show false)
+;; Battery ;;
+(defwidget battery [capacity status eleventy twenty thirty fourty
+	fifty sixty seventy eighty ninety full charge]
+	(eventbox 
+		:onhover "${EWW_CMD} update battery_status_show=true"
+    :onhoverlost "${EWW_CMD} update battery_status_show=false"
+(box :space-evenly false :spacing 2
+(label :class "battery-emoji" :text {(status == 'Charging' ? charge :
+capacity < 10 ? eleventy :
+capacity < 20 ? twenty :
+capacity < 30 ? thirty :
+capacity < 40 ? fourty :
+capacity < 50 ? fifty :
+capacity < 60 ? sixty :
+  capacity < 70 ? seventy :
+	capacity < 80 ? eighty :
+	  capacity < 90 ? ninety : full)})
+	  (label :class "infotext"
+	  :halign "start"
+	  :valign "center"
+	  :text "${capacity}%")
+(revealer :reveal battery_status_show :transition "slideleft" :duration "450ms"
+(label :class "infotext"
+	  :halign "end"
+	  :valign "center"
+	  :text "${status}. ${discharge_time} left")
+		)
+		)))
+
+;; Apps ;;
+(defwidget apps []
+	(box :class "mainbars"
+		 :spacing 15
+			(eventbox :cursor "pointer"
+			(button :style "background-image: url('images/zombie.png');"
+					:class "icons"
+					:valign "center"
+					:onclick "OpenApps --fetch &"))
+
+			(eventbox :cursor "pointer"
+			(button :style "background-image: url('images/terminal.png');"
+					:class "icons"
+					:valign "center"
+					:onclick "cd ; OpenApps --terminal &"))
+
+			(eventbox :cursor "pointer"
+			(button :style "background-image: url('images/firefox.png');"
+					:class "icons"
+					:valign "center"
+					:onclick "OpenApps --browser &"))
+
+			(eventbox :cursor "pointer"
+			(button :style "background-image: url('images/files.png');"
+					:class "icons"
+					:valign "center"
+					:onclick "cd ; OpenApps --filemanager &"))
+
+			(eventbox :cursor "pointer"
+			(button :style "background-image: url('images/notes.png');"
+					:class "icons"
+					:valign "center"
+					:onclick "OpenApps --editor &"))
+
+			(eventbox :cursor "pointer"
+			(button :style "background-image: url('images/telegram.png');"
+					:class "icons"
+					:valign "center"
+					:onclick "OpenApps --telegram &"))
+	)
+)
+
+;; Music Control ;;
+(defwidget music []
+	(revealer :reveal {STATUS=="Playing"} :transition "slideleft" :duration "450ms"
+	(box :class "mainbars"
+		 :spacing 10
+		 :space-evenly false
+		 (box :class "album_art"
+			  :valign "center"
+			  :halign "start"
+			  :style "background-image: url('${COVER}');")
+
+			(box :orientation "v"
+				:class "song-info"
+				:spacing 0
+				:valign "center"
+
+					(label :class "song"
+						:xalign 0
+						:justify "fill"
+						:wrap "false"
+						:limit-width 18
+						:text SONG)
+
+					(label :class "artist"
+						:xalign 0
+						:justify "fill"
+						:wrap "false"
+						:limit-width 18
+						:text ARTIST)
+				)
+
+		 (box :spacing 8
+			  :valign "center"
+			  :halign "center"
+			  :space-evenly "false"
+
+			  (eventbox :cursor "pointer"
+				(button :class "player-previous"
+						:onclick "playerctl previous -p playerctld" "󰒮"))
+
+			  (eventbox :cursor "pointer"
+				(button :class "player-toggle"
+						:onclick "playerctl play-pause -p playerctld"
+						{STATUS == "Playing" ? "󰏤" : STATUS == "Paused" ? "󰐊" : "󰓛"}))
+
+			  (eventbox :cursor "pointer"
+				(button :class "player-next"
+						:onclick "playerctl next -p playerctld" "󰒭"))
+		 ))
+	)
+)
+
+;; language
+(defwidget lang []
+	(eventbox
+	  :class "lang"
+	;   :cursor "pointer"
+	  (box
+		  :space-evenly false
+		  :orientation "h"
+		  :halign "center"
+		  ; (label :text "󰥻 ${lang_script}" :tooltip "Language" :class "lang")
+			(revealer :reveal {lang_script=="en"} :transition "slideright" :duration "450ms"
+				(label :text "🇺🇸en" :class "lang-1")
+			)
+			(revealer :reveal {lang_script=="ru"} :transition "slideleft" :duration "450ms"
+				(label :text "🇷🇺ru" :class "lang-2")
+			)
+		)
+		))
+
+(defvar bright_show false)
+(defvar vol_show false)
+;; system
+(defwidget system []
+	(box :class "mainbars"
+		 :spacing 8
+		 :space-evenly "false"
+
+		 (systray
+			:class "systray"
+			:orientation "h"
+			:icon-size 20
+			)
+
+		(lang)
+
+		(eventbox
+				:cursor "pointer"
+				:onclick "arandr &"
+				:tooltip "Brightness. Click to open arandr"
+				:onhover "${EWW_CMD} update bright_show=true"
+        :onhoverlost "${EWW_CMD} update bright_show=false"
+		 (box :orientation "h"
+				:spacing 3
+				:valign "center"
+				:halign "center"
+				:space-evenly "false"
+				(revealer :reveal bright_show :transition "slideleft" :duration "450ms"
+				(scale :min 0 :max 101 :value brightness_value :orientation "h" :flipped true :class "brightness_progress"
+				:onchange "brightnessctl -d amdgpu_bl1 set {}%"
+				)
+				)
+				(revealer :reveal {!bright_show} :transition "slideleft" :duration "250ms"
+				(circular-progress 
+				:class "brightness_progress"
+				:value brightness_value
+				:thickness 10
+				)
+				)
+				(label :class "infotext"
+						:halign "start"
+						:valign "center"
+						:text "${brightness_value}%"
+				)
+			))
+		 
+				(eventbox :cursor "pointer"
+				 :onscroll "scripts/playerctl.sh --volume-{} &"
+				 :tooltip "left click: mute, right click: pavucontrol"
+					:onhover "${EWW_CMD} update vol_show=true"
+	        :onhoverlost "${EWW_CMD} update vol_show=false"
+				:onclick "scripts/Volume --toggle-muted &"
+				:onrightclick "pavucontrol &"
+				(box :orientation "h"
+				:spacing 3
+				:valign "center"
+				:halign "center"
+				:space-evenly "false"
+			  ;   (box :style "background-image: url('${volume_icon}');"
+			  ; 	   :class "icons")
+				(revealer :reveal vol_show :transition "slideleft" :duration "450ms"
+				(scale
+				:min 0
+				:max 101
+				:value volume_value
+				:orientation "h"
+				:flipped true
+				:class "volume_progress"
+				:onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
+				)
+				)
+				(revealer :reveal {!vol_show} :transition "slideleft" :duration "250ms"
+				(circular-progress 
+					  :class "volume_progress"
+					  :value volume_value
+					  :thickness 10
+				))
+				(label :class "infotext"
+					   :halign "start"
+					   :valign "center"
+					   :text "${volume_value}%"
+				)
+	  )
+	   )
+
+		 (battery :status {EWW_BATTERY.BAT1.status}
+            :capacity {EWW_BATTERY.BAT1.capacity}
+            :charge "󰂄" :full "󰁹" :ninety "󰂂" :eighty "󰂁" :seventy "󰂀" :sixty "󰁿" 
+            :fifty "󰁾"  :fourty "󰁽" :thirty "󰁼" :twenty "󰁻" :eleventy "󱃍 ")
+
+		;  (eventbox :cursor "pointer"
+		;  (button :onclick "nm-connection-editor &"
+		; 		 (box :orientation "h"
+		; 			  :spacing 3
+		; 			  :valign "center"
+		; 			  :halign "center"
+		; 			  :space-evenly "false"
+		; 			  (box :style "background-image: url('${WIFIICON}');"
+		; 				   :class "icons")
+		; 			  (label :class "infotext"
+		; 					 :halign "start"
+		; 					 :valign "center"
+		; 					 :text NETSTAT
+		; 			  )
+		; 		 )
+		;  ))
+
+		 ; (eventbox :cursor "pointer" :tooltip "Toggle theme"
+		 ; (button :onclick "toggle-theme &"
+			; 	 (box :orientation "h"
+			; 		  :spacing 3
+			; 		  :valign "center"
+			; 		  :halign "center"
+			; 		  :space-evenly "false"
+			; 		  (box :style "background-image: url('${IMAGE}');"
+			; 			   :class "icons")
+			; 		  ; (label :class "infotext"
+			; 				;  :halign "start"
+			; 				;  :valign "center"
+			; 				;  :text USER
+			; 		  ; )
+			; 	 )
+		 ; ))
+
+		;  (eventbox :cursor "pointer"
+		;  (button :onclick "~/.config/rofi/powermenu/type-2/powermenu.sh &"
+		; 		 (box :orientation "h"
+		; 			  :spacing 3
+		; 			  :valign "center"
+		; 			  :halign "center"
+		; 			  :space-evenly "false"
+		; 			  (box :style "background-image: url('images/poweroff.png');"
+		; 				   :class "icon-power"
+		; 			  )
+		; 		 )
+		;  ))
+	)
+)
+
+(defwidget clock []
+	(box :class "mainbars"
+		 :spacing 15
+		 :space-evenly "false"
+		 (eventbox 
+			:cursor "pointer"
+			:tooltip "Open calendar"
+			:onhover "${EWW_CMD} open calendar"
+	    :onhoverlost "${EWW_CMD} close calendar"
+		 (button :onclick "${EWW_CMD} open --toggle calendar"
+		 (box :orientation "h"
+					:spacing 2
+					:space-evenly true
+					:valign "center"
+			  ; :halign "start"
+			(label :class "time" :halign "start" :valign "center" :text {formattime(EWW_TIME, "%H:%M:%S")})
+			(label :class "date" :halign "end" :valign "center" :text {formattime(EWW_TIME, "%d-%m-%Y")})
+		 )))
+	)
+)
+
+
+;;---------- Bar Widgets ----------;;
+
+(defwidget left []
+	(box :halign "start"
+	     :spacing 15
+		 :halign "start"
+	     :valign "center"
+		 :space-evenly "false"
+(launcher)
+(workspaces 
+	:active-workspace active-workspace
+	:focused-workspace focused-workspace
+	:urgent-workspace urgent-workspace)
+(resize-indicator)
+; (apps)
+))
+
+
+(defwidget middle []
+	(box :halign "center"
+		 :valign "center"
+		 :spacing 15
+		 :space-evenly false
+(clock)))
+
+(defwidget right []
+	(box :space-evenly false
+		 :spacing 15
+		 :halign "end"
+		 :valign "center"
+(music)
+(system)
+))
+
+; (defwidget left_middle []
+; 	(box 
+; 		 :space-evenly false
+; 		 :spacing 15
+; 		 :halign "center"
+; 		 :valign "center"
+
+; (left)
+; (middle)
+; ))
+
+(defwidget allbars []
+	(centerbox :class "allbars"
+		 ; :space-evenly false
+		 ; :spacing 15
+		 ; :halign "center"
+		 ; :valign "center"
+			:orientation "h"
+(left)
+(middle)
+(right)
+))
+
+
+
+;;---------- Main windows ----------;;
+
+(defwindow bar
+	:geometry (geometry :y "0px"
+						:width "100%"
+						:anchor "top center")
+	:class "bar"
+	:stacking "fg"
+	:halign "center"
+	:valign "center"
+	:reserve (struts :distance "3px" :side "top")
+	:windowtype "dock"
+	:wm-ignore false
+(allbars))
+
+(defwindow nc
+	:windowtype "normal"
+  :wm-ignore true
+	:halign "center"
+  :geometry (geometry :anchor "top left" :y "5%" :x "5%")
+(notification-center)
+)
+
+(defwidget calendar_indicator []
+    (box :orientation "v" :space-evenly false :class "calendar-box" 
+      (label :class "label-calendar" :text "Calendar")
+      (calendar :class "calendar-indicator"               
+              :day {formattime(EWW_TIME, "%d")}
+              :month {formattime(EWW_TIME, "%m")}
+              :year {formattime(EWW_TIME, "%Y")}
+      )
+    )
+)
+(defwindow calendar
+	:windowtype "normal"
+  :wm-ignore true
+	:halign "center"
+  :geometry (geometry :anchor "top center" :y "5%" :x "0%")
+(calendar_indicator)
+)

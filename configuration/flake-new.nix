@@ -14,7 +14,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    impermanence.url = "github:nix-community/impermanence"; # look into https://github.com/nix-community/preservation
+    impermanence.url = "github:nix-community/impermanence";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,37 +35,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:vic/import-tree";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    mkSystem = import ./mkSystem.nix {inherit nixpkgs inputs outputs home-manager;};
-    forAllSystems = nixpkgs.lib.genAttrs [
-      "aarch64-linux"
-      "x86_64-linux"
-    ];
-  in {
-    nixosConfigurations = {
-      nb = mkSystem {
-        system = "x86_64-linux";
-        host = "nb";
-        homes = ["plasmaa0"];
-      };
-      zep = mkSystem {
-        system = "x86_64-linux";
-        host = "zep";
-        homes = ["plasmaa0"];
-      };
-    };
-    devShells = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
-      import ./shell.nix {inherit pkgs;});
-  };
+  outputs = inputs: let
+    inherit (inputs.nixpkgs) lib;
+    inherit (lib.fileset) toList fileFilter;
+
+    isNixModule = file:
+      file.hasExt "nix"
+      && file.name != "flake.nix"
+      && !lib.hasPrefix "_" file.name;
+
+    importTree = path: toList (fileFilter isNixModule path);
+
+    mkFlake = inputs.flake-parts.lib.mkFlake {inherit inputs;};
+  in
+    mkFlake {imports = importTree ./modules;};
 }

@@ -1,0 +1,7 @@
+#!/bin/sh
+i3-msg -t subscribe -m '{"type":"workspace"}' |
+while read -r _; do
+    workspaces_info=$(i3-msg -t get_workspaces)
+    urgent_workspace=$(echo "$workspaces_info" | jq --unbuffered -r '.[] | select(.urgent == true).name')
+    echo "$urgent_workspace"
+done

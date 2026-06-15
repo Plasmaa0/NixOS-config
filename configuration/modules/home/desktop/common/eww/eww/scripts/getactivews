@@ -1,0 +1,8 @@
+#!/bin/sh
+i3-msg -t subscribe -m '{"type":"workspace"}' |
+while read -r _; do
+    workspaces_info=$(i3-msg -t get_workspaces)
+    active_workspaces=$(echo "$workspaces_info" | jq --unbuffered -r '[.[] | .name] | join(" ")')
+    echo "$active_workspaces"
+done
+
