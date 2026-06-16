@@ -1,134 +1,78 @@
-# Agent Instructions for Nix Configuration
+# Agent Instructions for Home Manager Config
 
-## Project Overview
+## Architecture
 
-This is a NixOS + home-manager configuration managed as a **dendritic flake-parts** module tree. The goal of the refactoring (in progress on branch `dendritic`) is to replace the old flat aggregator-style config with a fully dendritic pattern where every `.nix` file is a self-contained flake-parts module.
+This is a **flake-parts** dendritic module tree. Entry point: `configuration/flake.nix` calls `importTree(./modules)` → `mkFlake`. Every non-`_` `.nix` file under `modules/` is auto-discovered as a flake-parts module.
 
-**Two configs coexist:**
-- **Old (production):** `configuration/flake.nix` → `mkSystem.nix` → `hosts/` + `homes/` — currently used for builds
-- **New (refactored):** `configuration/flake-new.nix` → `importTree(./modules)` → `modules/` — not yet activated
+**Old (backup, unused):** `flake-old.nix` → `mkSystem.nix` → `hosts/` + `homes/` — kept for reference, will be deleted.
 
-## Repository Structure
+## Directory Layout
 
 ```
-/home/plasmaa0/home-manager/
-├── justfile                          # Build commands (rebuild-boot, etc.)
-├── AGENTS.md                         # This file
-├── configuration/
-│   ├── flake.nix                     # OLD entry point (production)
-│   ├── flake-new.nix                 # NEW entry point (refactored, not yet active)
-│   ├── mkSystem.nix                  # OLD builder (production)
-│   ├── PLAN.md                       # Full reference, file inventory, how-to guide
-│   ├── hosts/                        # OLD NixOS configs (to be deleted after transition)
-│   ├── homes/                        # OLD HM configs (to be deleted after transition)
-│   ├── modules/                      # NEW flake-parts module tree
-│   ├── themes/                       # Theme color schemes (unchanged)
-│   └── wallpapers/                   # Wallpaper images (unchanged)
+configuration/modules/
+├── parts.nix              # systems, home-manager flake module, pkgs with allowUnfree
+├── devshell.nix           # devshell
+├── secrets/
+│   ├── default.nix        # nixosModules.secrets — sops-nix, passwords, GitHub token
+│   └── secrets.yaml       # SOPS-encrypted (AGE key: age1wkq3uhx...)
+├── hosts/
+│   ├── zep/zep.nix        # nixosModules.zep + nixosConfigurations.zep
+│   └── nb/nb.nix          # nixosModules.nb + nixosConfigurations.nb
+├── users/
+│   └── plasmaa0.nix       # homeModules.plasmaa0 — user entry, imports all feature modules
+└── features/              # ALL feature modules (NixOS + HM mixed)
+    ├── <feature>.nix      # flat files for simple features
+    ├── cli/               # helix, fish, starship, terminals, utils
+    ├── desktop/           # i3, polybar, rofi, picom, dunst, eww, etc.
+    ├── applications/      # browsers, music, editors, media, games
+    ├── services/          # flameshot, copyq, powertop, udiskie, etc.
+    ├── dev/               # typst, latex, python
+    ├── stylix/            # global + user stylix (exports both nixosModules and homeModules)
+    └── nix/               # autoUpgrade, garbageCollect, nix-ld
 ```
 
-## Key Files for AI Agents
+## Export Key Convention
 
-### Entry Points
-- **`configuration/flake-new.nix`** — New flake entry point. Custom `importTree` function using `lib.fileset.fileFilter`. Auto-discovers all `.nix` files in `./modules` (excluding `_*` and `flake.nix`).
-- **`configuration/modules/parts.nix`** — Declares `systems`, imports `inputs.home-manager.flakeModules.home-manager`, sets `allowUnfree` pkgs config.
+All modules export unique dash-separated hierarchical keys — NO shared/grouped keys:
 
-### Documentation (MUST READ before modifications)
-- **`configuration/PLAN.md`** — COMPLETE REFERENCE. Contains: architecture, build instructions, complete file inventory (every module with export keys), conventions, how-to guides, transition procedure, troubleshooting.
-
-### Key Pattern Files
-| File | What it demonstrates |
+| Pattern | Example |
 |---|---|
-| `modules/nixos/nb.nix` | Host module pattern: imports 29 `self.nixosModules.*`, defines users, home-manager wiring, exports `nixosModules.nb` + `nixosConfigurations.nb` |
-| `modules/nixos/stylix.nix` | Dual-export pattern: both `nixosModules.stylix` and `homeModules.stylix` in one file |
-| `modules/home/plasmaa0.nix` | User module pattern: imports 9 group modules via `self.homeModules.*` |
-| `modules/home/applications/browser/qutebrowser.nix` | Simple grouped-key HM module: exports `flake.homeModules.applications` |
-| `modules/home/cli/editor/helix/default.nix` | Directory module with `_`-prefixed splits: imports `_theme.nix`, `_settings/*`, `_languages/*` |
+| `nixosModules.<short-name>` | `impermanence`, `bluetooth`, `secrets`, `stylix` |
+| `homeModules.<category>-<subcategory>-<name>` | `cli-editor-helix`, `application-browser-qutebrowser`, `desktop-window-manager-x11-i3` |
+
+Full hierarchy: `cli` → `cli-utils-common`, `cli-editor-helix`, `cli-shell-fish`; `desktop` → `desktop-window-manager-x11-i3`, `desktop-bar-eww`; `application` → `application-browser-qutebrowser`, `application-music-mpd`, `application-util-mime`.
 
 ## Critical Conventions
 
-### DO
-- Place all new `.nix` files inside `configuration/modules/`
-- Export `flake.nixosModules.*` for NixOS modules
-- Export `flake.homeModules.*` for HM modules
-- Use `_` prefix for split sub-modules (files that are manually imported by a parent)
-- List ALL `self.nixosModules.*` dependencies explicitly in host modules
-- List ALL group `self.homeModules.*` imports explicitly in user modules
-- Use `with self.nixosModules; [...]` in host modules for readability
-- Pass `specialArgs = { inherit inputs self; }` to `nixosSystem`
-- Pass `extraSpecialArgs = { inherit inputs self; }` to `home-manager`
-- Inline all content — NO `import` references to old `homes/` or `hosts/` files
+- **`_` prefix on file names** = excluded from auto-import (split modules, hardware configs, helpers)
+- **NO `_` prefix on directory names** (only files)
+- **Host modules** (`hosts/<host>/<host>.nix`) import all needed `self.nixosModules.*` features explicitly + `./_hardware-configuration.nix`
+- **User module** (`users/plasmaa0.nix`) imports all needed `self.homeModules.*` explicitly (~50+ imports)
+- **Host `nixosSystem`** passes `specialArgs = { inherit inputs self; }`
+- **Host `home-manager`** passes `extraSpecialArgs = { inherit inputs self; }` and `useGlobalPkgs = true`
+- **`users.mutableUsers = false`** is set in `features/impermanence.nix` — runtime `passwd` won't work
 
-### DO NOT
-- Create `_`-prefixed **directory** names (only file names)
-- Create aggregator modules that just re-export other modules
-- Reference `import ../homes/...` or `import ../hosts/...` in new modules
-- Add `nixpkgs.config.allowUnfree` in individual modules (handled centrally in `parts.nix`)
-- Touch old `hosts/` or `homes/` directories (they remain for production use until transition)
-- Store secrets in plain `.nix` files without `_` prefix (they'd be auto-imported)
+## Secret Management (sops-nix)
 
-## Grouped HM Keys (Dendritic Merge)
+**ACTIVE (new):** `modules/secrets/default.nix` — uses sops-nix. Encrypted secrets in `secrets.yaml` (AGE key `age1wkq3uhx...`). Passwords: `users.users.<name>.hashedPasswordFile` set from sops path. `neededForUsers = true` ensures decrypt before user activation.
 
-Multiple files in the same directory export the **same** `flake.homeModules.*` key. Flake-parts merges them into one module:
+**DEAD (old, unused):** `configuration/homes/common/secrets/` — contains old plaintext password `"REDACTED"` in `plasmaa0_password.nix`. The old `mkSystem.nix` used `password = import ...` but this path is no longer active.
 
-| Directory | Shared key | Files |
-|---|---|---|
-| `modules/home/cli/` | `flake.homeModules.cli` | 13 files (helix, fish, starship, terminals, utils) |
-| `modules/home/desktop/common/` | `flake.homeModules.desktop` | 8 files (i3, polybar, rofi, picom, dunst, conky, eww, betterlockscreen) |
-| `modules/home/applications/` | `flake.homeModules.applications` | 18 files (browsers, music, editors, media, games) |
-| `modules/home/services/` | `flake.homeModules.services` | 6 files |
-| `modules/home/dev/` | `flake.homeModules.dev` | 3 files |
+**If passwords stop working:** Check that the SSH host key at `/etc/ssh/ssh_host_ed25519_key` (persisted via impermanence) matches the recipient in `secrets.yaml`. Run `ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub` and compare. To re-encrypt `secrets.yaml` for the machine's SSH key, see `modules/secrets/SECRETS.md`.
 
-Standalone keys: `common`, `secrets`, `shell-templates`, `stylix`, `plasmaa0`
-
-NixOS modules are all unique keys — no sharing.
-
-## Build & Test Commands
+## Build Commands
 
 ```bash
-# Production build (uses old config):
-just rebuild-boot
-
-# Test-build new refactored config:
-nix build '.#nixosConfigurations.zep.config.system.build.toplevel' \
-  --flake /home/plasmaa0/home-manager/configuration/flake-new.nix
-
-# Check evaluation:
-nix flake check --flake /home/plasmaa0/home-manager/configuration/flake-new.nix
-
-# Format code:
-just format
-
-# Run all checks:
-just all-checks
+just rebuild-boot        # all-checks → cp to /etc/nixos → nixos-rebuild boot
+just rebuild-switch      # all-checks → cp → nixos-rebuild switch
+just rebuild-test        # all-checks → cp → nixos-rebuild test
+just all-checks          # format → check_dead → lint
+just format              # alejandra *.nix + just --fmt
 ```
 
-## Common Mistakes
+The `justfile` copies `configuration/*` to `/etc/nixos`, so both old dirs (`hosts/`, `homes/`) and new dirs (`modules/`) coexist on the target. The flake entry (`flake.nix`) only reads `modules/`.
 
-### Mistake 1: Using `_` prefix on directories
-Wrong: `modules/home/cli/_editor/helix/`
-Right: `modules/home/cli/editor/helix/`
-The `_` prefix is only for file names, never directory names.
+## Git Caveats
 
-### Mistake 2: Creating aggregator modules
-Wrong: Creating `modules/home/applications/default.nix` that imports other files.
-Right: Each file under `applications/` exports `flake.homeModules.applications` independently.
-
-### Mistake 3: Forgetting to add `self.nixosModules.*` to host import lists
-NixOS modules are NOT auto-discovered — hosts must explicitly import each one they need.
-
-### Mistake 4: Missing `self`/`inputs` in `specialArgs`
-If a NixOS module uses `self.nixosModules.*` or `inputs.*`, the host `nixosSystem` call must include `specialArgs = { inherit inputs self; }`.
-
-### Mistake 5: Path errors for secrets
-Host modules reference `../home/secrets/_plasmaa0_password.nix` — this resolves from `modules/nixos/`. If the file moves, update all host modules.
-
-## Transition Checklist (for final activation)
-
-- [ ] Run `nix flake check --flake configuration/flake-new.nix` — succeeds
-- [ ] Run `nix build '.#nixosConfigurations.zep...' --flake configuration/flake-new.nix` — succeeds  
-- [ ] Run `nix build '.#nixosConfigurations.nb...' --flake configuration/flake-new.nix` — succeeds
-- [ ] `cp configuration/flake-new.nix configuration/flake.nix`
-- [ ] `rm -rf configuration/hosts/ configuration/homes/ configuration/mkSystem.nix`
-- [ ] Remove `import-tree` input from `flake.nix`
-- [ ] `nix flake lock --flake configuration/`
-- [ ] `just rebuild-boot` — succeeds
+- **`git+file://` fetcher ignores untracked files** — new `.nix` files in `modules/` must be `git add`-ed before `nix build`/`nix eval` will see them
+- Submodules (wallpapers) need `?submodules=1` in git+file URL

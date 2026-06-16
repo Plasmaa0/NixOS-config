@@ -3,11 +3,7 @@
     inputs.home-manager.flakeModules.home-manager
   ];
 
-  perSystem = {
-    pkgs,
-    system,
-    ...
-  }: {
+  perSystem = {system, ...}: {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
       config = {
