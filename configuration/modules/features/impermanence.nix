@@ -33,7 +33,6 @@
           [
             "/etc/nixos"
             "/var/log"
-            "/var/lib/sops-nix"
             "/var/lib/bluetooth"
             "/etc/ssh"
             "/root"
@@ -401,7 +400,6 @@
         # needed at least for /var/log
         /etc/machine-id
         /var/swapfile
-        /var/lib/sops-nix/key.txt
       ];
     };
   };

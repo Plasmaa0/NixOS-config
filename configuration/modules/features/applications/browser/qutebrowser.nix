@@ -43,7 +43,7 @@
       stores = ["$HOME/.password-store"];
     };
     home.file."${config.xdg.configHome}/qutebrowser/rofi" = {
-      source = ../../desktop/common/rofi/rofi/launchers/type-2;
+      source = ../../desktop/rofi/rofi/launchers/type-2;
       recursive = true;
     };
     programs.qutebrowser = {

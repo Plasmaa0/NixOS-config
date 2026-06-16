@@ -21,7 +21,7 @@
         fantasque-sans-mono
         lilex
       ]);
-    # see also configuration/hosts/common/global-stylix.nix
+    # see also configuration/modules/features/stylix/stylix.nix
     fonts = {
       enableGhostscriptFonts = true;
       fontconfig = {

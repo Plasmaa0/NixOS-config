@@ -1,0 +1,69 @@
+{...}: {
+  flake.homeModules.desktop-bar-x11-polybar = {
+    config,
+    pkgs,
+    ...
+  }: let
+    polybar = pkgs.polybar.override {
+      alsaSupport = true;
+      i3Support = true;
+      pulseSupport = true;
+    };
+  in {
+    home.file."${config.xdg.configHome}/polybar" = {
+      source = ./polybar;
+      recursive = true;
+      onChange = "${polybar}/bin/polybar-msg cmd restart || true";
+    };
+    home.file."${config.xdg.configHome}/polybar/fonts.ini".text =
+      # ini
+      ''
+        font-0 = "${config.stylix.fonts.serif.name}:size=8;4"
+        font-1 = "Font Awesome 6 Free:size=8;6"
+        font-2 = "Font Awesome 6 Brands:size=8;6"
+        font-3 = "${config.stylix.fonts.emoji.name}:scale=12;2"
+        font-4 = "${config.stylix.fonts.serif.name}:size=10;6"
+      '';
+    home.file."${config.xdg.configHome}/polybar/colors.ini".text = let
+      c = config.lib.stylix.colors.withHashtag;
+    in
+      # ini
+      ''
+        [colors]
+        background = ${c.base00}
+        background-alt = ${c.base01}
+        foreground = ${c.base07}
+        foreground-alt = ${c.base03}
+        primary = ${c.base0A}
+        secondary = ${c.base0C}
+        alert = ${c.base09}
+        disabled = ${c.base02}
+        active = ${c.base03}
+        blue = ${c.base0D}
+        purple = ${c.base0E}
+        urgent = ${c.base08}
+
+        underline-1 = ${c.base05}
+        underline-2 = ${c.base0D}
+      '';
+    xsession.windowManager.i3.config.startup = [
+      {
+        notification = false;
+        always = true;
+        command = "${polybar}/bin/polybar-msg cmd restart || ${polybar}/bin/polybar";
+      }
+    ];
+    # services.polybar = {
+    #   enable = false;
+    #   script = "polybar &";
+    #   package = polybar;
+    # };
+    # systemd.user.services.polybar = {
+    #   # Install.WantedBy = ["graphical-session.target"];
+    #   Service = {
+    #     Restart = lib.mkForce "always";
+    #     RestartSec = 3;
+    #   };
+    # };
+  };
+}

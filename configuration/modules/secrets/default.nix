@@ -18,7 +18,7 @@
     ];
 
     sops.age.sshKeyPaths = [];
-    sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+    sops.age.keyFile = "/persist/var/lib/sops-nix/key.txt";
     sops.age.generateKey = true;
 
     sops.defaultSopsFile = ./secrets.yaml;
@@ -38,12 +38,7 @@
       fi
     '';
   };
-  flake.homeModules.secrets = {
-    config,
-    lib,
-    pkgs,
-    ...
-  }: {
+  flake.homeModules.secrets = {...}: {
     # imports = [inputs.impermanence.nixosModules.home-manager];
     home.persistence."/persist".files = [".config/sops/age/keys.txt"];
   };

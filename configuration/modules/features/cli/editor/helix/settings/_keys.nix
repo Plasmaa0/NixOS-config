@@ -49,12 +49,9 @@
         D = ["ensure_selections_forward" "extend_to_line_end"];
         g = {b = ":sh echo %sh{git show --no-patch --format='%%h \\(%%an: %%ar\\): %%s' $(git blame -p %{buffer_name} -L%{cursor_line},+1 | head -1 | cut -d' ' -f1)}";};
       }
-      // disable_arrow_keys
       // cyrillicToEnglishKeymap;
-    insert =
-      {
-        C-space = "signature_help";
-      }
-      // disable_arrow_keys;
+    insert = {
+      C-space = "signature_help";
+    };
   };
 }
