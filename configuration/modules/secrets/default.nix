@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.secrets = {
     config,
     lib,
@@ -8,6 +12,11 @@
     imports = [
       inputs.sops-nix.nixosModules.sops
     ];
+
+    home-manager.sharedModules = [
+      self.homeModules.secrets
+    ];
+
     sops.age.sshKeyPaths = [];
     sops.age.keyFile = "/var/lib/sops-nix/key.txt";
     sops.age.generateKey = true;
@@ -28,5 +37,14 @@
         echo "access-tokens = github.com=$token" >> /etc/nix/nix.conf
       fi
     '';
+  };
+  flake.homeModules.secrets = {
+    config,
+    lib,
+    pkgs,
+    ...
+  }: {
+    # imports = [inputs.impermanence.nixosModules.home-manager];
+    home.persistence."/persist".files = [".config/sops/age/keys.txt"];
   };
 }

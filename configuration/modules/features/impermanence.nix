@@ -401,6 +401,7 @@
         # needed at least for /var/log
         /etc/machine-id
         /var/swapfile
+        /var/lib/sops-nix/key.txt
       ];
     };
   };
