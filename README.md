@@ -1,251 +1,253 @@
 <h1 align="center">
-   <img src="./assets_readme/NixOS.png" width="100px" /> 
+   <img src="./assets_readme/NixOS.png" width="100px" />
    <br>
-      My NixOS system
+   NixOS Configuration
    <br>
-   
-   <img src="./assets_readme/monokai.png" width="600px" height="10px" /> <br>
+   <img src="./assets_readme/monokai.png" width="600px" height="10px" />
+   <br>
    <div align="center">
-
-   <div align="center">
-      <p></p>
-      <div align="center">
-         <a href="https://github.com/plasmaa0/nixos-config/stargazers">
-            <img src="https://img.shields.io/github/stars/plasmaa0/nixos-config?color=fd971f&labelColor=303446&style=for-the-badge&logo=starship&logoColor=fd971f">
-         </a>
-         <a href="https://github.com/plasmaa0/nixos-config/">
-            <img src="https://img.shields.io/github/repo-size/plasmaa0/nixos-config?color=a6e22e&labelColor=303446&style=for-the-badge&logo=github&logoColor=a6e22e">
-         </a>
-         <a = href="https://nixos.org">
-            <img src="https://img.shields.io/badge/NixOS-Unstable-blue?style=for-the-badge&logo=NixOS&logoColor=white&label=NixOS&labelColor=303446&color=66d9ef">
-         </a>
-         <a href="https://github.com/plasmaa0/nixos-config/blob/main/LICENSE">
-            <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=MIT&colorA=313244&colorB=cc6633&logo=unlicense&logoColor=cc6633&"/>
-         </a>
-      </div>
-      <br>
+      <a href="https://github.com/plasmaa0/nixos-config/stargazers">
+         <img src="https://img.shields.io/github/stars/plasmaa0/nixos-config?color=fd971f&labelColor=303446&style=for-the-badge&logo=starship&logoColor=fd971f" />
+      </a>
+      <a href="https://github.com/plasmaa0/nixos-config/">
+         <img src="https://img.shields.io/github/repo-size/plasmaa0/nixos-config?color=a6e22e&labelColor=303446&style=for-the-badge&logo=github&logoColor=a6e22e" />
+      </a>
+      <a href="https://nixos.org">
+         <img src="https://img.shields.io/badge/NixOS-Unstable-blue?style=for-the-badge&logo=NixOS&logoColor=white&label=NixOS&labelColor=303446&color=66d9ef" />
+      </a>
+      <a href="https://github.com/plasmaa0/nixos-config/blob/main/LICENSE">
+         <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=MIT&colorA=313244&colorB=cc6633&logo=unlicense&logoColor=cc6633" />
+      </a>
    </div>
+   <br>
 </h1>
 
-<h1 align="center"> Preview </h1>
+<p align="center">
+  <b>Personal NixOS + home-manager config</b> -- flake-parts module tree, sops-nix secrets,
+  impermanence root, stylix theming, Secure Boot, and a fully themed desktop (i3/eww/rofi).
+  Two hosts: <code>zep</code> (ASUS ROG Zephyrus G16, NVIDIA Optimus) and <code>nb</code> (old Huawei).
+</p>
+
+---
+
+## Screenshots
+
+<details open>
+<summary><b>Desktop Preview</b></summary>
 
 ![preview](./assets_readme/new_screens/result.gif)
+<br>
+<sub>helix editor + btop system monitor + rmpc MPD client, all themed via stylix</sub>
 
-On the screenshot:
-- [helix](https://github.com/helix-editor/helix) editor
-- [btop](https://github.com/aristocratos/btop) system monitor
-- [rmpc](https://github.com/mierak/rmpc) mpd client
+</details>
 
-all with custom themes via [stylix](https://github.com/nix-community/stylix) 🌈
-
-<h2 align="center"> Wallpapers </h2>
+<details>
+<summary><b>Wallpaper Gallery</b></summary>
 
 ![wallpapers](./assets_readme/wall_screens/result.gif)
 
-<h2 align="center"> Coding </h2>
+</details>
+
+<details>
+<summary><b>Coding</b></summary>
 
 ![coding](./assets_readme/code_screens/result.gif)
 
-<h2 align="center"> Launcher and powermenu </h2>
+</details>
 
-Reimagined [adi1090x rofi configs](https://github.com/adi1090x/rofi)
+<details>
+<summary><b>Launcher & Powermenu</b></summary>
+
+Reimagined <a href="https://github.com/adi1090x/rofi">adi1090x rofi configs</a>
 
 ![launcher](./assets_readme/launcher_screens/result.gif)
-
 ![powermenu](./assets_readme/powermenu_screens/result.gif)
 
-<h2 align="center"> Lockscreen </h2>
+</details>
 
-(monokai theme), using [betterlockscreen](https://github.com/betterlockscreen/betterlockscreen)
+<details>
+<summary><b>Lockscreen & Display Manager</b></summary>
+
+(betterlockscreen + obscure-sddm-theme)
+
 ![lockscreen](./assets_readme/5.png)
-
-<h2 align="center"> Display Manager (SDDM) </h2>
-
-my theme: kyoto
-
-sddm theme: [obscure-sddm-theme](https://github.com/saatvik333/obscure-sddm-theme)
 ![sddm](./assets_readme/displayManager.png)
 
-# Installation steps
+</details>
 
-> [!IMPORTANT] 
-> Backup your `/etc/nixos` folder before installation.
+---
 
-## Getting started
-1. Clone repo in any folder you'd like. 
-2. Add your host config in directory `configuration/hosts/<host-name>`
-   - it must have `default.nix`
-   - may write your own, may use `nixos-generate-config`
-   - import common host modules (`configuration/hosts/common`) or add your own into (`configuration/hosts/common/modules`) and import them
-   - refer to `configuration/hosts/zep` or `configuration/hosts/nb`
-3. Add your user config in directory `configuration/homes/<username>`
-   - it must have `default.nix`
-   - import common user modules (`configuration/homes/common`) or add your own user-specific
-   - refer to `configuration/homes/plasmaa0`
-   - create `configuration/homes/common/secrets/secrets.nix` which may be empty (`_: _`), fill it with your secret options
-   - put your new user's passowrd into `configuration//homes/common/secrets/<usermame>_password.nix` just as string. for example: ```"qwerty123"```
-   - put your intended root's password in the same directory into `root_hashed_password` via `mkpasswd > root_hashed_password`
-4. Add entry to `flake.nix`:
-```nix
-nixosConfigurations = {
-  <HOST_NAME> = mkSystem {
-    system = "x86_64-linux"; # your architecture
-    host = "<HOST_NAME>";
-    homes = ["<username>"]; # may contain multiple user names in array
-  };
-};
+## Architecture
+
+<p align="center">
+  <code>configuration/flake.nix</code> -- entry point
+</p>
+
 ```
-5. If it's your first build run `just rebuild-switch-specific HOST_NAME`
-6. If you already have activated derivation of system then just `just rebuild-switch`
-7. *other versions of rebuilding also available (rebuild boot, update, test)
+configuration/
+  flake.nix          # importTree(./modules) -> mkFlake (flake-parts)
+  flake.lock
+  modules/
+    parts.nix        # systems, allowUnfree, home-manager flake module
+    devshell.nix     # devshell: just, alejandra, statix, deadnix, opencode
+    secrets/         # sops-nix secrets (standalone age keys)
+    hosts/           # per-host nixosConfigurations (zep, nb)
+    users/           # homeModules.plasmaa0 (~55 module imports)
+    features/        # all NixOS + HM feature modules
+```
 
-# Personal data
-Be careful when sharing these files, they contain personal information:
-- `homes/common/default.nix` imports `secrets/secrets.nix` which sets up secrets e.g. github token:
+### Module Export Convention
+
+| Type | Pattern | Example |
+|------|---------|---------|
+| NixOS (flat .nix) | `nixosModules.<name>` | `bluetooth.nix` -> `nixosModules.bluetooth` |
+| HM (dir/default.nix) | `homeModules.<cat>-<sub>-<name>` | `cli/editor/helix/` -> `homeModules.cli-editor-helix` |
+| Dual export | both keys in one file | `stylix/stylix.nix`, `secrets/default.nix` |
+
+### Auto-Discovery
+
+Every `.nix` file under `modules/` that is NOT prefixed with `_` is recursively
+auto-imported as a flake-parts module. Files starting with `_` are excluded --
+use them for split helpers, hardware configs, or theme helpers. Directories
+named with `_` are fine (Nix ignores directory names in fileFilter).
+
+---
+
+## Theming
+
+Themes live in `configuration/themes/<polarity>/<name>.nix` as pure attribute
+sets (no function wrapper):
+
 ```nix
-{...}:{
-  nix.settings.access-tokens = [
-    "github.com=........"
-  ];
-  programs.git = {
-    userName  = "...";
-    userEmail = "...";
-  };
+{
+  wallpaper = "kyoto.jpg";
+  polarity = "dark";
+  scheme = "mocha";
 }
 ```
 
-My method of managing secrets is definitely not the best and secure.
-Check out this project: [sops-nix](https://github.com/Mic92/sops-nix) to deal with secrets management.
+- **polarity**: `"dark"` or `"light"`
+- **scheme**: Base16 color scheme name
+- **wallpaper**: filename from `configuration/wallpapers/`
 
-# Features
+The active theme is imported by `features/stylix/stylix.nix`. Switch themes
+by changing that import and running `just rebuild-switch`.
 
-Most of the apps listed below are configured using [home-manager](https://nix-community.github.io/home-manager/) and themed with [stylix](https://stylix.danth.me/index.html). 
+**Available themes:**
 
+<details>
+<summary><b>Dark (12 themes)</b></summary>
 
-<h2 align="center"> Honorable mentions </h2>
-(configs that I'm proud of)
+- abstract_waves, anime, desert, forest, glass-blue-hexagons, graphite,
+  gruvbox, kyoto, monokai, purple_flowers, simplex, xmas
 
-Applications:
-- `qutebrowser` minimalist, keyboard-driven web browser with Vim-like keybindings and Qt backend [link](https://qutebrowser.org)
-- `zathura` ultra-lightweight PDF/PostScript viewer with minimal UI and powerful keyboard navigation [link](https://pwmt.org/projects/zathura)
-- `mime.nix` my custom Nix module for declaratively defining file type handlers (e.g., `pdf → zathura`, `epub → calibre`) - no manual `~/.config/mimeapps.list` editing needed
-- `rmpc` lightweight, fast Rust-based MPD client with real-time lyrics fetching and album art display [link](https://github.com/mierak/rmpc)
-- `helix` ~vim killer~ modern, fast, modal terminal text editor with built-in LSP, tree-sitter, and ergonomic defaults - my daily driver for code and config. configured essential for me language servers (latex, python, c/c++, etc...). theme is somewhat tweaked from what default stylix gave me.  [link](https://helix-editor.com)
-- `fish` + `starship` fish shell with custom completions and functions, paired with starship for a visually rich, dynamic prompt - config ported from my old Garuda Linux setup [link](https://fishshell.com) | [link](https://starship.rs)
-- `kitty`/`wezterm` two terminal emulators both configured with matching colors and keybindings [link](https://sw.kovidgoyal.net/kitty) | [link](https://wezterm.org/)
-- `betterlockscreen` customizable lockscreen using i3lock + blur effects and dynamic wallpaper switching - visually polished and scriptable [link](https://github.com/betterlockscreen/betterlockscreen)
-- `xidlehook` X11 idle hook daemon for screen locking and power management [link](https://github.com/jD91mZM2/xidlehook)
-- `fastfetch` system info fetcher with custom NixOS logo [link](https://github.com/fastfetch-cli/fastfetch)
-- `polybar` old good status bar [link](https://polybar.github.io)
-- `eww` highly customizable, YAML-driven widget engine used to build my modern status bar, music controls, and workspace indicators [link](https://elkowar.github.io/eww)
-- `i3status-rust` lightweight, fast system status bar (CPU, RAM, battery, network) [link](https://github.com/greshake/i3status-rust)
-- `picom` compositor for drop shadows, transparency, and smooth animations - configured for performance with optional blur effects [link](https://github.com/yshui/picom)
-- `rofi` fast, themeable application launcher and power menu - uses Adi1090x themes for a clean, modern look [link](https://github.com/davatorium/rofi)
-- `dunst.nix` notification daemon with custom config [link](https://github.com/dunst-project/dunst)
-- `i3` Tiling window manager with custom keybindings, workspace layout, and startup scripts - still active for legacy sessions [link](https://i3wm.org)
-- `yazi` blazing fast terminal file manager with vim-like keybindings and live preview [link](https://github.com/sxyazi/yazi)
-- `lanzaboote` secure boot (YES IT EXISTS ON LINUX) with [link](https://github.com/nix-community/lanzaboote)
-- `impermanence` stateless system with empemeral root via [link](https://github.com/nix-community/impermanence)
-- `tlp` advanced power management tool for laptops — optimizes battery life with smart CPU, disk, and USB power settings [link](https://linrunner.de/tlp)
+</details>
 
+<details>
+<summary><b>Light (4 themes)</b></summary>
 
-<h3 align="center"> Other stuff that powers my system </h3>
-(not as interesting as stuff above, but not less useful)
+- bliss, desert, grass, pink-lighthouse
 
-- `flameshot` screenshot daemon;
-- `copyq` clipboard management tool;
-- `poweralertd` daemon which notifies you some info about power of your battery and connected devices;
-- `udiskie` automount devices daemon with nice tray widget;
-- `alacritty.nix` great terminal [site](https://alacritty.org/);
-- `autorandr.nix` [autorandr](https://github.com/phillipberndt/autorandr) can save your monitor configurations and quickly change them. Very useful for laptops if you connect them to monitor at different places;
-- `texstudio` Integrated LaTeX environment with syntax highlighting and real-time preview [link](https://www.texstudio.org)
-- `prismlauncher` + `atlauncher` minecraft launchers with modpack support and version management — `prismlauncher` for general use, `atlauncher` for specific modpacks [link](https://prismlauncher.org) | [link](https://atlauncher.com)
-- `mangohud` Vulkan/OpenGL overlay for FPS, CPU/GPU stats, and custom performance metrics [link](https://github.com/flightlessmango/MangoHud)
-- `steam` valve's gaming platform with library management and Proton compatibility [link](https://store.steampowered.com)
-- `direnv` environment switcher for directories — automatically loads/unloads variables based on project context (essential for Nix dev) [link](https://direnv.net)
-- `easyeffects` advanced audio effects processor with system-wide equalizer and presets [link](https://github.com/wwmm/easyeffects)
-- `vlc` cross-platform multimedia player for video, audio, and streaming [link](https://www.videolan.org)
-- nice plymouth themes from adi1090x
-- nerd fonts (my favs: Iosevka, Victor, Fantasque...)
-- `vial` tool for configuring custom keyboards (fork of qmk as i know)
+</details>
 
+stylix applies the same color scheme, fonts, and wallpaper across the entire
+desktop. Stylix targets explicitly disabled: plymouth, i3, helix (custom
+tweaked themes instead).
 
-# Theming
-See `configuration/hosts/common/global-stylix.nix` and `configuration/homes/common/user-stylix.nix` configs of stylix are there.
+---
 
-[Stylix](https://stylix.danth.me/index.html) - a NixOS module which applies the same colour scheme, font and wallpaper to a range of applications and desktop environments. Sets up systemwide dark mode, color scheme, wallpaper, icon-pack (Papirus Dark), cursor-pack (Bibata Modern Ice), fonts. [link](https://stylix.danth.me/);
+## What's Inside
 
-To install more fonts add them to `configuration/hosts/common/fonts.nix` (this will just install them but not apply them everywhere). To apply fonts everywhere use stylix as described below.
+### Notable Configs
 
-To set the theme, wallpaper, fonts, cursors, icons you need to edit it in `configuration/hosts/common/global-stylix.nix`. More details at [stylix wiki](https://stylix.danth.me/).
+| Category | Applications |
+|----------|-------------|
+| Editor | helix (LSP: LaTeX, Python, C/C++, Typst, Nix, Yuck), markdown-oxide, vscode, texstudio, xournalpp |
+| Shell | fish + starship (custom abbrs, aliases, functions, plugins, nix-index-database) |
+| Terminals | kitty, wezterm, alacritty |
+| WM/Desktop | i3 (custom keybinds, workspaces, modes), eww (status bar + widgets), polybar, rofi, betterlockscreen, dunst, picom, conky |
+| Browsers | qutebrowser (Vim-like, keyboard-driven), helium (minimal webview browser) |
+| Media | rmpc (MPD client, album art + lyrics), mpd, yandex-music, cassette, zathura, vlc, obs, easyeffects |
+| File Mgmt | yazi (terminal file manager, plugins: compress, max-preview, restore, smart-enter, smart-filter) |
+| Gaming | steam, prismlauncher/atlauncher (Minecraft), mangohud, heroic |
+| Utils | mime (custom file-type handler module), flameshot, copyq, udiskie, autorandr, fastfetch, direnv, gparted |
+| Dev | Typst, LaTeX (texlive basic), Python |
+| System | impermanence (stateless root), lanzaboote (Secure Boot), sops-nix (secrets), autoUpgrade, garbageCollect, nix-ld, tlp, asusd (ROG), ananicy |
+| Hardware | NVIDIA Optimus (zep: offload + powersave specialisation), AMDGPU, bluetooth, printing, ollama, vial (custom keyboards), weylus |
 
-Stylix color schemes are now centrally managed through predefined theme files. Each theme (e.g., `configuration/themes/dark/kyoto.nix`) explicitly defines:
-- `wallpaper`: relative path to wallpaper in `configuration/wallpapers/`
-- `polarity`: "dark" or "light" mode enforcement (theme polarity in stylix terms)
-- `scheme` (optional): Base16 color scheme name. **When omitted**, Stylix falls back to generating colors from wallpaper pixels - but I recommend against this as auto-generated schemes often suffer from poor contrast, limited color range, and lack of distinctive highlight colors.  
+### Secrets (sops-nix)
 
-To switch themes:
-1. Edit `configuration/hosts/common/global-stylix.nix` to import your desired theme file
-2. Set `scheme` explicitly in the theme file for consistent, high-quality color palettes
-3. Run `just rebuild-switch` to apply changes system-wide (or `just rebuild-test` just to preview)
+- **Machine key**: auto-generated at `/var/lib/sops-nix/key.txt` (generated on first boot)
+- **Admin key**: `~/.config/sops/age/keys.txt` (persisted via impermanence)
+- **Passwords**: hashed, decrypted at activation via `neededForUsers = true`
+- **GitHub token**: injected via `system.activationScripts` (sops decrypts at activation time, not build time)
+- **Edit**: `sops configuration/modules/secrets/secrets.yaml`
+- **Bootstrap**: `sudo configuration/modules/secrets/init.sh`
 
-All handcrafted themes in `configuration/themes/` guarantee proper contrast ratios and semantic color grouping for both light and dark modes. The wallpaper submodule (`configuration/wallpapers/`) contains all referenced assets.
+---
 
-Check out `configuration/wallpapers` directory for wallpapers that i use.
+## Build Commands
 
-For 16 color themes: [link](https://tinted-theming.github.io/tinted-gallery/)
+All via `just`. Commands copy `configuration/*` to `/etc/nixos`, then run
+`nixos-rebuild` against `/etc/nixos`.
 
-> [!NOTE]  
-> Applications will get their theme from stylix almost in every case except for the apps listed below. I tweaked colors which they get so their look may be bad.
-
-List of stylix targets which are explicitly disabled:
-- `plymouth`
-- `i3`
-- `helix`
-
-<h2 align="center"> TODO </h2>
-- [ ] sops-nix secret management
-
-<h3 align="center"> In case you can't even log into system </h3>
-## Recovery steps.
-Load from usb. (In debug mode you won't be able to connect to wifi, so i'd prefer default mode)
-### Mount everything:
-1. As in `hardware-configuration.nix` (like with impermanence):
-```bash
-mount -t tmpfs -o "defaults,size=25%,mode=755" tmpfs /mnt
-
-mkdir -p /mnt/home
-mount -t tmpfs -o "defaults,size=25%,mode=755" tmpfs /mnt/home
-
-mkdir -p /mnt/persist/home
-mount /dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772 /mnt/persist
-mount /dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3 /mnt/persist/home
-
-mkdir -p /mnt/boot
-mount -o "fmask=0077,dmask=0077" /dev/disk/by-uuid/B24C-64BF /mnt/boot
 ```
-2. Or in a simple way:
-```bash
-mkdir -p /mnt/home
-mount /dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772 /mnt
-mount /dev/disk/by-uuid/12d128c8-46ef-4b58-9c59-f7cc2ce799c3 /mnt/home
-
-mkdir -p /mnt/boot
-mount -o "fmask=0077,dmask=0077" /dev/disk/by-uuid/B24C-64BF /mnt/boot
+just rebuild-boot              all-checks -> cp -> nixos-rebuild boot
+just rebuild-switch            all-checks -> cp -> nixos-rebuild switch
+just rebuild-test              all-checks -> cp -> nixos-rebuild test
+just rebuild-update            update flake.lock -> rebuild-boot
+just rebuild-*-specific HOST   same, targeting /etc/nixos#HOST
+just all-checks                format -> check_dead -> lint
+just format                    just --fmt + alejandra *.nix
+just gc                        nix-collect-garbage -d + switch-to-config boot
+just diff                      nvd diff between last 2 system profiles
 ```
-3. Or even simpler (if you haven't splitted `/home` and `/`)
-```bash
-mount /dev/disk/by-uuid/74219b09-f02e-43f9-a15b-375ff4037772 /mnt
 
-mkdir -p /mnt/boot
-mount -o "fmask=0077,dmask=0077" /dev/disk/by-uuid/B24C-64BF /mnt/boot
-```
-### Activate and enter your system
-```bash
-chroot /mnt /nix/var/nix/profiles/system/activate
-chroot /mnt /run/current-system/sw/bin/bash
-# any recovery steps needed, for example:
-passwd
-```
-Alternatively look into `nix-enter`
+`all-checks` runs: `just --fmt --unstable` + `alejandra --quiet $(fd --extension nix)`
+then `deadnix` then `statix check`.
 
+---
+
+## Hosts
+
+### zep (ASUS ROG Zephyrus G16 2024)
+
+- AMD Ryzen + NVIDIA RTX 4060 laptop (Optimus)
+- AMDGPU + NVIDIA with prime offload (`powersave` specialisation disables NVIDIA)
+- asusd ROG control, 180 DPI HiDPI, 24.11 stateVersion
+- Multi-monitor via autorandr, hibernation, tlp
+
+### nb (Old Huawei)
+
+- Intel integrated graphics only -- dedicated NVIDIA module excluded
+- 192 DPI HiDPI, 24.05 stateVersion
+- Touchpad, power management, automount
+
+---
+
+## Getting Started (Forking)
+
+1. Clone the repo
+2. Add your host config in `configuration/modules/hosts/<hostname>/` (see `zep` or `nb`)
+3. Add your user config in `configuration/modules/users/<username>.nix`
+4. Wire up secrets via sops-nix or replace with your own method
+5. Run `just rebuild-switch-specific <hostname>` for first build
+
+---
+
+## Credits
+
+- [Stylix](https://github.com/nix-community/stylix) -- system-wide theming
+- [flake-parts](https://github.com/hercules-ci/flake-parts) -- modular flake architecture
+- [home-manager](https://nix-community.github.io/home-manager/) -- declarative user config
+- [impermanence](https://github.com/nix-community/impermanence) -- stateless root
+- [lanzaboote](https://github.com/nix-community/lanzaboote) -- Secure Boot
+- [sops-nix](https://github.com/Mic92/sops-nix) -- secrets management
+- [adi1090x/rofi](https://github.com/adi1090x/rofi) -- rofi themes
+- [obscure-sddm-theme](https://github.com/saatvik333/obscure-sddm-theme) -- SDDM theme
+
+---
+
+<p align="center">
+  <i>Licensed under MIT.</i>
+</p>
