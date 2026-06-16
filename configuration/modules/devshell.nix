@@ -29,6 +29,7 @@
         statix
         deadnix
         nix-inspect
+        opencode
       ];
     };
   };
