@@ -1,0 +1,183 @@
+include "config/colors.kdl"
+include "config/scripts.kdl"
+
+// ---- Input ----
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+            options "grp:alt_shift_toggle"
+        }
+        repeat-delay 600
+        repeat-rate 25
+        numlock false
+    }
+    touchpad {
+        natural-scroll true
+        tap true
+        click-method "clickfinger"
+        scroll-method "two-finger"
+        dwt true
+    }
+    warp-mouse-to-focus true
+    workspace-auto-back-and-forth true
+    focus-follows-mouse false
+}
+
+// ---- Layout ----
+layout {
+    gaps 16
+    struts { top 0 bottom 0 left 0 right 0 }
+    border {
+        on
+        width 2
+        active-color $active_border
+        inactive-color $inactive_border
+        urgent-color $urgent_border
+    }
+    focus-ring {
+        on
+        width 2
+        active-color $active_ring
+        inactive-color $inactive_ring
+        urgent-color $urgent_ring
+    }
+    default-column-width { proportion 0.5; }
+}
+
+workspace "scratchpad"
+
+// ---- Keybindings (fully static) ----
+binds {
+    // Workspace switching
+    Mod+1 { focus-workspace "1"; }
+    Mod+2 { focus-workspace "2"; }
+    Mod+3 { focus-workspace "3"; }
+    Mod+4 { focus-workspace "4"; }
+    Mod+5 { focus-workspace "5"; }
+    Mod+6 { focus-workspace "6"; }
+    Mod+7 { focus-workspace "7"; }
+    Mod+8 { focus-workspace "8"; }
+    Mod+9 { focus-workspace "9"; }
+    Mod+0 { focus-workspace "10"; }
+
+    Mod+Shift+1 { move-window-to-workspace "1"; }
+    Mod+Shift+2 { move-window-to-workspace "2"; }
+    Mod+Shift+3 { move-window-to-workspace "3"; }
+    Mod+Shift+4 { move-window-to-workspace "4"; }
+    Mod+Shift+5 { move-window-to-workspace "5"; }
+    Mod+Shift+6 { move-window-to-workspace "6"; }
+    Mod+Shift+7 { move-window-to-workspace "7"; }
+    Mod+Shift+8 { move-window-to-workspace "8"; }
+    Mod+Shift+9 { move-window-to-workspace "9"; }
+    Mod+Shift+0 { move-window-to-workspace "10"; }
+
+    // Focus / Move (a,s,w,d)
+    Mod+a { focus-column-left; }
+    Mod+s { focus-window-down; }
+    Mod+w { focus-window-up; }
+    Mod+d { focus-column-right; }
+    Mod+Shift+a { move-column-left; }
+    Mod+Shift+s { move-window-down; }
+    Mod+Shift+w { move-window-up; }
+    Mod+Shift+d { move-column-right; }
+
+    // Splits
+    Mod+h { split-horizontal; }
+    Mod+v { split-vertical; }
+
+    // Fullscreen / Tabbed / Floating
+    Mod+f { fullscreen-window; }
+    Mod+Tab { toggle-column-display; }
+    Mod+Shift+space { toggle-window-floating; }
+    Mod+space { switch-focus-between-floating-and-tiling; }
+
+    // Scratchpad (workspace "scratchpad")
+    Mod+semicolon { move-window-to-workspace "scratchpad"; }
+    Mod+l { focus-workspace "scratchpad"; }
+
+    // Resize (direct)
+    Mod+Ctrl+h { resize-column amount -10 direction "right"; }
+    Mod+Ctrl+l { resize-column amount 10 direction "right"; }
+    Mod+Ctrl+j { resize-window amount -10 direction "down"; }
+    Mod+Ctrl+k { resize-window amount 10 direction "down"; }
+    Mod+Ctrl+space { set-column-width "50%"; }
+    Mod+Ctrl+w { set-column-width "80%"; set-window-height "80%"; }
+    Mod+Ctrl+c { center-window; }
+    Mod+Ctrl+Left { resize-column amount -10 direction "right"; }
+    Mod+Ctrl+Right { resize-column amount 10 direction "right"; }
+    Mod+Ctrl+Down { resize-window amount -10 direction "down"; }
+    Mod+Ctrl+Up { resize-window amount 10 direction "down"; }
+
+    // Launch (replaces i3 "launch" mode)
+    Mod+e { spawn "wofi --show drun"; }
+    Mod+Shift+t { spawn "telegram-desktop"; }
+    Mod+Shift+q { spawn "helium"; }
+    Mod+Shift+m { spawn "yandex-music"; }
+    Mod+Shift+e { spawn "dolphin"; }
+
+    // Applications
+    Mod+Return { spawn "kitty"; }
+    Mod+Shift+Return { spawn "wofi --show drun"; }
+    Mod+q { close-window; }
+    Mod+Shift+q { close-window; }
+    Mod+t { spawn "telegram-desktop"; }
+    Print { spawn "flameshot gui"; }
+    Mod+m { focus-workspace "scratchpad"; }
+    Mod+Shift+c { reload-config; }
+    Mod+Shift+r { restart; }
+    Mod+Shift+e { spawn "~/.config/wofi/powermenu.sh"; }
+
+    // Media keys (using scripts from $scripts)
+    XF86AudioRaiseVolume { spawn-sh "$VOLUME_UP"; }
+    XF86AudioLowerVolume { spawn-sh "$VOLUME_DOWN"; }
+    XF86AudioMute { spawn-sh "$VOLUME_MUTE"; }
+    XF86AudioMicMute { spawn-sh "$MIC_MUTE"; }
+    XF86MonBrightnessUp { spawn-sh "$BRIGHTNESS_UP"; }
+    XF86MonBrightnessDown { spawn-sh "$BRIGHTNESS_DOWN"; }
+    XF86TouchpadToggle { spawn-sh "$TOUCHPAD_TOGGLE"; }
+    XF86AudioPlay { spawn "playerctl play-pause"; }
+    XF86AudioNext { spawn "playerctl next"; }
+    XF86AudioPrev { spawn "playerctl previous"; }
+
+    // Overview / help
+    Mod+question { show-hotkey-overlay; }
+    Mod+tab { toggle-overview; }
+}
+
+// ---- Startup commands ----
+// spawn-at-startup [
+    // { argv [ "nm-applet" "--indicator" ]; }
+    // { argv [ "blueman-applet" ]; }
+    // { argv [ "swaybg" "--mode" "fill" "--image" "${stylix.image}" ]; }
+    // { argv [ "eww" "daemon" ]; }
+// ]
+
+// ---- Touchpad gestures ----
+gestures {
+    swipe-up   { three-finger { focus-workspace-up; } }
+    swipe-down { three-finger { focus-workspace-down; } }
+    swipe-left { three-finger { focus-column-left; } }
+    swipe-right { three-finger { focus-column-right; } }
+}
+
+// ---- Environment ----
+environment {
+    QT_QPA_PLATFORM "wayland"
+    SDL_VIDEODRIVER "wayland"
+    _JAVA_AWT_WM_NONREPARENTING "1"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
+
+window-rule { matches { app-id "Yad"; } open-floating true; }
+window-rule { matches { app-id "copyq"; } open-floating true; }
+window-rule { matches { app-id "QuteTextEdit"; } open-floating true; }
+window-rule { matches { app-id "feh"; } open-floating true; }
+window-rule { matches { app-id "simplescreenrecorder"; } open-floating true; }
+
+output "eDP" {
+    mode "2560x1600@240.00"
+    scale 1
+    transform "0"
+    position x=0 y=0
+}

@@ -29,7 +29,10 @@
     };
     helix.url = "github:helix-editor/helix";
     yazi.url = "github:sxyazi/yazi";
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     helium = {
       url = "github:schembriaiden/helium-browser-nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,6 +43,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     devshell.url = "github:numtide/devshell";
+    awww = {
+      url = "git+https://codeberg.org/LGFae/awww";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: let

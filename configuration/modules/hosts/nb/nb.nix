@@ -14,7 +14,6 @@
       ananicy
       audio
       automount
-      autorandr
       autoUpgrade
       bootloader
       sddm

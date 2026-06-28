@@ -6,7 +6,7 @@
     color-modes = true;
     rulers = [100];
     scrolloff = 15;
-    scroll-lines = 1;
+    scroll-lines = 2;
     auto-info = true;
     bufferline = "multiple";
     gutters = ["diagnostics" "spacer" "line-numbers" "spacer" "diff"];

@@ -34,12 +34,11 @@
       token=$(cat ${config.sops.secrets.github_token.path} 2>/dev/null || true)
       if [ -n "$token" ]; then
         ${pkgs.gnused}/bin/sed -i '/^access-tokens/d' /etc/nix/nix.conf
-        echo "access-tokens = github.com=$token" >> /etc/nix/nix.conf
+        echo "access-tokens = $token" >> /etc/nix/nix.conf
       fi
     '';
   };
   flake.homeModules.secrets = {...}: {
-    # imports = [inputs.impermanence.nixosModules.home-manager];
     home.persistence."/persist".files = [".config/sops/age/keys.txt"];
   };
 }

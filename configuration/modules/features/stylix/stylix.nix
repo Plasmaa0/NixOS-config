@@ -49,6 +49,7 @@
           package = pkgs.noto-fonts-color-emoji;
           name = "Noto Color Emoji";
         };
+        sizes.popups = builtins.ceil (config.stylix.fonts.sizes.desktop * 1.5);
       };
       cursor = {
         package = pkgs.bibata-cursors;
@@ -58,7 +59,7 @@
             then "Ice"
             else "Classic";
         in "Bibata-Modern-${suffix}";
-        size = 34;
+        size = 24;
       };
       icons = {
         enable = true;
