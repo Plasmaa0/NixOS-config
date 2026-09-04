@@ -9,6 +9,9 @@
 
     services.pipewire = {
       enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
 
       wireplumber.extraConfig = {
         "10-bluez" = {
@@ -17,6 +20,8 @@
             "bluez5.enable-msbc" = true;
             "bluez5.enable-hw-volume" = true;
             "bluez5.roles" = [
+              "a2dp_sink"
+              "a2dp_source"
               "hsp_hs"
               "hsp_ag"
               "hfp_hf"
@@ -49,6 +54,13 @@
               # };
             }
           ];
+        };
+        "99-bluez-headset" = {
+          "monitor.bluez.properties" = {
+            "bluez5.msbc-support" = true;
+            "bluez5.sbc-xq-support" = true;
+            "bluez5.autoswitch-profile" = true;
+          };
         };
       };
     };
