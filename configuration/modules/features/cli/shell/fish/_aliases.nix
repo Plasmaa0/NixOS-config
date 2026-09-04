@@ -1,14 +1,14 @@
 {lib, ...}: {
   programs.fish.shellAliases =
     {
-      ls = "eza -al --color=always --group-directories-first --icons";
-      lsg = "eza -al --color=always --group-directories-first --icons --git";
-      la = "eza -a --color=always --group-directories-first --icons";
-      lag = "eza -a --color=always --group-directories-first --icons --git";
-      ll = "eza -l --color=always --group-directories-first --icons";
-      llg = "eza -l --color=always --group-directories-first --icons --git";
-      lt = "eza -aT --color=always --group-directories-first --icons";
-      ltg = "eza -aT --color=always --group-directories-first --icons --git";
+      ls = "eza -al --color=auto --group-directories-first --icons=auto";
+      lsg = "eza -al --color=auto --group-directories-first --icons=auto --git";
+      la = "eza -a --color=auto --group-directories-first --icons=auto";
+      lag = "eza -a --color=auto --group-directories-first --icons=auto --git";
+      ll = "eza -l --color=auto --group-directories-first --icons=auto";
+      llg = "eza -l --color=auto --group-directories-first --icons=auto --git";
+      lt = "eza -aT --color=auto --group-directories-first --icons=auto";
+      ltg = "eza -aT --color=auto --group-directories-first --icons=auto --git";
       "l." = "eza -a | egrep '^\\.'";
       ip = "ip -color";
       hexdump = "hexd";
