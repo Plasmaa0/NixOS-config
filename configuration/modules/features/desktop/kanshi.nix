@@ -25,7 +25,7 @@
                 scale = 1.25;
                 status = "enable";
                 position = "0,491"; # x=0, y=1440
-                mode = "2560x1440@59.95";
+                mode = "2560x1440@144.002";
               }
               {
                 criteria = "DP-2"; # Huawei (left USB-C)
@@ -56,7 +56,7 @@
                 scale = 1.25;
                 status = "enable";
                 position = "0,491";
-                mode = "2560x1440@59.95";
+                mode = "2560x1440@144.002";
               }
               {
                 criteria = "DP-9"; # Huawei (right USB-C)
