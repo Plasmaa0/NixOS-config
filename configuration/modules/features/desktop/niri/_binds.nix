@@ -136,6 +136,22 @@ in {
       action = spawn-cmd scripts.touchpad_toggle;
       allow-when-locked = true;
     };
+    "XF86KbdBrightnessUp" = {
+      action = spawn-cmd scripts.kb_brightness_up;
+      allow-when-locked = true;
+    };
+    "XF86KbdBrightnessDown" = {
+      action = spawn-cmd scripts.kb_brightness_down;
+      allow-when-locked = true;
+    };
+    "XF86Launch4" = {
+      action = spawn-cmd scripts.fan_profile_next;
+      allow-when-locked = true;
+    };
+    "XF86Launch3" = {
+      action = spawn-cmd scripts.aura_next;
+      allow-when-locked = true;
+    };
     "XF86AudioPlay".action = {spawn = "playerctl play-pause";};
     "XF86AudioNext".action = {spawn = "playerctl next";};
     "XF86AudioPrev".action = {spawn = "playerctl previous";};

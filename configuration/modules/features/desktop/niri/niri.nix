@@ -5,21 +5,62 @@
     ...
   }: {
     imports = [inputs.niri.nixosModules.niri];
-    nixpkgs.overlays = [inputs.niri.overlays.niri];
+    # TEMP (2026-08-24): resurrect libdisplay-info 0.2.0 for niri-flake
+    # nixpkgs removed libdisplay-info_0_2 (default is now 0.4, throw alias
+    # left behind), but niri-flake hard-asserts version 0.2.0 to match niri's
+    # vendored bindings, breaking eval after the lock bump. Upstream fix
+    # (sodiboo/niri-flake#1851, PR #1853) is not merged, and our niri pin is
+    # already at branch tip, so bumping cannot help yet. Overlay rebuilds the
+    # old derivation via overrideAttrs -- 0.2.0 and 0.4.0 have identical
+    # deps/patches/mesonFlags, only src differs. Drop once #1853 lands and
+    # the niri pin is bumped.
+    nixpkgs.overlays = [
+      (final: prev: {
+        libdisplay-info_0_2 = prev.libdisplay-info.overrideAttrs (old: {
+          name = "libdisplay-info-0.2.0";
+          version = "0.2.0";
+          src = prev.fetchFromGitLab {
+            domain = "gitlab.freedesktop.org";
+            owner = "emersion";
+            repo = "libdisplay-info";
+            rev = "0.2.0";
+            hash = "sha256-6xmWBrPHghjok43eIDGeshpUEQTuwWLXNHg7CnBUt3Q=";
+          };
+        });
+      })
+      inputs.niri.overlays.niri
+    ];
     programs.niri = {
       enable = true;
       package = pkgs.niri-unstable;
     };
     services.gnome.gnome-keyring.enable = true;
     programs.seahorse.enable = true;
+    environment.systemPackages = with pkgs; [
+      nautilus
+      #   (runCommandLocal "nautilus-portal" {} ''
+      #     mkdir -p $out/share/xdg-desktop-portal/portals
+      #     cat > $out/share/xdg-desktop-portal/portals/nautilus.portal <<EOF
+      #     [portal]
+      #     DBusName=org.gnome.Nautilus
+      #     Interfaces=org.freedesktop.impl.portal.FileChooser
+      #     EOF
+      #   '')
+    ];
 
     xdg.portal = {
       enable = true;
+      xdgOpenUsePortal = true;
+      # wlr.enable = true;
       extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
+        # pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-gnome
       ];
-      config.common.default = "*";
+      config.common.default = ["gnome"];
+      # config.common = {
+      #   default = ["gtk"];
+      #   "org.freedesktop.impl.portal.FileChooser" = "nautilus";
+      # };
     };
     security.pam.services.login.enableGnomeKeyring = true;
     security.pam.services.sddm.enableGnomeKeyring = true;
@@ -99,6 +140,58 @@
     programs.niri.settings.spawn-at-startup = [
       {argv = ["nm-applet" "--indicator"];}
       {argv = ["blueman-applet"];}
+      {argv = ["asusctl" "slash" "-l" "128" "--mode" "Flux" "-B" "true" "-S" "true" "-s" "false" "-b" "false" "-w" "true"];}
+      {
+        argv = let
+          inherit (builtins) floor fromJSON;
+          inherit (lib) toHexString stringLength min max;
+          inherit (config.lib.stylix) colors;
+
+          r = fromJSON colors.base03-rgb-r;
+          g = fromJSON colors.base03-rgb-g;
+          b = fromJSON colors.base03-rgb-b;
+
+          min-val = min (min r g) b;
+          max-val = max (max r g) b;
+          range = max-val - min-val;
+
+          mid-val = r + g + b - min-val - max-val;
+
+          sat-mid =
+            if range == 0
+            then 0
+            else floor (255.0 * (mid-val - min-val) / range);
+
+          saturate = ch:
+            if ch == max-val
+            then 255
+            else if ch == min-val
+            then 0
+            else sat-mid;
+
+          sat-r =
+            if range == 0
+            then 148
+            else saturate r;
+          sat-g =
+            if range == 0
+            then 103
+            else saturate g;
+          sat-b =
+            if range == 0
+            then 189
+            else saturate b;
+
+          pad2 = s:
+            if stringLength s == 1
+            then "0${s}"
+            else s;
+          toHex = n: pad2 (toHexString n);
+
+          color = "${toHex sat-r}${toHex sat-g}${toHex sat-b}";
+        in ["asusctl" "aura" "effect" "static" "-c" color];
+      }
+      {argv = ["asusctl" "leds" "set" "low"];}
       {command = ["awww-daemon -l background"];}
       {command = ["awww" "img" config.stylix.image];}
       {argv = [(lib.getExe pkgs.kanshi)];}
@@ -214,11 +307,27 @@
           {app-id = "QuteTextEdit";}
           {app-id = "feh";}
           {app-id = "simplescreenrecorder";}
-          {app-id = "pavucontrol";}
           {app-id = "gnome-calculator";}
           {app-id = "org.gnome.Nautilus";}
           {app-id = "blueman-manager";}
+          {title = "Picture in picture";}
         ];
+        open-floating = true;
+      }
+      {
+        matches = [
+          {title = "Picture in picture";}
+        ];
+        open-floating = true;
+        default-column-width = {proportion = 0.2;};
+        default-window-height = {proportion = 0.2;};
+      }
+      {
+        matches = [
+          {app-id = "pavucontrol";}
+        ];
+        default-column-width = {proportion = 0.8;};
+        default-window-height = {proportion = 0.8;};
         open-floating = true;
       }
       {

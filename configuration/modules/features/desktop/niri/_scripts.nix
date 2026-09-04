@@ -72,11 +72,50 @@
     '';
   };
 
+  kb_brightness_up = pkgs.writeShellApplication {
+    name = "kb-brightness-up";
+    runtimeInputs = with pkgs; [asusctl libnotify];
+    text = ''
+      asusctl leds next
+      CURRENT=$(asusctl leds get | grep "Current" | cut -c 34-)
+      notify-send -u low -i keyboard "Keyboard brightness" "$CURRENT" --hint=string:x-dunst-stack-tag:kb_bright -h string:x-canonical-private-synchronous:kb_bright_notif
+    '';
+  };
+
+  kb_brightness_down = pkgs.writeShellApplication {
+    name = "kb-brightness-down";
+    runtimeInputs = with pkgs; [asusctl libnotify];
+    text = ''
+      asusctl leds prev
+      CURRENT=$(asusctl leds get | grep "Current" | cut -c 34-)
+      notify-send -u low -i keyboard "Keyboard brightness" "$CURRENT" --hint=string:x-dunst-stack-tag:kb_bright -h string:x-canonical-private-synchronous:kb_bright_notif
+    '';
+  };
+
+  fan_profile_next = pkgs.writeShellApplication {
+    name = "fan-profile-next";
+    runtimeInputs = with pkgs; [asusctl libnotify];
+    text = ''
+      asusctl profile next
+      PROFILE=$(asusctl profile get | grep "Active profile: " | cut -c 17-)
+      notify-send -u low -i sensors-fan-symbolic "Fan profile" "$PROFILE" --hint=string:x-dunst-stack-tag:fan_profile -h string:x-canonical-private-synchronous:fan_profile_notif
+    '';
+  };
+
+  aura_next = pkgs.writeShellApplication {
+    name = "aura-next";
+    runtimeInputs = with pkgs; [asusctl libnotify];
+    text = ''
+      asusctl aura effect --next-mode
+      notify-send -u low -i keyboard-brightness-symbolic "Aura" "Next mode" --hint=string:x-dunst-stack-tag:auro_mode -h string:x-canonical-private-synchronous:auro_mode_notif
+    '';
+  };
+
   fuzzel_powermenu = pkgs.writeShellApplication {
     name = "fuzzel-powermenu";
     runtimeInputs = [pkgs.fuzzel];
     text = ''
-      SELECTION="$(printf "1 - Lock\n2 - Suspend\n3 - Log out\n4 - Reboot\n5 - Reboot to UEFI\n6 - Hard reboot\n7 - Shutdown" | fuzzel --dmenu -l 7 -p "Power Menu: ")"
+      SELECTION="$(printf "1 - Lock\n2 - Suspend\n3 - Log out\n4 - Reboot\n5 - Reboot to UEFI\n6 - Shutdown" | fuzzel --dmenu -l 6 -p "Power Menu: ")"
 
       case $SELECTION in
       	*"Lock")
@@ -89,8 +128,6 @@
       		systemctl reboot;;
       	*"Reboot to UEFI")
       		systemctl reboot --firmware-setup;;
-      	*"Hard reboot")
-      		pkexec "echo b > /proc/sysrq-trigger";;
       	*"Shutdown")
       		systemctl poweroff;;
       esac
