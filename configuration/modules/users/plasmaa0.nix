@@ -22,7 +22,9 @@
       cli-utils-direnv
       cli-utils-fastfetch
       cli-utils-git
-      cli-utils-yazi
+      cli-utils-opencode
+      # cli-utils-yazi
+      cli-utils-elio
       desktop-window-manager-wayland-niri
       # desktop-window-manager-x11-i3
       # desktop-util-x11-conky
@@ -47,7 +49,7 @@
       application-media-zathura
       application-media-easyeffects
       application-music-rmpc
-      application-music-yandex-music
+      # application-music-yandex-music
       application-music-cassette
       application-music-mpd
       application-social-telegram
@@ -90,7 +92,7 @@
       simplescreenrecorder
       gimp
       darktable
-      mindustry
+      # mindustry
       nvtopPackages.full
       aria2
       rura

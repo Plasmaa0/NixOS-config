@@ -40,6 +40,7 @@
       weylus
       stylix
       host-enable-niri-support
+      virtualization
       secrets
       ./_hardware-configuration.nix
     ];
@@ -56,7 +57,6 @@
     hardware.sensor.iio.enable = true;
     hardware.bluetooth.powerOnBoot = false;
     programs.dconf.enable = true;
-
     nixpkgs.config.allowUnfree = true;
 
     services.asusd.enable = true;
@@ -72,7 +72,7 @@
       plasmaa0 = {
         isNormalUser = true;
         description = "plasmaa0";
-        extraGroups = ["networkmanager" "wheel" "dialout"];
+        extraGroups = ["networkmanager" "wheel" "dialout" "input"];
       };
     };
 

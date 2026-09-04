@@ -16,9 +16,8 @@
   hardware.amdgpu.initrd.enable = true;
   boot.kernelModules = ["kvm-amd"];
   boot.kernelParams = [
+    "mem_sleep_default=deep"
     "iommu=1"
-    "amd_pstate=passive"
-    "pcie_aspm.policy=powersupersave"
     "acpi.prefer_microsoft_dsm_guid=1"
     "amdgpu.gpu_recovery=1"
     "amdgpu.dcdebugmask=0x210"

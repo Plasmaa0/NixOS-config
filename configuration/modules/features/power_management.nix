@@ -87,6 +87,7 @@
         RUNTIME_PM_DRIVER_DENYLIST = "";
 
         USB_AUTOSUSPEND = 1;
+        # USB_EXCLUDE_BTUSB = 1;
         DISK_APM_LEVEL_ON_AC = "254 254";
         DISK_APM_LEVEL_ON_BAT = "128 128";
         MEM_SLEEP_ON_AC = "deep";

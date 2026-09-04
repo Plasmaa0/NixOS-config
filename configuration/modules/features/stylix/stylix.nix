@@ -7,7 +7,7 @@
     self,
     ...
   }: let
-    theme = import ./../../../themes/dark/glass-blue-hexagons.nix;
+    theme = import ./../../../themes/dark/simplex.nix;
     recolor = false;
     gowall-recolored-wallpaper = pkgs.callPackage ./_gowall-recolor-wallpaper.nix {
       colorsList = config.lib.stylix.colors.withHashtag.toList;
@@ -74,6 +74,7 @@
     ];
   };
   flake.homeModules.stylix = {dpi, ...}: {
+    home.pointerCursor.enable = true;
     imports = [./_generate-theme-preview.nix];
     stylix.targets = {
       i3.enable = false;

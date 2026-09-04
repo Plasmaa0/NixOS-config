@@ -4,7 +4,7 @@
     self,
     ...
   }: {
-    programs.regreet.enable = true;
+    services.displayManager.regreet = true;
     # services.xserver = {
     #   enable = true;
     #   displayManager.session = [
