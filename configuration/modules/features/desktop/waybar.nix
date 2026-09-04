@@ -15,7 +15,7 @@
       b = builtins.fromJSON (builtins.getAttr "${colorName}-rgb-b" config.lib.stylix.colors);
     in "${toString r}, ${toString g}, ${toString b}";
 
-    pillAlpha = "0.5";
+    pillAlpha = "0.7";
     wsActiveBg = "rgba(${rgb "base0A"}, 0.2)";
     wsActiveBorder = "rgba(${rgb "base0A"}, 0.6)";
     wsOccupiedBg = "rgba(${rgb "base0A"}, 0.08)";
@@ -67,7 +67,7 @@
           "clock" = {
             format = "󰃭 {:%d-%m-%Y %H:%M}";
             interval = 1;
-            tooltip-format = "<tt><small>{calendar}</small></tt>";
+            tooltip-format = "<tt>{calendar}</tt>";
           };
 
           "custom/notification" = {
