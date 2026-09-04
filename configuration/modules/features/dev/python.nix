@@ -13,6 +13,7 @@
             sympy
             scipy
             seaborn
+            pandas
           ]))
     ];
   };
