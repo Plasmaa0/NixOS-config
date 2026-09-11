@@ -1,7 +1,5 @@
 {...}: {
-  flake.homeModules.kanshi = {config, ...}: let
-    reloadCmd = "awww img ${config.stylix.image}"; # optional, may not work
-  in {
+  flake.homeModules.kanshi = {...}: {
     services.kanshi = {
       enable = true;
 
@@ -35,7 +33,6 @@
                 mode = "3840x2560@59.98";
               }
             ];
-            exec = [reloadCmd];
           };
         }
 
@@ -66,7 +63,6 @@
                 mode = "3840x2560@59.98";
               }
             ];
-            exec = [reloadCmd];
           };
         }
 
@@ -90,7 +86,6 @@
                 mode = "3840x2560@59.98";
               }
             ];
-            exec = [reloadCmd];
           };
         }
 
@@ -107,7 +102,6 @@
                 mode = "2560x1600@240";
               }
             ];
-            exec = [reloadCmd];
           };
         }
 
@@ -124,7 +118,6 @@
                 mode = "2560x1600@60";
               }
             ];
-            exec = [reloadCmd];
           };
         }
       ];

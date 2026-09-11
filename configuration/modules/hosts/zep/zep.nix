@@ -17,7 +17,7 @@
       automount
       autoUpgrade
       bootloader
-      greetd
+      greetd-noctalia
       firewall
       fonts
       gamemode
@@ -40,6 +40,7 @@
       weylus
       stylix
       host-enable-niri-support
+      host-enable-noctalia-support
       virtualization
       secrets
       ./_hardware-configuration.nix
@@ -162,6 +163,7 @@
         imports = [
           self.homeModules.stylix
           self.homeModules.plasmaa0
+          self.homeModules.desktop-shell-wayland-noctalia
         ];
       };
     };

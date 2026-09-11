@@ -5,10 +5,12 @@
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://yazi.cachix.org"
+      "https://noctalia.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
 
@@ -51,6 +53,10 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Prebuilt via https://noctalia.cachix.org; do NOT set inputs.nixpkgs.follows
+    # or the cache is invalidated and the shell compiles from source.
+    noctalia.url = "github:noctalia-dev/noctalia";
+    noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
   };
 
   outputs = inputs: let

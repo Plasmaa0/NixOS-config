@@ -76,7 +76,6 @@
     '';
 
     home.packages = with pkgs; [
-      networkmanagerapplet
       upower
       xbacklight
       brightnessctl

@@ -38,10 +38,10 @@
         PASSWORD_STORE_DIR = "$HOME/.password-store";
       };
     };
-    programs.rofi.pass = {
-      enable = true;
-      stores = ["$HOME/.password-store"];
-    };
+    # programs.rofi.pass = {
+    #   enable = true;
+    #   stores = ["$HOME/.password-store"];
+    # };
     home.file."${config.xdg.configHome}/qutebrowser/rofi" = {
       source = ../../desktop/rofi/rofi/launchers/type-2;
       recursive = true;

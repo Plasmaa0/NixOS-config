@@ -78,11 +78,12 @@ in {
       repeat = false;
     };
     "Mod+v" = {
-      action.spawn = "fuzzel-cliphist";
+      action.spawn-sh = "noctalia msg panel-toggle clipboard";
       repeat = false;
     };
-    "Mod+Shift+L".action = {
-      spawn = "swaylock";
+    "Mod+Shift+L" = {
+      action.spawn-sh = "noctalia msg session lock";
+      repeat = false;
     };
 
     # ----- Applications -----
@@ -91,7 +92,7 @@ in {
       repeat = false;
     };
     "Mod+Shift+Return" = {
-      action.spawn = ["fuzzel"];
+      action.spawn-sh = "noctalia msg panel-toggle launcher";
       repeat = false;
     };
 
@@ -101,35 +102,50 @@ in {
       repeat = false;
     };
 
-    "XF86Launch1".action = {screenshot = [];};
+    "XF86Launch1" = {
+      action.spawn-sh = "noctalia msg screenshot-region";
+      repeat = false;
+    };
     "Mod+Shift+e" = {
-      action = spawn-cmd scripts.fuzzel_powermenu;
+      action.spawn-sh = "noctalia msg panel-toggle session";
+      repeat = false;
+    };
+    "Mod+Shift+C" = {
+      action.spawn-sh = "noctalia msg panel-toggle control-center";
+      repeat = false;
+    };
+    "Mod+Shift+comma" = {
+      action.spawn-sh = "noctalia msg settings-toggle";
+      repeat = false;
+    };
+    "Alt+Tab" = {
+      action.spawn-sh = "noctalia msg window-switcher";
       repeat = false;
     };
 
-    # ----- Media keys (using scripts) -----
+    # ----- Media keys (native Noctalia OSD) -----
     "XF86AudioRaiseVolume" = {
-      action = spawn-cmd scripts.volume_up;
+      action.spawn-sh = "noctalia msg volume-up";
       allow-when-locked = true;
     };
     "XF86AudioLowerVolume" = {
-      action = spawn-cmd scripts.volume_down;
+      action.spawn-sh = "noctalia msg volume-down";
       allow-when-locked = true;
     };
     "XF86AudioMute" = {
-      action = spawn-cmd scripts.volume_mute;
+      action.spawn-sh = "noctalia msg volume-mute";
       allow-when-locked = true;
     };
     "XF86AudioMicMute" = {
-      action = spawn-cmd scripts.mic_mute;
+      action.spawn-sh = "noctalia msg mic-mute";
       allow-when-locked = true;
     };
     "XF86MonBrightnessUp" = {
-      action = spawn-cmd scripts.brightness_up;
+      action.spawn-sh = "noctalia msg brightness-up eDP-1";
       allow-when-locked = true;
     };
     "XF86MonBrightnessDown" = {
-      action = spawn-cmd scripts.brightness_down;
+      action.spawn-sh = "noctalia msg brightness-down eDP-1";
       allow-when-locked = true;
     };
     "XF86TouchpadToggle" = {

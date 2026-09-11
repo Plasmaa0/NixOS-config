@@ -69,7 +69,6 @@
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };
   flake.homeModules.desktop-window-manager-wayland-niri = {
-    inputs,
     config,
     pkgs,
     lib,
@@ -85,61 +84,14 @@
     ];
     home.packages = [pkgs.wdisplays pkgs.wl-mirror];
     home.persistence."/persist".directories = [".local/share/keyrings"];
-    home.persistence."/persist".files = [".cache/fuzzel"];
-    programs.fuzzel.enable = true;
-    programs.swaylock.enable = true;
-    services.awww = {
-      enable = true;
-      package = inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww;
-    };
-    services.swayidle = let
-      seconds = 1;
-      minutes = 60 * seconds;
-      screen-blank-timeout = 15 * minutes;
-      lock-after-blank-timeout = 15 * minutes;
-      sleep-timeout = 60 * minutes;
-
-      niri-bin = "${pkgs.niri-unstable}/bin/niri";
-      loginctl = "${pkgs.systemd}/bin/loginctl";
-      systemctl = "${pkgs.systemd}/bin/systemctl";
-      swaylock = "${pkgs.swaylock}/bin/swaylock";
-
-      lock-session = pkgs.writeShellScript "lock-session" ''
-        ${swaylock} -f
-        ${niri-bin} msg action power-off-monitors
-      '';
-
-      before-sleep = pkgs.writeShellScript "before-sleep" ''
-        ${loginctl} lock-session
-      '';
-    in {
-      enable = true;
-      timeouts = [
-        {
-          timeout = screen-blank-timeout;
-          command = "${niri-bin} msg action power-off-monitors";
-        }
-        {
-          timeout = screen-blank-timeout + lock-after-blank-timeout;
-          command = "${loginctl} lock-session";
-        }
-        {
-          timeout = sleep-timeout;
-          command = "${systemctl} suspend";
-        }
-      ];
-      events = {
-        lock = lock-session.outPath;
-        before-sleep = before-sleep.outPath;
-      };
-    };
+    # waybar / swaync / fuzzel / swaylock / swayidle are superseded by Noctalia
+    # (see the force-disables in the Noctalia module).
 
     programs.niri.settings.prefer-no-csd = true;
 
     # Startup commands
     programs.niri.settings.spawn-at-startup = [
-      {argv = ["nm-applet" "--indicator"];}
-      {argv = ["blueman-applet"];}
+      {argv = ["noctalia"];}
       {argv = ["asusctl" "slash" "-l" "128" "--mode" "Flux" "-B" "true" "-S" "true" "-s" "false" "-b" "false" "-w" "true"];}
       {
         argv = let
@@ -192,17 +144,12 @@
         in ["asusctl" "aura" "effect" "static" "-c" color];
       }
       {argv = ["asusctl" "leds" "set" "low"];}
-      {command = ["awww-daemon -l background"];}
-      {command = ["awww" "img" config.stylix.image];}
       {argv = [(lib.getExe pkgs.kanshi)];}
       {argv = [(lib.getExe pkgs.xwayland-satellite)];}
-      {command = [(lib.getExe pkgs.waybar)];}
       # {command = [(lib.getExe pkgs.mako)];}
       {command = ["${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"];}
       {command = ["${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"];}
     ];
-
-    programs.niri.settings.screenshot-path = "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png";
 
     programs.niri.settings.environment = {
       QT_QPA_PLATFORM = "wayland";
@@ -301,6 +248,12 @@
     # Window rules
     programs.niri.settings.window-rules = [
       {
+        matches = [{app-id = "dev.noctalia.Noctalia";}];
+        open-floating = true;
+        default-column-width = {fixed = 1080;};
+        default-window-height = {fixed = 920;};
+      }
+      {
         matches = [
           {app-id = "Yad";}
           {app-id = "copyq";}
@@ -309,7 +262,6 @@
           {app-id = "simplescreenrecorder";}
           {app-id = "gnome-calculator";}
           {app-id = "org.gnome.Nautilus";}
-          {app-id = "blueman-manager";}
           {title = "Picture in picture";}
         ];
         open-floating = true;
@@ -371,14 +323,18 @@
       }
     ];
     programs.niri.settings.layer-rules = [
+      # Noctalia's blurred backdrop rendered inside niri's overview. Noctalia
+      # publishes its own blur regions on ext-background-effects, so no
+      # `background-effect` rule is needed (niri-flake also does not expose it).
       {
-        matches = [{namespace = "^wallpaper$";} {namespace = "^background$";} {namespace = "^awww";}];
+        matches = [{namespace = "^noctalia-backdrop";}];
         place-within-backdrop = true;
       }
     ];
     programs.niri.settings.gestures.hot-corners.enable = false;
     programs.niri.settings.debug = {
       render-drm-device = "/dev/dri/card1";
+      honor-xdg-activation-with-invalid-serial = true;
     };
   };
 }
