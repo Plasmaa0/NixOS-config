@@ -114,6 +114,10 @@ in {
       action.spawn-sh = "noctalia msg panel-toggle control-center";
       repeat = false;
     };
+    "Mod+i" = {
+      action.spawn-sh = "noctalia msg settings-toggle";
+      repeat = false;
+    };
     "Mod+Shift+comma" = {
       action.spawn-sh = "noctalia msg settings-toggle";
       repeat = false;

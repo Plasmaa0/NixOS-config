@@ -33,29 +33,28 @@
   in {
     imports = [inputs.noctalia-greeter.nixosModules.default];
 
-    programs.noctalia-greeter = {
+    services.displayManager.noctalia-greeter = {
       enable = true;
       # Authenticated sync (greeter < 1.5.0 has no passwordless action).
-      passwordless-sync-users = lib.mkDefault [];
 
-      # eDP-1 advertises every mode at 240 Hz except 2560x1600@60, and the
-      # greeter's wlroots compositor picks the *highest* refresh at the
-      # preferred size. The amdgpu atomic test for 2560x1600@240 fails
-      # ("Cannot allocate memory"), so the internal panel stays black and a
-      # standalone boot cannot log in. Cap the mode search at 60 Hz (niri has no
-      # such problem); outputs whose only modes are >60 Hz keep their preferred
-      # mode. Patch the greeter rather than the compositor config because the
-      # config has no refresh knob.
-      package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
-        postPatch =
-          (old.postPatch or "")
-          + ''
-            substituteInPlace src/compositor/noctalia_compositor.c \
-              --replace-fail \
-              'if (mode->refresh > best->refresh) {' \
-              'if (mode->refresh <= 60000 && (best->refresh > 60000 || mode->refresh > best->refresh)) {'
-          '';
-      });
+      # # eDP-1 advertises every mode at 240 Hz except 2560x1600@60, and the
+      # # greeter's wlroots compositor picks the *highest* refresh at the
+      # # preferred size. The amdgpu atomic test for 2560x1600@240 fails
+      # # ("Cannot allocate memory"), so the internal panel stays black and a
+      # # standalone boot cannot log in. Cap the mode search at 60 Hz (niri has no
+      # # such problem); outputs whose only modes are >60 Hz keep their preferred
+      # # mode. Patch the greeter rather than the compositor config because the
+      # # config has no refresh knob.
+      # package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+      #   postPatch =
+      #     (old.postPatch or "")
+      #     + ''
+      #       substituteInPlace src/compositor/noctalia_compositor.c \
+      #         --replace-fail \
+      #         'if (mode->refresh > best->refresh) {' \
+      #         'if (mode->refresh <= 60000 && (best->refresh > 60000 || mode->refresh > best->refresh)) {'
+      #     '';
+      # });
 
       settings = {
         session.default = "Niri";
@@ -100,7 +99,7 @@
       "${lib.getExe' pkgs.coreutils "env"} "
       + "WLR_DRM_DEVICES=/dev/dri/card1 "
       + "WLR_DRM_NO_ATOMIC=1 "
-      + "${lib.getExe' config.programs.noctalia-greeter.package "noctalia-greeter-session"} --"
+      + "${lib.getExe' config.services.displayManager.noctalia-greeter.package "noctalia-greeter-session"} --"
     );
 
     # Keep session choices and synced appearance across the impermanent root.

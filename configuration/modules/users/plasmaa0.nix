@@ -48,6 +48,7 @@
       application-media-vlc
       application-media-zathura
       application-media-easyeffects
+      application-media-kdenlive
       application-music-rmpc
       # application-music-yandex-music
       application-music-cassette
@@ -100,6 +101,7 @@
       pandoc
       simple-scan
       tealdeer
+      mpv
     ];
 
     mime.enable = true;

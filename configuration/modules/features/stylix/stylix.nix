@@ -7,7 +7,7 @@
     self,
     ...
   }: let
-    theme = import ./../../../themes/dark/simplex.nix;
+    theme = import ./../../../themes/dark/graphite.nix;
     recolor = false;
     gowall-recolored-wallpaper = pkgs.callPackage ./_gowall-recolor-wallpaper.nix {
       colorsList = config.lib.stylix.colors.withHashtag.toList;

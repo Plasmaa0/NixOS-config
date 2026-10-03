@@ -14,6 +14,9 @@
     # Noctalia's bluetooth widget replaces blueman entirely. `bluetooth.nix`
     # enables blueman globally; force it off on hosts that run Noctalia.
     services.blueman.enable = lib.mkForce false;
+
+    # ddcutil (external-monitor brightness) needs the i2c device nodes.
+    hardware.i2c.enable = true;
   };
 
   flake.homeModules.desktop-shell-wayland-noctalia = {
@@ -38,13 +41,20 @@
       show_unlock_hint = true;
       show_weather = true;
     };
-    loginBox = output: cx: cy: placement_width: placement_height: {
+    loginBox = {
+      output,
+      cx,
+      cy,
+      placement_width,
+      placement_height,
+      settings ? {},
+    }: {
       type = "login_box";
       inherit output cx cy placement_width placement_height;
       box_width = 810.0;
       box_height = 196.0;
       rotation = 0.0;
-      settings = loginBoxSettings;
+      settings = loginBoxSettings // settings;
     };
   in {
     imports = [inputs.noctalia.homeModules.default];
@@ -60,9 +70,16 @@
           niri_overview_type_to_launch_enabled = true;
           clipboard_enabled = true;
           password_style = "random";
+          polkit_agent = true;
           screen_time_enabled = true;
+          panel = {
+            control_center_position = "top_right";
+            open_near_click_control_center = true;
+            open_near_click_session = true;
+          };
           screenshot = {
             annotate = true;
+            remember_last_region = true;
             save_to_file = false;
           };
         };
@@ -70,18 +87,17 @@
         bar.main = {
           position = "top";
           thickness = 34;
-          background_opacity = 0.75;
+          background_opacity = 0.85;
           radius = 12;
-          margin_ends = 40;
-          margin_edge = 5;
-          margin_opposite_edge = 5;
+          margin_ends = 120;
+          margin_edge = 0;
           padding = 14;
           widget_spacing = 6;
           shadow = true;
           reserve_space = true;
 
           start = ["control-center" "workspaces" "active_window"];
-          center = ["privacy" "notifications" "clock" "media" "audio_visualizer"];
+          center = ["privacy" "caffeine" "notifications" "clock" "media" "audio_visualizer"];
           end = [
             "tray"
             "network"
@@ -112,6 +128,7 @@
         widget.privacy.hide_inactive = true;
 
         audio.enable_sounds = true;
+        battery.warning_threshold = 20;
 
         # Inert while Stylix pins `theme.source = "custom"`, but synced so
         # switching source later keeps these choices.
@@ -125,7 +142,12 @@
           enable_daemon = true;
           position = "top_right";
           layer = "overlay";
+          # Stylix writes notification.background_opacity (= 1.0); GUI wins.
+          background_opacity = lib.mkForce 0.75;
         };
+
+        # Stylix writes osd.background_opacity (= 1.0); the GUI value wins.
+        osd.background_opacity = lib.mkForce 0.75;
 
         lockscreen.enabled = true;
 
@@ -144,9 +166,13 @@
 
         # zep has two backlights (nvidia_0 + amdgpu_bl1); pin the internal
         # panel to its real sysfs device, matching the old brightnessctl script.
-        brightness.monitor."eDP-1" = {
-          backend = "backlight";
-          backlight_device = "amdgpu_bl1";
+        # DDC/CI is enabled for the external monitors.
+        brightness = {
+          enable_ddcutil = true;
+          monitor."eDP-1" = {
+            backend = "backlight";
+            backlight_device = "amdgpu_bl1";
+          };
         };
 
         location.auto_locate = true;
@@ -160,15 +186,19 @@
         };
         control_center.calendar.show_week_numbers = true;
 
-        # Lock screen login-box layout (disabled; kept declarative).
+        # Lock screen: login boxes plus a few widgets on the internal panel.
         lockscreen_widgets = {
-          enabled = false;
+          enabled = true;
           schema_version = 2;
           widget_order = [
+            "lockscreen-widget-0000000000000003"
             "lockscreen-login-box@winit"
             "lockscreen-login-box@HDMI-A-1"
             "lockscreen-login-box@eDP-1"
             "lockscreen-login-box@DP-2"
+            "lockscreen-widget-0000000000000001"
+            "lockscreen-widget-0000000000000002"
+            "lockscreen-widget-0000000000000004"
           ];
           grid = {
             cell_size = 16;
@@ -176,16 +206,111 @@
             visible = true;
           };
           widget = {
-            "lockscreen-login-box@DP-2" = loginBox "DP-2" 960.0 1098.0 1920.0 1280.0;
-            "lockscreen-login-box@HDMI-A-1" = loginBox "HDMI-A-1" 1024.0 970.0 2048.0 1152.0;
-            "lockscreen-login-box@eDP-1" = loginBox "eDP-1" 854.0 885.00006103515625 1707.0 1067.0;
-            "lockscreen-login-box@winit" = loginBox "winit" 619.0 1317.0 1238.0 1499.0;
+            "lockscreen-login-box@DP-2" = loginBox {
+              output = "DP-2";
+              cx = 960.0;
+              cy = 1098.0;
+              placement_width = 1920.0;
+              placement_height = 1280.0;
+            };
+            "lockscreen-login-box@HDMI-A-1" = loginBox {
+              output = "HDMI-A-1";
+              cx = 1024.0;
+              cy = 970.0;
+              placement_width = 2048.0;
+              placement_height = 1152.0;
+            };
+            "lockscreen-login-box@eDP-1" = loginBox {
+              output = "eDP-1";
+              cx = 853.5;
+              cy = 885.5;
+              placement_width = 1707.0;
+              placement_height = 1067.0;
+              settings.show_media = false;
+            };
+            "lockscreen-login-box@winit" = loginBox {
+              output = "winit";
+              cx = 619.0;
+              cy = 1317.0;
+              placement_width = 1238.0;
+              placement_height = 1499.0;
+            };
+
+            # eDP-1 widgets: now playing, clock, date, audio visualizer.
+            "lockscreen-widget-0000000000000001" = {
+              type = "media_player";
+              output = "eDP-1";
+              cx = 853.5;
+              cy = 533.5;
+              box_width = 384.0;
+              box_height = 176.0;
+              placement_width = 1707.0;
+              placement_height = 1067.0;
+              rotation = 0.0;
+              settings = {
+                background = true;
+                hide_when_no_media = true;
+                layout = "horizontal";
+              };
+            };
+            "lockscreen-widget-0000000000000002" = {
+              type = "clock";
+              output = "eDP-1";
+              cx = 853.5;
+              cy = 229.5;
+              box_width = 688.0;
+              box_height = 320.0;
+              placement_width = 1707.0;
+              placement_height = 1067.0;
+              rotation = 0.0;
+              settings = {
+                background = false;
+                clock_style = "digital";
+                format = "{:%H:%M}";
+                shadow = true;
+              };
+            };
+            "lockscreen-widget-0000000000000003" = {
+              type = "audio_visualizer";
+              output = "eDP-1";
+              cx = 861.5;
+              cy = 675.5;
+              box_width = 800.0;
+              box_height = 80.0;
+              placement_width = 1707.0;
+              placement_height = 1067.0;
+              rotation = 0.0;
+              settings = {
+                background = false;
+                bands = 64;
+                color_1 = "primary";
+                color_2 = "primary";
+                mirrored = true;
+                reversed = false;
+                show_when_idle = false;
+              };
+            };
+            "lockscreen-widget-0000000000000004" = {
+              type = "clock";
+              output = "eDP-1";
+              cx = 853.5;
+              cy = 389.5;
+              box_width = 0.0;
+              box_height = 0.0;
+              placement_width = 1707.0;
+              placement_height = 1067.0;
+              rotation = 0.0;
+              settings = {
+                background = false;
+                format = "{:%d %B}";
+              };
+            };
           };
         };
 
         # screen-off 15m -> lock 30m -> lock-and-suspend 60m
         idle = {
-          pre_action_fade_seconds = 2.0;
+          pre_action_fade_seconds = 10.0;
           behavior_order = ["screen-off" "lock" "suspend"];
           behavior = {
             "screen-off" = {
@@ -207,6 +332,9 @@
         };
       };
     };
+
+    # Noctalia shells out to `ddcutil` for external-monitor brightness.
+    home.packages = [pkgs.ddcutil];
 
     # Zep-scoped disables: these modules are still imported by the shared
     # plasmaa0 profile, so force them off only where Noctalia takes over.

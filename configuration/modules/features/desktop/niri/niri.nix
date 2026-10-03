@@ -147,7 +147,6 @@
       {argv = [(lib.getExe pkgs.kanshi)];}
       {argv = [(lib.getExe pkgs.xwayland-satellite)];}
       # {command = [(lib.getExe pkgs.mako)];}
-      {command = ["${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"];}
       {command = ["${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"];}
     ];
 
