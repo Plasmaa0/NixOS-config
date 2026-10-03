@@ -58,7 +58,6 @@
       application-utils-gparted
       service-powertop
       service-poweralertd
-      service-udiskie
       service-kde-connect
       service-flameshot
       service-cliphist
