@@ -22,7 +22,7 @@
       cli-utils-direnv
       cli-utils-fastfetch
       cli-utils-git
-      cli-utils-opencode
+      cli-utils-ai-agents
       # cli-utils-yazi
       cli-utils-elio
       desktop-window-manager-wayland-niri
