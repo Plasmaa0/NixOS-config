@@ -25,6 +25,8 @@
     pkgs,
     ...
   }: let
+    # Same derivation the `cli-utils-elio` module installs.
+    elio = pkgs.callPackage ../cli/utils/elio/_elio_package.nix {};
     loginBoxSettings = {
       background_color = "surface_variant";
       background_opacity = 0.88;
@@ -100,15 +102,40 @@
           center = ["privacy" "caffeine" "notifications" "clock" "media" "audio_visualizer"];
           end = [
             "tray"
+            "udiskie"
             "network"
             "bluetooth"
+            "group:quick"
             "volume"
             "brightness"
             "battery"
             "keyboard_layout"
             "session"
           ];
+
+          # Collapsed to the icon-only niri-displays anchor, unfolding printers +
+          # phone while hovered. `direction = "start"` renders the anchor at the
+          # capsule's trailing edge: the `end` lane is right-justified, so that
+          # edge is fixed and the anchor stays under the pointer while the other
+          # members unfold to its left.
+          capsule_group = [
+            {
+              id = "quick";
+              members = ["niri-displays" "printers" "phone"];
+              accordion = true;
+              accordion_direction = "start";
+            }
+          ];
         };
+
+        # Community plugins. Sources are seeded to the built-in `official` +
+        # `community` git sources when `[[plugins.source]]` is absent.
+        plugins.enabled = [
+          "aristides/udiskie"
+          "andrewdems/printers"
+          "icefish/phone-operate"
+          "raycursive/niri-displays"
+        ];
 
         widget.clock = {
           format = "{:%d-%m-%Y %H:%M}";
@@ -126,6 +153,26 @@
         widget.keyboard_layout.display = "short";
         widget.network.show_label = false;
         widget.privacy.hide_inactive = true;
+
+        # Plugin-provided bar widgets; the keys must match the names used in
+        # the `bar.main` lists above.
+        widget.udiskie = {
+          type = "aristides/udiskie:status";
+          hide_when_empty = true;
+        };
+        widget.printers.type = "andrewdems/printers:printer";
+        # Phone-operate's bar presence: renders its no-device label until a
+        # phone is connected; revealed by the `group:quick` accordion.
+        widget.phone.type = "icefish/phone-operate:status";
+        # Icon only: the port/name/resolution labels take too much bar space.
+        widget.niri-displays = {
+          type = "raycursive/niri-displays:bar";
+          show_resolution = false;
+        };
+
+        # Plugin-level settings live at the top level, not under `plugins`.
+        # Keeps the file manager the removed udiskie daemon used to open.
+        plugin_settings."aristides/udiskie".file_manager_cmd = "${pkgs.kitty}/bin/kitty -e ${elio}/bin/elio";
 
         audio.enable_sounds = true;
         battery.warning_threshold = 20;
@@ -184,7 +231,21 @@
             type = "google";
           };
         };
-        control_center.calendar.show_week_numbers = true;
+        # Home-tab shortcut row. Declaring the list replaces the built-in
+        # default set, so the defaults are repeated here; the control center
+        # renders at most six of them, hence `caffeine` is dropped (the bar's
+        # `caffeine` widget covers it) to keep the plugin tile visible.
+        control_center = {
+          calendar.show_week_numbers = true;
+          shortcuts = [
+            {type = "wifi";}
+            {type = "bluetooth";}
+            {type = "nightlight";}
+            {type = "notification";}
+            {type = "power_profile";}
+            {type = "icefish/phone-operate:tile";}
+          ];
+        };
 
         # Lock screen: login boxes plus a few widgets on the internal panel.
         lockscreen_widgets = {
@@ -333,8 +394,17 @@
       };
     };
 
-    # Noctalia shells out to `ddcutil` for external-monitor brightness.
-    home.packages = [pkgs.ddcutil];
+    # Noctalia shells out to `ddcutil` for external-monitor brightness; the
+    # rest are runtime dependencies of the enabled plugins.
+    home.packages = [
+      pkgs.ddcutil
+      pkgs.udiskie # aristides/udiskie: `udiskie` + `udiskie-info`
+      pkgs.sshfs # icefish/phone-operate: SFTP browse
+      pkgs.glib.bin # icefish/phone-operate: `gdbus`
+    ];
+
+    # icefish/phone-operate: kdeconnectd + kdeconnect-cli.
+    services.kdeconnect.enable = true;
 
     # Zep-scoped disables: these modules are still imported by the shared
     # plasmaa0 profile, so force them off only where Noctalia takes over.

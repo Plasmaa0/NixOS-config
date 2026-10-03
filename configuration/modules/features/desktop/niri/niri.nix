@@ -282,6 +282,13 @@
         open-floating = true;
       }
       {
+        # icefish/phone-operate casts through scrcpy; keep the mirror window
+        # floating and opaque.
+        matches = [{app-id = "scrcpy";}];
+        open-floating = true;
+        opacity = 1.0;
+      }
+      {
         matches = [
           {
             app-id = "org.telegram.desktop";
