@@ -168,7 +168,7 @@ tweaked themes instead).
 | WM/Desktop | i3 (custom keybinds, workspaces, modes), eww (status bar + widgets), polybar, rofi, betterlockscreen, dunst, picom, conky |
 | Browsers | qutebrowser (Vim-like, keyboard-driven), helium (minimal webview browser) |
 | Media | rmpc (MPD client, album art + lyrics), mpd, yandex-music, cassette, zathura, vlc, obs, easyeffects |
-| File Mgmt | yazi (terminal file manager, plugins: compress, max-preview, restore, smart-enter, smart-filter) |
+| File Mgmt | elio (terminal file manager, rich previews + trash) |
 | Gaming | steam, prismlauncher/atlauncher (Minecraft), mangohud, heroic |
 | Utils | mime (custom file-type handler module), flameshot, copyq, udiskie, autorandr, fastfetch, direnv, gparted |
 | Dev | Typst, LaTeX (texlive basic), Python |

@@ -24,14 +24,15 @@
           panel = c.base01;
           panel_alt = c.base02;
           surface = c.base03;
-          elevated = c.base04;
+          elevated = c.base03;
           border = c.base05;
-          text = c.base06;
+          text = c.base07;
           muted = c.base05;
           accent = c.base0D;
           accent_soft = c.base03;
-          accent_text = c.base07;
-          selected_bg = c.base04;
+          accent_text = c.base00;
+          selected_bg = c.base03;
+          chip_text = c.base00;
           selected_border = c.base0D;
           selection_bar = c.base09;
           yank_bar = c.base0B;
@@ -47,14 +48,14 @@
         };
 
         preview.code = {
-          fg = c.base06;
+          fg = c.base07;
           bg = c.base01;
-          selection_bg = c.base03;
+          selection_bg = c.base02;
           selection_fg = c.base07;
           caret = c.base0D;
           line_highlight = c.base00;
           line_number = c.base04;
-          comment = c.base03;
+          comment = c.base04;
           string = c.base0B;
           constant = c.base09;
           keyword = c.base0E;

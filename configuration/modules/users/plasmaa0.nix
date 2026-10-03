@@ -23,7 +23,6 @@
       cli-utils-fastfetch
       cli-utils-git
       cli-utils-ai-agents
-      # cli-utils-yazi
       cli-utils-elio
       desktop-window-manager-wayland-niri
       # desktop-window-manager-x11-i3
