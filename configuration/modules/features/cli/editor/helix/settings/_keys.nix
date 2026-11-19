@@ -1,12 +1,5 @@
 {lib, ...}: {
-  programs.helix.settings.keys = let
-    disable_arrow_keys = {
-      up = "no_op";
-      down = "no_op";
-      left = "no_op";
-      right = "no_op";
-    };
-  in {
+  programs.helix.settings.keys = {
     normal = let
       # map cycyrillic keys to english using helix macro feature
       # example:
