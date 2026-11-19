@@ -12,40 +12,21 @@
     };
     services.gnome.gnome-keyring.enable = true;
     programs.seahorse.enable = true;
-    environment.systemPackages = with pkgs; [
-      nautilus
-      #   (runCommandLocal "nautilus-portal" {} ''
-      #     mkdir -p $out/share/xdg-desktop-portal/portals
-      #     cat > $out/share/xdg-desktop-portal/portals/nautilus.portal <<EOF
-      #     [portal]
-      #     DBusName=org.gnome.Nautilus
-      #     Interfaces=org.freedesktop.impl.portal.FileChooser
-      #     EOF
-      #   '')
-    ];
+    environment.systemPackages = [pkgs.nautilus];
 
     xdg.portal = {
       enable = true;
       xdgOpenUsePortal = true;
-      # wlr.enable = true;
       extraPortals = [
-        # pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-gnome
       ];
       config = {
         common.default = ["gnome"];
-        # FileChooser для niri-сессии; XDG_CURRENT_DESKTOP=niri, поэтому
-        # xdg-desktop-portal читает именно niri-portals.conf и не смотрит
-        # generic portals.conf в той же локации — default дублируем.
         niri = {
           default = ["gnome"];
           "org.freedesktop.impl.portal.FileChooser" = ["elio"];
         };
       };
-      # config.common = {
-      #   default = ["gtk"];
-      #   "org.freedesktop.impl.portal.FileChooser" = "nautilus";
-      # };
     };
     security.pam.services.login.enableGnomeKeyring = true;
     security.pam.services.sddm.enableGnomeKeyring = true;
@@ -66,9 +47,6 @@
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
       QT_QPA_PLATFORM = "wayland";
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      # No SDL_VIDEODRIVER: Steam rewrites a single-driver value into
-      # "wayland,x11,windows", which games bundling an X11-only SDL2 reject
-      # ("wayland,x11,windows not available"). SDL auto-detects instead.
     };
   in {
     imports = [
@@ -109,9 +87,6 @@
 
     programs.niri.settings.environment = sessionEnv;
 
-    # systemd --user reads environment.d at manager start. This merges into the
-    # same ~/.config/environment.d/10-home-manager.conf that the xdg and qt
-    # modules already write (XDG_BIN_HOME, QT_PLUGIN_PATH, ...).
     systemd.user.sessionVariables = sessionEnv;
 
     # Input configuration
@@ -284,9 +259,6 @@
         # background-effect.blur = false; # FIXME
       }
       {
-        # elio FileChooser поднимает kitty с этими app-id/title
-        # (src/portal/terminal.rs: kitty --title "elio File Chooser"
-        #  --app-id io.github.elio_fm.elio.filechooser).
         matches = [
           {app-id = "io.github.elio_fm.elio.filechooser";}
           {title = "elio File Chooser";}
@@ -297,9 +269,6 @@
       }
     ];
     programs.niri.settings.layer-rules = [
-      # Noctalia's blurred backdrop rendered inside niri's overview. Noctalia
-      # publishes its own blur regions on ext-background-effects, so no
-      # `background-effect` rule is needed (niri-flake also does not expose it).
       {
         matches = [{namespace = "^noctalia-backdrop";}];
         place-within-backdrop = true;
