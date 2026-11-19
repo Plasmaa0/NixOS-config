@@ -47,7 +47,7 @@
       recursive = true;
     };
     programs.qutebrowser = {
-      enable = true;
+      enable = false;
       quickmarks = {
         # nix(os)
         home-manager = "https://nix-community.github.io/home-manager/options.xhtml";
