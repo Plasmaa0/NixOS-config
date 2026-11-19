@@ -74,7 +74,7 @@
       plasmaa0 = {
         isNormalUser = true;
         description = "plasmaa0";
-        extraGroups = ["networkmanager" "wheel" "dialout" "input" "i2c"];
+        extraGroups = ["networkmanager" "wheel" "dialout" "input" "i2c" "docker"];
       };
     };
 

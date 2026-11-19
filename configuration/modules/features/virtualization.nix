@@ -1,9 +1,5 @@
 {...}: {
-  flake.nixosModules.virtualization = {
-    pkgs,
-    self,
-    ...
-  }: {
+  flake.nixosModules.virtualization = {pkgs, ...}: {
     programs.dconf.enable = true;
     environment.persistence."/persist" = {
       hideMounts = true;
@@ -23,5 +19,12 @@
       quickemu
       quickgui
     ];
+    virtualisation.docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
   };
 }
