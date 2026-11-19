@@ -42,6 +42,7 @@
       host-enable-niri-support
       host-enable-noctalia-support
       virtualization
+      application-media-obs-v4l2loopback
       secrets
       ./_hardware-configuration.nix
     ];
