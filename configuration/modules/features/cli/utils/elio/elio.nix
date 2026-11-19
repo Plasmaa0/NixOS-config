@@ -1,21 +1,34 @@
 {...}: {
   flake.homeModules.cli-utils-elio = {
-    pkgs,
     config,
+    inputs,
+    pkgs,
     ...
-  }: {
-    home.packages = [(pkgs.callPackage ./_elio_package.nix {})];
-    # home.persistence."/persist" = {
-    #   directories = [
-    #     ".config/opencode"
-    #     ".cache/opencode"
-    #     ".local/share/opencode"
-    #     ".local/state/opencode"
-    #   ];
-    # };
+  }: let
+    elio = inputs.elio.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    tomlFormat = pkgs.formats.toml {};
+    c = config.lib.stylix.colors.withHashtag;
+  in {
+    home.packages = [elio];
+
+    xdg.dataFile = {
+      "xdg-desktop-portal/portals/elio.portal".text = ''
+        [portal]
+        DBusName=io.github.elio_fm.elio.Portal
+        Interfaces=org.freedesktop.impl.portal.FileChooser;
+      '';
+      "dbus-1/services/io.github.elio_fm.elio.Portal.service".text = ''
+        [D-BUS Service]
+        Name=io.github.elio_fm.elio.Portal
+        Exec=${config.home.profileDirectory}/bin/elio --portal-service
+      '';
+    };
+
+    xdg.configFile."elio/config.toml".source = tomlFormat.generate "elio-config.toml" {
+      portal.terminal = "kitty";
+    };
+
     xdg.configFile."elio/theme.toml".source = let
-      tomlFormat = pkgs.formats.toml {};
-      c = config.lib.stylix.colors.withHashtag;
       theme = {
         palette = {
           bg = c.base00;
@@ -23,134 +36,136 @@
           chrome_alt = c.base02;
           panel = c.base01;
           panel_alt = c.base02;
-          surface = c.base03;
+          surface = c.base02;
           elevated = c.base03;
-          border = c.base05;
+          border = c.base04;
           text = c.base07;
-          muted = c.base05;
-          accent = c.base0D;
-          accent_soft = c.base03;
+          muted = c.base04;
+          colored_names = true;
+          accent = c.base0C;
+          accent_soft = c.base02;
           accent_text = c.base00;
-          selected_bg = c.base03;
+          selected_bg = c.base02;
           chip_text = c.base00;
-          selected_border = c.base0D;
+          selected_border = c.base0C;
           selection_bar = c.base09;
           yank_bar = c.base0B;
           cut_bar = c.base08;
-          progress_bar = c.base0D;
-          grid_selection_band = c.base0F;
-          grid_yank_band = c.base0B;
-          grid_cut_band = c.base08;
-          sidebar_active = c.base03;
-          button_bg = c.base00;
-          button_disabled_bg = c.base01;
+          progress_bar = c.base0C;
+          trash_bar = c.base08;
+          restore_bar = c.base0C;
+          sidebar_active = c.base02;
+          button_bg = c.base01;
+          button_disabled_bg = c.base00;
           path_bg = c.base00;
         };
 
         preview.code = {
           fg = c.base07;
-          bg = c.base01;
+          bg = c.base00;
           selection_bg = c.base02;
           selection_fg = c.base07;
-          caret = c.base0D;
-          line_highlight = c.base00;
+          caret = c.base0C;
+          line_highlight = c.base01;
           line_number = c.base04;
           comment = c.base04;
           string = c.base0B;
           constant = c.base09;
           keyword = c.base0E;
-          function = c.base0D;
+          function = c.base0C;
           type = c.base0A;
           parameter = c.base0F;
           tag = c.base0C;
-          operator = c.base0C;
+          operator = c.base0D;
           macro = c.base08;
           invalid = c.base08;
         };
 
         classes = {
-          directory = {color = c.base0D;};
-          code = {color = c.base0C;};
+          directory = {color = c.base0C;};
+          symlink_directory = {color = c.base0C;};
+          broken_symlink = {color = c.base08;};
+          code = {color = c.base0A;};
           config = {color = c.base0E;};
           document = {color = c.base0B;};
-          license = {color = c.base0A;};
-          image = {color = c.base0C;};
-          audio = {color = c.base09;};
-          video = {color = c.base0E;};
+          license = {color = c.base0F;};
+          image = {color = c.base09;};
+          audio = {color = c.base0D;};
+          video = {color = c.base0A;};
           archive = {color = c.base08;};
           font = {color = c.base0E;};
           data = {color = c.base0B;};
-          file = {color = c.base05;};
+          file = {color = c.base07;};
         };
 
         directories = {
           "node_modules" = {
             icon = "󰏗";
-            color = c.base0D;
+            color = c.base0C;
           };
           "tests" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "test" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "__tests__" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "scripts" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "build" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "dist" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           ".next" = {
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           ".nuxt" = {
             icon = "󱄆";
-            color = c.base0D;
+            color = c.base0C;
           };
           ".svelte-kit" = {
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           ".astro" = {
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           "public" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "Public" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "publico" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "Publico" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "público" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "Público" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "pictures" = {
             icon = "󰉏";
@@ -210,107 +225,107 @@
           };
           "music" = {
             icon = "󱍙";
-            color = c.base0E;
+            color = c.base0A;
           };
           "Music" = {
             icon = "󱍙";
-            color = c.base0E;
+            color = c.base0A;
           };
           "musica" = {
             icon = "󱍙";
-            color = c.base0E;
+            color = c.base0A;
           };
           "Musica" = {
             icon = "󱍙";
-            color = c.base0E;
+            color = c.base0A;
           };
           "música" = {
             icon = "󱍙";
-            color = c.base0E;
+            color = c.base0A;
           };
           "Música" = {
             icon = "󱍙";
-            color = c.base0E;
+            color = c.base0A;
           };
           "videos" = {
             icon = "󰕧";
-            color = c.base0E;
+            color = c.base0A;
           };
           "Videos" = {
             icon = "󰕧";
-            color = c.base0E;
+            color = c.base0A;
           };
           "vídeos" = {
             icon = "󰕧";
-            color = c.base0E;
+            color = c.base0A;
           };
           "Vídeos" = {
             icon = "󰕧";
-            color = c.base0E;
+            color = c.base0A;
           };
           "desktop" = {
             icon = "󰍹";
-            color = c.base0E;
+            color = c.base0A;
           };
           "Desktop" = {
             icon = "󰍹";
-            color = c.base0E;
+            color = c.base0A;
           };
           "escritorio" = {
             icon = "󰍹";
-            color = c.base0E;
+            color = c.base0A;
           };
           "Escritorio" = {
             icon = "󰍹";
-            color = c.base0E;
+            color = c.base0A;
           };
           "assets" = {
             icon = "󰉏";
-            color = c.base0D;
+            color = c.base0C;
           };
           "coverage" = {
             icon = "󰙨";
-            color = c.base0D;
+            color = c.base0C;
           };
           "tmp" = {
             icon = "󰪺";
-            color = c.base0D;
+            color = c.base0C;
           };
           "temp" = {
             icon = "󰪺";
-            color = c.base0D;
+            color = c.base0C;
           };
           "out" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "target" = {
             icon = "󱧽";
-            color = c.base0D;
+            color = c.base0C;
           };
           "bin" = {
             icon = "󱁿";
-            color = c.base0D;
+            color = c.base0C;
           };
           "lib" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "vendor" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "src" = {
             icon = "󰉋";
-            color = c.base0D;
+            color = c.base0C;
           };
           "config" = {
             icon = "󰒓";
-            color = c.base0D;
+            color = c.base0C;
           };
           "docs" = {
             icon = "󱧷";
-            color = c.base0D;
+            color = c.base0C;
           };
         };
 
@@ -318,35 +333,35 @@
           toml = {
             class = "config";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           yaml = {
             class = "config";
-            color = c.base0E;
+            color = c.base0A;
           };
           yml = {
             class = "config";
-            color = c.base0E;
+            color = c.base0A;
           };
           json = {
             class = "config";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           jsonc = {
             class = "config";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           json5 = {
             class = "config";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           desktop = {
             class = "config";
             icon = "󰍹";
-            color = c.base0D;
+            color = c.base0C;
           };
           xcf = {
             class = "image";
@@ -381,7 +396,7 @@
           iso = {
             class = "archive";
             icon = "󰗮";
-            color = c.base05;
+            color = c.base08;
           };
           lock = {
             class = "data";
@@ -396,7 +411,7 @@
           ts = {
             class = "code";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           tsx = {
             class = "code";
@@ -426,42 +441,42 @@
           sh = {
             class = "code";
             icon = "";
-            color = c.base05;
+            color = c.base0A;
           };
           bash = {
             class = "code";
             icon = "";
-            color = c.base05;
+            color = c.base0A;
           };
           zsh = {
             class = "code";
             icon = "";
-            color = c.base05;
+            color = c.base0A;
           };
           fish = {
             class = "code";
             icon = "";
-            color = c.base05;
+            color = c.base0A;
           };
           c = {
             class = "code";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           cpp = {
             class = "code";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           h = {
             class = "code";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           hpp = {
             class = "code";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           java = {
             class = "code";
@@ -471,12 +486,12 @@
           lua = {
             class = "code";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           php = {
             class = "code";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           rb = {
             class = "code";
@@ -491,7 +506,7 @@
           kt = {
             class = "code";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           vue = {
             class = "code";
@@ -506,7 +521,7 @@
           astro = {
             class = "code";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           html = {
             class = "code";
@@ -521,22 +536,22 @@
           xml = {
             class = "code";
             icon = "󰗀";
-            color = c.base0E;
+            color = c.base0A;
           };
           xsd = {
             class = "code";
             icon = "󰗀";
-            color = c.base0E;
+            color = c.base0A;
           };
           xsl = {
             class = "code";
             icon = "󰗀";
-            color = c.base0E;
+            color = c.base0A;
           };
           xslt = {
             class = "code";
             icon = "󰗀";
-            color = c.base0E;
+            color = c.base0A;
           };
           css = {
             class = "code";
@@ -546,7 +561,7 @@
           scss = {
             class = "code";
             icon = "";
-            color = c.base0F;
+            color = c.base09;
           };
           md = {
             class = "document";
@@ -581,7 +596,7 @@
           txt = {
             class = "document";
             icon = "";
-            color = c.base05;
+            color = c.base0B;
           };
           sql = {
             class = "data";
@@ -591,7 +606,7 @@
           nix = {
             class = "config";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           dart = {
             class = "code";
@@ -606,7 +621,7 @@
           log = {
             class = "document";
             icon = "";
-            color = c.base05;
+            color = c.base0B;
           };
           srt = {
             class = "document";
@@ -624,7 +639,7 @@
           "package.json" = {
             class = "config";
             icon = "󰏗";
-            color = c.base0D;
+            color = c.base0C;
           };
           "package-lock.json" = {
             class = "data";
@@ -634,7 +649,7 @@
           "tsconfig.json" = {
             class = "config";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           "Dockerfile" = {
             class = "config";
@@ -669,32 +684,32 @@
           "AUTHORS" = {
             class = "document";
             icon = "󰭘";
-            color = c.base0E;
+            color = c.base0A;
           };
           "AUTHORS.md" = {
             class = "document";
             icon = "󰭘";
-            color = c.base0E;
+            color = c.base0A;
           };
           "AUTHORS.txt" = {
             class = "document";
             icon = "󰭘";
-            color = c.base0E;
+            color = c.base0A;
           };
           "CONTRIBUTORS" = {
             class = "document";
             icon = "󰭘";
-            color = c.base0E;
+            color = c.base0A;
           };
           "CONTRIBUTORS.md" = {
             class = "document";
             icon = "󰭘";
-            color = c.base0E;
+            color = c.base0A;
           };
           ".gitignore" = {
             class = "config";
             icon = "󰊢";
-            color = c.base0E;
+            color = c.base0A;
           };
           ".env" = {
             class = "config";
@@ -744,7 +759,7 @@
           "turbo.json" = {
             class = "config";
             icon = "󰐷";
-            color = c.base05;
+            color = c.base0E;
           };
           "deno.json" = {
             class = "config";
@@ -764,7 +779,7 @@
           "requirements.txt" = {
             class = "document";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           "go.mod" = {
             class = "config";
@@ -779,22 +794,22 @@
           "vite.config.ts" = {
             class = "config";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           "vite.config.js" = {
             class = "config";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           "vite.config.mjs" = {
             class = "config";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           "vite.config.mts" = {
             class = "config";
             icon = "";
-            color = c.base0E;
+            color = c.base0A;
           };
           "tailwind.config.ts" = {
             class = "config";
@@ -814,32 +829,32 @@
           "eslint.config.js" = {
             class = "config";
             icon = "󰱺";
-            color = c.base0E;
+            color = c.base0A;
           };
           "eslint.config.mjs" = {
             class = "config";
             icon = "󰱺";
-            color = c.base0E;
+            color = c.base0A;
           };
           "eslint.config.ts" = {
             class = "config";
             icon = "󰱺";
-            color = c.base0E;
+            color = c.base0A;
           };
           "prettier.config.js" = {
             class = "config";
             icon = "";
-            color = c.base0F;
+            color = c.base09;
           };
           "prettier.config.mjs" = {
             class = "config";
             icon = "";
-            color = c.base0F;
+            color = c.base09;
           };
           "prettier.config.ts" = {
             class = "config";
             icon = "";
-            color = c.base0F;
+            color = c.base09;
           };
           "postcss.config.js" = {
             class = "config";
@@ -869,12 +884,12 @@
           "CMakeLists.txt" = {
             class = "config";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           "flake.nix" = {
             class = "config";
             icon = "";
-            color = c.base0D;
+            color = c.base0C;
           };
           "flake.lock" = {
             class = "data";

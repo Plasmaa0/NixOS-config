@@ -58,6 +58,10 @@
       url = "github:can1357/oh-my-pi";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    elio = {
+      url = "github:elio-fm/elio";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: let
