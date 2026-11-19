@@ -54,6 +54,10 @@
     # or the cache is invalidated and the shell compiles from source.
     noctalia.url = "github:noctalia-dev/noctalia";
     noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
+    omp = {
+      url = "github:can1357/oh-my-pi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: let

@@ -1,5 +1,11 @@
 {...}: {
-  flake.homeModules.cli-utils-ai-agents = {pkgs, ...}: let
+  flake.homeModules.cli-utils-ai-agents = {
+    pkgs,
+    config,
+    lib,
+    inputs,
+    ...
+  }: let
     codegraph = {
       stdenvNoCC,
       lib,
@@ -50,12 +56,142 @@
       };
 
     codegraphPkg = pkgs.callPackage codegraph {};
+
+    ompTheme = let
+      c = config.lib.stylix.colors.withHashtag;
+      theme = {
+        name = "stylix";
+        vars = {
+          bg = c.base00;
+          bgAlt = c.base01;
+          bgAlt2 = c.base02;
+          fgMuted = c.base04;
+          fg = c.base05;
+          red = c.base08;
+          orange = c.base09;
+          yellow = c.base0A;
+          green = c.base0B;
+          cyan = c.base0C;
+          blue = c.base0D;
+          gold = c.base0E;
+          brown = c.base0F;
+        };
+        colors = {
+          accent = "blue";
+          border = "fg";
+          borderAccent = "blue";
+          borderMuted = "fgMuted";
+          success = "green";
+          error = "red";
+          warning = "yellow";
+          muted = "fgMuted";
+          dim = "fgMuted";
+          text = "";
+          thinkingText = "fgMuted";
+
+          selectedBg = "bgAlt2";
+          userMessageBg = "bgAlt";
+          userMessageText = "";
+          customMessageBg = "bgAlt";
+          customMessageText = "";
+          customMessageLabel = "gold";
+          toolPendingBg = "bgAlt";
+          toolSuccessBg = "bgAlt";
+          toolErrorBg = "bgAlt";
+          toolTitle = "";
+          toolOutput = "fgMuted";
+
+          mdHeading = "blue";
+          mdLink = "cyan";
+          mdLinkUrl = "fgMuted";
+          mdCode = "gold";
+          mdCodeBlock = "gold";
+          mdCodeBlockBorder = "fgMuted";
+          mdQuote = "fgMuted";
+          mdQuoteBorder = "fgMuted";
+          mdHr = "fgMuted";
+          mdListBullet = "blue";
+
+          toolDiffAdded = "green";
+          toolDiffRemoved = "red";
+          toolDiffContext = "fgMuted";
+
+          syntaxComment = "fgMuted";
+          syntaxKeyword = "gold";
+          syntaxFunction = "blue";
+          syntaxVariable = "fg";
+          syntaxString = "green";
+          syntaxNumber = "orange";
+          syntaxType = "yellow";
+          syntaxOperator = "cyan";
+          syntaxPunctuation = "fg";
+
+          thinkingOff = "brown";
+          thinkingMinimal = "fgMuted";
+          thinkingLow = "cyan";
+          thinkingMedium = "blue";
+          thinkingHigh = "gold";
+          thinkingXhigh = "red";
+          thinkingMax = "orange";
+
+          bashMode = "cyan";
+          pythonMode = "yellow";
+
+          statusLineBg = "bgAlt";
+          statusLineSep = "fgMuted";
+          statusLineModel = "gold";
+          statusLinePath = "blue";
+          statusLineGitClean = "green";
+          statusLineGitDirty = "yellow";
+          statusLineContext = "cyan";
+          statusLineSpend = "orange";
+          statusLineStaged = "green";
+          statusLineDirty = "yellow";
+          statusLineUntracked = "red";
+          statusLineOutput = "fg";
+          statusLineCost = "orange";
+          statusLineSubagents = "blue";
+        };
+      };
+    in
+      (pkgs.formats.json {}).generate "stylix.json" theme;
+
+    ompFishCompletions = pkgs.runCommand "omp-fish-completions" {} ''
+      mkdir -p "$out"
+      HOME="$TMPDIR" ${config.programs.omp.package}/bin/omp completions fish > "$out/omp.fish"
+    '';
+
+    ompConfigSeed = (pkgs.formats.yaml {}).generate "omp-config-seed.yml" {
+      theme = {
+        dark = "stylix";
+        light = "stylix";
+      };
+      tools.approvalMode = "write";
+    };
   in {
-    # AI coding agents: codegraph (opencode MCP), opencode, oh-my-pi.
-    home.packages = [
-      codegraphPkg
-      pkgs.omp
-    ];
+    imports = [inputs.omp.homeManagerModules.default];
+
+    home.packages = [codegraphPkg];
+    home.file.".omp/agent/themes/stylix.json".source = ompTheme;
+
+    xdg.configFile."fish/completions/omp.fish".source = "${ompFishCompletions}/omp.fish";
+    home.activation.ompConfigSeed = lib.hm.dag.entryAfter ["linkGeneration"] ''
+      ompConfig="$HOME/.omp/agent/config.yml"
+      if [ -e "$ompConfig" ]; then
+        if ! grep -qE '^theme:' "$ompConfig"; then
+          run ${config.programs.omp.package}/bin/omp config set theme.dark stylix
+          run ${config.programs.omp.package}/bin/omp config set theme.light stylix
+        fi
+        if ! grep -qE '^[[:space:]]+approvalMode:' "$ompConfig"; then
+          run ${config.programs.omp.package}/bin/omp config set tools.approvalMode write
+        fi
+      else
+        run mkdir -p "$HOME/.omp/agent"
+        run install -m 600 ${ompConfigSeed} "$ompConfig"
+      fi
+    '';
+
+    programs.omp.enable = true;
 
     programs.opencode = {
       enable = true;
