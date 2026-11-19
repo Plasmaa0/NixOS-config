@@ -25,8 +25,7 @@
     pkgs,
     ...
   }: let
-    # Same derivation the `cli-utils-elio` module installs.
-    elio = pkgs.callPackage ../cli/utils/elio/_elio_package.nix {};
+    elio = inputs.elio.packages.${pkgs.stdenv.hostPlatform.system}.default;
     loginBoxSettings = {
       background_color = "surface_variant";
       background_opacity = 0.88;
@@ -58,6 +57,51 @@
       rotation = 0.0;
       settings = loginBoxSettings // settings;
     };
+
+    chargeLimit = pkgs.writeShellApplication {
+      name = "charge-limit";
+      runtimeInputs = [pkgs.asusctl pkgs.libnotify];
+      text = ''
+        limits=(40 60 80 100)
+
+        case ''${1:-up} in
+          up | down) ;;
+          *)
+            echo "usage: charge-limit [up|down]" >&2
+            exit 2
+            ;;
+        esac
+
+        current=$(asusctl battery info | grep -oE '[0-9]+' | head -1)
+        current=''${current:-0}
+
+        # up: nearest limit above the current one (40 when wrapping past 100);
+        # down: nearest limit below it (100 when wrapping past 40). Values the
+        # firmware stored that are not in the list (e.g. 70) round the right way.
+        next=""
+        for limit in "''${limits[@]}"; do
+          if [ "$1" = up ] && [ "$limit" -gt "$current" ]; then
+            next=$limit
+            break
+          elif [ "$1" = down ] && [ "$limit" -lt "$current" ]; then
+            next=$limit
+          fi
+        done
+        if [ -z "$next" ]; then
+          if [ "$1" = up ]; then
+            next=40
+          else
+            next=100
+          fi
+        fi
+
+        asusctl battery limit "$next" >/dev/null
+        # Report what the firmware actually kept, not what was requested.
+        effective=$(asusctl battery info | grep -oE '[0-9]+' | head -1)
+        notify-send -a battery -i battery "Charge limit: ''${effective}%" \
+          "Stops charging at ''${effective}%" || true
+      '';
+    };
   in {
     imports = [inputs.noctalia.homeModules.default];
 
@@ -74,6 +118,7 @@
           password_style = "random";
           polkit_agent = true;
           screen_time_enabled = true;
+          avatar_path = ../../users/plasmaa0.jpg;
           panel = {
             control_center_position = "top_right";
             open_near_click_control_center = true;
@@ -153,6 +198,11 @@
         widget.keyboard_layout.display = "short";
         widget.network.show_label = false;
         widget.privacy.hide_inactive = true;
+        widget.battery.display_mode = "graphic";
+        widget.battery.actions = {
+          right = "exec charge-limit up";
+          middle = "exec charge-limit down";
+        };
 
         # Plugin-provided bar widgets; the keys must match the names used in
         # the `bar.main` lists above.
@@ -173,6 +223,7 @@
         # Plugin-level settings live at the top level, not under `plugins`.
         # Keeps the file manager the removed udiskie daemon used to open.
         plugin_settings."aristides/udiskie".file_manager_cmd = "${pkgs.kitty}/bin/kitty -e ${elio}/bin/elio";
+        plugin_settings."andrewdems/printers".show_when_idle = true;
 
         audio.enable_sounds = true;
         battery.warning_threshold = 20;
@@ -401,6 +452,7 @@
       pkgs.udiskie # aristides/udiskie: `udiskie` + `udiskie-info`
       pkgs.sshfs # icefish/phone-operate: SFTP browse
       pkgs.glib.bin # icefish/phone-operate: `gdbus`
+      chargeLimit # battery widget scroll gestures
     ];
 
     # icefish/phone-operate: kdeconnectd + kdeconnect-cli.

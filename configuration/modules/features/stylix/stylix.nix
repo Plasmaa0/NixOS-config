@@ -7,7 +7,7 @@
     self,
     ...
   }: let
-    theme = import ./../../../themes/dark/graphite.nix;
+    theme = import ./../../../themes/dark/dark_mountains.nix;
     recolor = false;
     gowall-recolored-wallpaper = pkgs.callPackage ./_gowall-recolor-wallpaper.nix {
       colorsList = config.lib.stylix.colors.withHashtag.toList;
@@ -24,7 +24,6 @@
       autoEnable = true;
       image = wallpaper-path;
       targets = {
-        qt.enable = false;
         plymouth.enable = false;
       };
       imageScalingMode = "fill";
@@ -79,7 +78,6 @@
     stylix.targets = {
       i3.enable = false;
       helix.enable = false;
-      qt.enable = true;
     };
     xresources.properties."Xft.dpi" = dpi;
   };

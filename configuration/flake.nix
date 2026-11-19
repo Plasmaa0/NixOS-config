@@ -47,7 +47,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     niri = {
-      url = "github:sodiboo/niri-flake";
+      url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Prebuilt via https://noctalia.cachix.org; do NOT set inputs.nixpkgs.follows

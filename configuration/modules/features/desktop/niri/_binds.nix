@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   lib,
   ...
@@ -99,6 +100,10 @@ in {
     "Mod+q".action = {close-window = [];};
     "Mod+t" = {
       action.spawn = lib.getExe pkgs.telegram-desktop;
+      repeat = false;
+    };
+    "Mod+e" = {
+      action.spawn = lib.getExe inputs.elio.packages.${pkgs.stdenv.hostPlatform.system}.default;
       repeat = false;
     };
 

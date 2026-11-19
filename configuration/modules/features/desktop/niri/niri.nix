@@ -5,31 +5,7 @@
     ...
   }: {
     imports = [inputs.niri.nixosModules.niri];
-    # TEMP (2026-08-24): resurrect libdisplay-info 0.2.0 for niri-flake
-    # nixpkgs removed libdisplay-info_0_2 (default is now 0.4, throw alias
-    # left behind), but niri-flake hard-asserts version 0.2.0 to match niri's
-    # vendored bindings, breaking eval after the lock bump. Upstream fix
-    # (sodiboo/niri-flake#1851, PR #1853) is not merged, and our niri pin is
-    # already at branch tip, so bumping cannot help yet. Overlay rebuilds the
-    # old derivation via overrideAttrs -- 0.2.0 and 0.4.0 have identical
-    # deps/patches/mesonFlags, only src differs. Drop once #1853 lands and
-    # the niri pin is bumped.
-    nixpkgs.overlays = [
-      (final: prev: {
-        libdisplay-info_0_2 = prev.libdisplay-info.overrideAttrs (old: {
-          name = "libdisplay-info-0.2.0";
-          version = "0.2.0";
-          src = prev.fetchFromGitLab {
-            domain = "gitlab.freedesktop.org";
-            owner = "emersion";
-            repo = "libdisplay-info";
-            rev = "0.2.0";
-            hash = "sha256-6xmWBrPHghjok43eIDGeshpUEQTuwWLXNHg7CnBUt3Q=";
-          };
-        });
-      })
-      inputs.niri.overlays.niri
-    ];
+    nixpkgs.overlays = [inputs.niri.overlays.niri];
     programs.niri = {
       enable = true;
       package = pkgs.niri-unstable;
@@ -56,7 +32,16 @@
         # pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-gnome
       ];
-      config.common.default = ["gnome"];
+      config = {
+        common.default = ["gnome"];
+        # FileChooser для niri-сессии; XDG_CURRENT_DESKTOP=niri, поэтому
+        # xdg-desktop-portal читает именно niri-portals.conf и не смотрит
+        # generic portals.conf в той же локации — default дублируем.
+        niri = {
+          default = ["gnome"];
+          "org.freedesktop.impl.portal.FileChooser" = ["elio"];
+        };
+      };
       # config.common = {
       #   default = ["gtk"];
       #   "org.freedesktop.impl.portal.FileChooser" = "nautilus";
@@ -76,6 +61,15 @@
   }: let
     # Stylix colours
     c = config.lib.stylix.colors.withHashtag;
+    sessionEnv = {
+      DISPLAY = ":0";
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      QT_QPA_PLATFORM = "wayland";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      # No SDL_VIDEODRIVER: Steam rewrites a single-driver value into
+      # "wayland,x11,windows", which games bundling an X11-only SDL2 reject
+      # ("wayland,x11,windows not available"). SDL auto-detects instead.
+    };
   in {
     imports = [
       ./_binds.nix
@@ -94,54 +88,17 @@
       {argv = ["noctalia"];}
       {argv = ["asusctl" "slash" "-l" "128" "--mode" "Flux" "-B" "true" "-S" "true" "-s" "false" "-b" "false" "-w" "true"];}
       {
-        argv = let
-          inherit (builtins) floor fromJSON;
-          inherit (lib) toHexString stringLength min max;
-          inherit (config.lib.stylix) colors;
-
-          r = fromJSON colors.base03-rgb-r;
-          g = fromJSON colors.base03-rgb-g;
-          b = fromJSON colors.base03-rgb-b;
-
-          min-val = min (min r g) b;
-          max-val = max (max r g) b;
-          range = max-val - min-val;
-
-          mid-val = r + g + b - min-val - max-val;
-
-          sat-mid =
-            if range == 0
-            then 0
-            else floor (255.0 * (mid-val - min-val) / range);
-
-          saturate = ch:
-            if ch == max-val
-            then 255
-            else if ch == min-val
-            then 0
-            else sat-mid;
-
-          sat-r =
-            if range == 0
-            then 148
-            else saturate r;
-          sat-g =
-            if range == 0
-            then 103
-            else saturate g;
-          sat-b =
-            if range == 0
-            then 189
-            else saturate b;
-
-          pad2 = s:
-            if stringLength s == 1
-            then "0${s}"
-            else s;
-          toHex = n: pad2 (toHexString n);
-
-          color = "${toHex sat-r}${toHex sat-g}${toHex sat-b}";
-        in ["asusctl" "aura" "effect" "static" "-c" color];
+        argv = [
+          "asusctl"
+          "aura"
+          "effect"
+          "static"
+          "-c"
+          (import ../_aura-color.nix {
+            inherit lib;
+            colors = config.lib.stylix.colors;
+          })
+        ];
       }
       {argv = ["asusctl" "leds" "set" "low"];}
       {argv = [(lib.getExe pkgs.kanshi)];}
@@ -150,13 +107,12 @@
       {command = ["${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"];}
     ];
 
-    programs.niri.settings.environment = {
-      QT_QPA_PLATFORM = "wayland";
-      SDL_VIDEODRIVER = "wayland";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
-      ELECTRON_OZONE_PLATFORM_HINT = "auto";
-      DISPLAY = ":0";
-    };
+    programs.niri.settings.environment = sessionEnv;
+
+    # systemd --user reads environment.d at manager start. This merges into the
+    # same ~/.config/environment.d/10-home-manager.conf that the xdg and qt
+    # modules already write (XDG_BIN_HOME, QT_PLUGIN_PATH, ...).
+    systemd.user.sessionVariables = sessionEnv;
 
     # Input configuration
     programs.niri.settings.input = {
@@ -327,6 +283,18 @@
         # opacity = 1; # FIXME
         # background-effect.blur = false; # FIXME
       }
+      {
+        # elio FileChooser поднимает kitty с этими app-id/title
+        # (src/portal/terminal.rs: kitty --title "elio File Chooser"
+        #  --app-id io.github.elio_fm.elio.filechooser).
+        matches = [
+          {app-id = "io.github.elio_fm.elio.filechooser";}
+          {title = "elio File Chooser";}
+        ];
+        open-floating = true;
+        default-column-width = {proportion = 0.6;};
+        default-window-height = {proportion = 0.7;};
+      }
     ];
     programs.niri.settings.layer-rules = [
       # Noctalia's blurred backdrop rendered inside niri's overview. Noctalia
@@ -337,7 +305,12 @@
         place-within-backdrop = true;
       }
     ];
-    programs.niri.settings.gestures.hot-corners.enable = false;
+    programs.niri.settings.gestures.hot-corners = {
+      top-left = false;
+      top-right = false;
+      bottom-left = false;
+      bottom-right = false;
+    };
     programs.niri.settings.debug = {
       render-drm-device = "/dev/dri/card1";
       honor-xdg-activation-with-invalid-serial = true;

@@ -20,7 +20,7 @@
           curve = "linear";
         };
       };
-      custom-shader = ''
+      custom-shader.text = ''
         vec4 pixelate_open(vec3 coords_geo, vec3 size_geo) {
             // Discard pixels outside window bounds
             if (coords_geo.x < 0.0 || coords_geo.x > 1.0 || coords_geo.y < 0.0 || coords_geo.y > 1.0) {
@@ -61,7 +61,7 @@
           curve = "linear";
         };
       };
-      custom-shader = ''
+      custom-shader.text = ''
         vec4 pixelate_close(vec3 coords_geo, vec3 size_geo) {
             // Discard pixels outside window bounds
             if (coords_geo.x < 0.0 || coords_geo.x > 1.0 || coords_geo.y < 0.0 || coords_geo.y > 1.0) {
