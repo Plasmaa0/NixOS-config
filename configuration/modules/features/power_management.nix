@@ -32,11 +32,6 @@
         TLP_PROFILE_BAT = "BAL";
         TLP_PROFILE_DEFAULT = "BAL";
 
-        START_CHARGE_THRESH_BAT0 = 30;
-        STOP_CHARGE_THRESH_BAT0 = 70;
-        START_CHARGE_THRESH_BAT1 = 30;
-        STOP_CHARGE_THRESH_BAT1 = 70;
-
         PLATFORM_PROFILE_ON_AC = "performance";
         PLATFORM_PROFILE_ON_BAT = "balanced";
         PLATFORM_PROFILE_ON_SAV = "low-power";

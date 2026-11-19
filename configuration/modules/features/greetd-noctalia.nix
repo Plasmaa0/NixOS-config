@@ -99,6 +99,10 @@
       "${lib.getExe' pkgs.coreutils "env"} "
       + "WLR_DRM_DEVICES=/dev/dri/card1 "
       + "WLR_DRM_NO_ATOMIC=1 "
+      # mkForce ниже заменяет дефолтную команду upstream-модуля, а он передавал
+      # XDG_DATA_DIRS=…-desktops/share — без этого грейдер не находит ни одного
+      # wayland-session (кроме synthetic Shell) и session.default игнорируется.
+      + "XDG_DATA_DIRS=${config.services.displayManager.sessionData.desktops}/share "
       + "${lib.getExe' config.services.displayManager.noctalia-greeter.package "noctalia-greeter-session"} --"
     );
 

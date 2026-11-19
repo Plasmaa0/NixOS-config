@@ -1,9 +1,5 @@
 {...}: {
-  flake.nixosModules.regreet = {
-    pkgs,
-    self,
-    ...
-  }: {
+  flake.nixosModules.regreet = {...}: {
     services.displayManager.regreet = true;
     # services.xserver = {
     #   enable = true;

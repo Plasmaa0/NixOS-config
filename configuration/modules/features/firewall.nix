@@ -7,13 +7,15 @@
       steam-voicechat = range 27014 27020;
       kde-connect = range 1714 1764;
       printing = [631];
+      syncthing = [22000 8384 21027];
       ports =
         [8080 8000]
         ++ mindustry
         ++ minecraft
         ++ steam-voicechat
         ++ kde-connect
-        ++ printing;
+        ++ printing
+        ++ syncthing;
     in {
       enable = true;
       allowedTCPPorts = ports;

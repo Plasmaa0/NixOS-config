@@ -52,14 +52,17 @@
       # application-music-yandex-music
       application-music-cassette
       application-music-mpd
+      application-social-element
       application-social-telegram
       application-utils-mangohud
       application-utils-gparted
       service-powertop
       service-poweralertd
       service-kde-connect
+      service-syncthing
       service-flameshot
       service-cliphist
+      service-handy
       dev-python
       dev-latex
       dev-typst
