@@ -3,7 +3,6 @@
     home.packages = with pkgs; [
       eza
       bat
-      tabiew
       starship
       ripgrep
       ripgrep-all
