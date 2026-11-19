@@ -62,10 +62,8 @@
           (adi1090x-plymouth-themes.override {selected_themes = [theme_name];})
         ];
       };
-      # # Enable "Silent Boot"
+      # Enable "Silent Boot"
       consoleLogLevel = 0;
-      initrd.systemd.enable = true;
-      initrd.verbose = false;
       kernelParams = [
         "quiet"
         "splash"
