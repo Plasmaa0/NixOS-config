@@ -12,7 +12,7 @@
   boot.supportedFilesystems = ["ntfs"];
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "sdhci_pci"];
   boot.initrd.kernelModules = ["amdgpu"];
-  boot.initrd.systemd.enable = true;
+  # boot.initrd.systemd.enable = true;
   hardware.amdgpu.initrd.enable = true;
   boot.kernelModules = ["kvm-amd"];
   boot.kernelParams = [

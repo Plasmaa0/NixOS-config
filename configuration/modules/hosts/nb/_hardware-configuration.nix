@@ -19,7 +19,7 @@ in {
 
   boot.initrd.availableKernelModules = ["xhci_pci" "nvme"];
   boot.initrd.kernelModules = [];
-  boot.initrd.systemd.enable = true;
+  # boot.initrd.systemd.enable = true;
   boot.kernelModules = ["kvm-intel"];
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.extraModulePackages = [];
